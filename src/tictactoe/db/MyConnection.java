@@ -10,7 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import org.apache.derby.jdbc.ClientDriver;
+import tictactoe.AlertMessage;
 
 /**
  *
@@ -24,10 +26,22 @@ public class MyConnection {
 
             DriverManager.deregisterDriver(new ClientDriver());
             connection = DriverManager.getConnection("jdbc:derby://localhost:1527/TicTacToeGame", "root", "root");
+
         } catch (SQLException ex) {
-            Logger.getLogger(MyConnection.class.getName()).log(Level.SEVERE, null, ex);
+            AlertMessage.infoBox(ex.getLocalizedMessage(), "Error", null);
         }
         return connection;
+    }
+
+    public static boolean isDbConnected(Connection con) {
+        try {
+            return con != null && !con.isClosed();
+        } catch (SQLException e) {
+            AlertMessage.infoBox(e.getLocalizedMessage(), "Error!", null);
+
+        }
+
+        return false;
     }
 
 }
