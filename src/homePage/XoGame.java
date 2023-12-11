@@ -1,7 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package homePage;
 
-package tictactoe;
-
-import homePage.XOgameUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,13 +13,17 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author user
+ * @author DELL
  */
-public class TicTacToe extends Application {
+public class XoGame extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = new XOgameUI();
+        String image = XOgameUI.class.getResource("bkdnd.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "'); "+
+                 "-fx-background-size: 100% 100%;"+
+                 "-fx-background-position: center center;");
         
         Scene scene = new Scene(root);
         
