@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,6 +17,11 @@ import javafx.scene.text.Font;
 import tictactoe.db.DataAccessLayer;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import static sun.audio.AudioPlayer.player;
 import tictactoe.AlertMessage;
 
 public class LoginScreenBase extends BorderPane {
@@ -93,7 +100,7 @@ public class LoginScreenBase extends BorderPane {
             System.out.println(username_tf.getText());
             System.out.println(pass_tf.getText());
             if (username_tf.getText().isEmpty()) {
-                
+
                 AlertMessage.showAlert(AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
                         "Please enter your username");
                 return;
@@ -101,8 +108,7 @@ public class LoginScreenBase extends BorderPane {
             if (pass_tf.getText().isEmpty()) {
                 AlertMessage.showAlert(AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
                         "Please enter a password");
-                
-                
+
                 return;
             }
             String username = username_tf.getText();
@@ -111,7 +117,8 @@ public class LoginScreenBase extends BorderPane {
             if (!flag) {
                 AlertMessage.infoBox("Please enter correct Email and Password", null, "Failed");
             } else {
-                AlertMessage.infoBox("Login Successful!", null, "Succeed");
+ 
+               AlertMessage.infoBox("Login Successful!", null, "Succeed");
             }
         });
 
