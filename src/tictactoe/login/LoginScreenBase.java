@@ -146,8 +146,13 @@ public class LoginScreenBase extends BorderPane {
         have_account_lbl.setUnderline(true);
         have_account_lbl.setFont(new Font(18.0));
         have_account_lbl.setOnMouseClicked((event) -> {
-          
-            Mynav.navigateTo(new RegisterScreenBase(), event);
+            Parent root = new RegisterScreenBase();
+            String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
+            root.setStyle("-fx-background-image: url('" + image + "'); "
+                    + "-fx-background-size: 100% 100%;"
+                    + "-fx-background-position: center center;"
+            );
+            Mynav.navigateTo(root, event);
         });
 
         username_tf.setLayoutX(170.0);
