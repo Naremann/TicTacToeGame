@@ -5,6 +5,15 @@
  */
 package gameBoard;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -20,6 +29,8 @@ import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,7 +64,20 @@ public class GameBoardUI extends AnchorPane {
     private boolean isX;
     int xCount;
     int oCount;
+    protected String mark;
+     private final List<String> moves;
+    private final List<String> rMoves;
+    BufferedWriter writer;
+    boolean isRecord;
     public GameBoardUI() {
+         try {
+            writer = new BufferedWriter(new FileWriter("Record History.txt",true));
+        } catch (IOException ex) {
+            Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        isRecord =false;
+        moves = new ArrayList<>();
+        rMoves = new ArrayList<>();
         xCount=0;
         oCount=0;
         grideSize = 3;
@@ -122,15 +146,57 @@ public class GameBoardUI extends AnchorPane {
         recBtn.setText("Record Game");
         FlowPane.setMargin(recBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         recBtn.setFont(new Font(18.0));
-
+        recBtn.setOnAction(event -> {
+            isRecord= true;
+            recordMovesToFile();
+        });
         againBtn.setMnemonicParsing(false);
         againBtn.setPrefHeight(35.0);
         againBtn.setPrefWidth(235.0);
         againBtn.setText("Play Again");
         FlowPane.setMargin(againBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         againBtn.setFont(new Font(18.0));
-        againBtn.setOnAction(event -> {
+        againBtn.setOnAction((ActionEvent event) -> {
             resetGride();
+                 loadMovesFromFile();
+            System.out.println(rMoves);
+            new Thread() {
+                public void run() {
+                    String str = rMoves.get(1) + "#";
+                    while (!str.isEmpty()) {
+                        int hashtagIndex = str.indexOf('#');
+                        if (hashtagIndex < 0) {
+                            break; // No more valid moves
+                        }
+
+                        String s = str.substring(0, hashtagIndex);
+                        if (s.length() >= 5) {
+                            int row = Character.getNumericValue(s.charAt(2));
+                            int col = Character.getNumericValue(s.charAt(4));
+
+                            if (row >= 0 && row < grideButtons.length && col >= 0 && col < grideButtons[row].length) {
+                                // To update the UI from a non-UI thread, you need to use Platform.runLater()
+                                final String buttonText = Character.toString(s.charAt(0));
+                                Platform.runLater(() -> grideButtons[row][col].setText(buttonText));
+                            }
+                        }
+
+                        System.out.println(s);
+
+                        int index = hashtagIndex + 1;
+                        if (index < str.length()) {
+                            str = str.substring(index);
+                        } else {
+                            break; // No more characters after the last '#'
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
         });
 
         resetBtn.setMnemonicParsing(false);
@@ -192,13 +258,29 @@ public class GameBoardUI extends AnchorPane {
     {
         if (btn.getText().isEmpty()) {
             btn.setText(isX ? "X" : "O");
+            mark = isX ? "X" : "O";
+            if(isRecord)
+                recordMove(btn);
             btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
             if (isWinner()) {
                 winnerAlert(isX ? "Player X" : "Player O");
                 updateScore(isX);
                 resetGride();
+                try {
+                    writer.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    isRecord=false;
             } else if (gameOver()) {
+                try {
+                    writer.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    isRecord=false;
                 grideFullAlert();
+                
                // resetGride();
             } else {
                 isX = !isX;
@@ -293,5 +375,47 @@ public class GameBoardUI extends AnchorPane {
 
         dialog.getDialogPane().setContent(contentBox);
         dialog.showAndWait();
+    }
+    private void recordMovesToFile() {
+        try  {
+            writer = new BufferedWriter(new FileWriter("Record History.txt",true));
+            for (int i = 0 ; i<moves.size();i++) {
+                writer.write(moves.get(i));
+                writer.write("#");
+                if(i==moves.size()-1)
+                {  
+                    writer.newLine();
+                    writer.write("&");
+                    writer.newLine();
+                }
+            }
+            moves.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+     private void recordMove(Button btn) {
+        int row = gride.getRowIndex(btn);
+        int col = gride.getColumnIndex(btn);
+        String move = String.format("%s,%s,%s", mark, row, col);
+        moves.add(move);
+    }
+     private void loadMovesFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Record History.txt"))) {
+            String line;
+            StringBuilder record = new StringBuilder();
+             rMoves.clear();
+            while ((line = reader.readLine()) != null) {
+                if (line.equals("&")) {
+                   
+                    rMoves.add(record.toString());
+                    record.setLength(0); // Clear StringBuilder for the next record
+                } else {
+                    record.append(line).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

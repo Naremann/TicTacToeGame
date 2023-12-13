@@ -1,11 +1,16 @@
 package homePage;
 
+import gameBoard.ChooseGameUI;
+import gameBoard.GameBoardUI;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import mynev.Mynav;
 
 public  class XOgameUI extends BorderPane {
 
@@ -90,17 +95,36 @@ public  class XOgameUI extends BorderPane {
         btnwFriend.setMnemonicParsing(false);
         btnwFriend.setPrefHeight(186.0);
         btnwFriend.setPrefWidth(217.0);
-
+        //**********
+        btnwFriend.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new ChooseGameUI(), event);
+                 }
+        });
+        
+        
+        //************
         btnwComp.setLayoutX(339.0);
         btnwComp.setLayoutY(129.0);
         btnwComp.setMnemonicParsing(false);
         btnwComp.setPrefHeight(185.0);
         btnwComp.setPrefWidth(216.0);
+        //*****************
+         btnwComp.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new GameBoardUI(), event);
+                 }
+        });
+        //*******************
+        
 
         lbPlayWFriend.setLayoutX(70.0);
         lbPlayWFriend.setLayoutY(325.0);
         lbPlayWFriend.setText("MULTI PLAYER MODE");
         lbPlayWFriend.setFont(new Font("Arial Bold", 18.0));
+        
 
         lbwComp.setLayoutX(381.0);
         lbwComp.setLayoutY(325.0);
