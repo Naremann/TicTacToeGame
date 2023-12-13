@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package gameBoard;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.text.Font;
+import mynev.Mynav;
+import tictactoe.login.LoginScreenBase;
 /**
  *
  * @author HimaMarey
@@ -23,6 +27,7 @@ public class ChooseGameUI extends AnchorPane {
     protected final FlowPane flowPane0;
     protected final Label label0;
     protected final Button onlineBtn;
+    
 
     public ChooseGameUI() {
 
@@ -60,7 +65,17 @@ public class ChooseGameUI extends AnchorPane {
                  "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;"
                 );
-
+        //**********
+        locallyBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new GameBoardUI(), event);
+                 }
+        });
+        
+        
+        
+       //***************
         flowPane0.setLayoutX(309.0);
         flowPane0.setLayoutY(75.0);
         flowPane0.setPrefHeight(250.0);
@@ -71,7 +86,7 @@ public class ChooseGameUI extends AnchorPane {
         label0.setPrefWidth(253.0);
         label0.setText("Online Game");
         label0.setFont(new Font("System Bold", 18.0));
-
+   
         onlineBtn.setMnemonicParsing(false);
         onlineBtn.setPrefHeight(174.0);
         onlineBtn.setPrefWidth(223.0);
@@ -82,7 +97,14 @@ public class ChooseGameUI extends AnchorPane {
                  "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;"
                 );
-        
+        //*********************
+        onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new LoginScreenBase(), event);
+                 }
+        });
+        //////////************
         flowPane.getChildren().add(label);
         flowPane.getChildren().add(locallyBtn);
         getChildren().add(flowPane);

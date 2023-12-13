@@ -1,17 +1,20 @@
 package homePage;
 
+import gameBoard.ChooseGameUI;
+import gameBoard.GameBoardUI;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import mynev.Mynav;
 
 public  class XOgameUI extends BorderPane {
 
     protected final AnchorPane anchorPane;
-    protected final TextField txtName;
-    protected final TextField txtScore;
     protected final Button btnRequest;
     protected final Button btnHistory;
     protected final Button btnwFriend;
@@ -22,8 +25,6 @@ public  class XOgameUI extends BorderPane {
     public XOgameUI() {
 
         anchorPane = new AnchorPane();
-        txtName = new TextField();
-        txtScore = new TextField();
         btnRequest = new Button();
         btnHistory = new Button();
         btnwFriend = new Button();
@@ -54,21 +55,10 @@ public  class XOgameUI extends BorderPane {
                 "-fx-background-repeat: no-repeat;"+
                  "-fx-background-position: center center;");
 
-        txtName.setEditable(false);
-        txtName.setLayoutX(31.0);
-        txtName.setLayoutY(14.0);
-        txtName.setFont(new Font("Arial Bold", 18.0));
-
-        txtScore.setEditable(false);
-        txtScore.setLayoutX(31.0);
-        txtScore.setLayoutY(56.0);
-        txtScore.setPrefHeight(33.0);
-        txtScore.setPrefWidth(224.0);
-        txtScore.setText("SCORE:");
-        txtScore.setFont(new Font("Arial Bold", 18.0));
+        
 
         btnRequest.setLayoutX(386.0);
-        btnRequest.setLayoutY(14.0);
+        btnRequest.setLayoutY(25.0);
         btnRequest.setMnemonicParsing(false);
         btnRequest.setPrefHeight(33.0);
         btnRequest.setPrefWidth(179.0);
@@ -76,8 +66,8 @@ public  class XOgameUI extends BorderPane {
         btnRequest.setText("REQUESTS");
         btnRequest.setFont(new Font("Arial Bold", 18.0));
 
-        btnHistory.setLayoutX(386.0);
-        btnHistory.setLayoutY(56.0);
+        btnHistory.setLayoutX(50.0);
+        btnHistory.setLayoutY(25.0);
         btnHistory.setMnemonicParsing(false);
         btnHistory.setPrefHeight(33.0);
         btnHistory.setPrefWidth(179.0);
@@ -90,26 +80,44 @@ public  class XOgameUI extends BorderPane {
         btnwFriend.setMnemonicParsing(false);
         btnwFriend.setPrefHeight(186.0);
         btnwFriend.setPrefWidth(217.0);
-
+        //**********
+        btnwFriend.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new ChooseGameUI(), event);
+                 }
+        });
+        
+        
+        //************
         btnwComp.setLayoutX(339.0);
         btnwComp.setLayoutY(129.0);
         btnwComp.setMnemonicParsing(false);
         btnwComp.setPrefHeight(185.0);
         btnwComp.setPrefWidth(216.0);
+        //*****************
+         btnwComp.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                  // GameBoardUI gameBoard = new GameBoardUI(true);
+                   Mynav.navigateTo(new GameBoardUI(true), event);
+                 }
+        });
+        //*******************
+        
 
-        lbPlayWFriend.setLayoutX(70.0);
+        lbPlayWFriend.setLayoutX(50.0);
         lbPlayWFriend.setLayoutY(325.0);
         lbPlayWFriend.setText("MULTI PLAYER MODE");
         lbPlayWFriend.setFont(new Font("Arial Bold", 18.0));
+        
 
-        lbwComp.setLayoutX(381.0);
+        lbwComp.setLayoutX(350.0);
         lbwComp.setLayoutY(325.0);
-        lbwComp.setText("SINGLE MODE");
+        lbwComp.setText("SINGLE PLAYER MODE");
         lbwComp.setFont(new Font("Arial Bold", 18.0));
         setCenter(anchorPane);
-
-        anchorPane.getChildren().add(txtName);
-        anchorPane.getChildren().add(txtScore);
+ 
         anchorPane.getChildren().add(btnRequest);
         anchorPane.getChildren().add(btnHistory);
         anchorPane.getChildren().add(btnwFriend);
@@ -117,5 +125,6 @@ public  class XOgameUI extends BorderPane {
         anchorPane.getChildren().add(lbPlayWFriend);
         anchorPane.getChildren().add(lbwComp);
 
+    
     }
 }

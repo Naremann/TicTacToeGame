@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane maxHeight="420.0" maxWidth="600.0" minHeight="420.0" minWidth="600.0" prefHeight="420.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="high_btn" layoutX="14.0" layoutY="88.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" stylesheets="@../cssstyle/btnStyle.css" text="High Level" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label fx:id="level_lbl" layoutX="223.0" layoutY="23.0" prefHeight="35.0" prefWidth="183.0" text="Game Levels">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="med_btn" layoutX="172.0" layoutY="162.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" stylesheets="@../cssstyle/btnStyle.css" text="Medium Level" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="low_btn" layoutX="307.0" layoutY="245.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="270.0" text="Easy Level" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <stylesheets>
+                  <URL value="@cssstyle/btnStyle.css" />
+                  <URL value="@../cssstyle/btnStyle.css" />
+               </stylesheets>
+            </Button>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
