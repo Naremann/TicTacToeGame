@@ -86,7 +86,7 @@ public class ChooseGameUI extends AnchorPane {
         label0.setPrefWidth(253.0);
         label0.setText("Online Game");
         label0.setFont(new Font("System Bold", 18.0));
-
+   
         onlineBtn.setMnemonicParsing(false);
         onlineBtn.setPrefHeight(174.0);
         onlineBtn.setPrefWidth(223.0);
