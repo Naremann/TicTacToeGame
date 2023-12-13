@@ -1,10 +1,14 @@
 package tictactoe.gamelevels;
 
+import gameBoard.GameBoardUI;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import mynev.Mynav;
 
 public  class GameLevelsBase extends BorderPane {
 
@@ -73,6 +77,15 @@ public  class GameLevelsBase extends BorderPane {
         low_btn.setTextFill(javafx.scene.paint.Color.WHITE);
         low_btn.setFont(new Font(24.0));
         low_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
+        //*****************
+         low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                  // GameBoardUI gameBoard = new GameBoardUI(true);
+                   Mynav.navigateTo(new GameBoardUI(true), event);
+                 }
+        });
+        //*******************
         setCenter(anchorPane);
 
         anchorPane.getChildren().add(high_btn);
