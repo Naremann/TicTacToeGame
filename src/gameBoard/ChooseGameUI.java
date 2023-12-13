@@ -27,6 +27,7 @@ public class ChooseGameUI extends AnchorPane {
     protected final FlowPane flowPane0;
     protected final Label label0;
     protected final Button onlineBtn;
+    
 
     public ChooseGameUI() {
 
