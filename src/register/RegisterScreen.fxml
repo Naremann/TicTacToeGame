@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="321.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="regisster_lbl" layoutX="228.0" layoutY="6.0" text="Register">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="fill_lbl" layoutX="173.0" layoutY="67.0" text="Kindly fill in this form to register">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="username_tf" layoutX="182.0" layoutY="116.0" prefHeight="35.0" prefWidth="252.0" promptText="Username" stylesheets="@../login/textFieldStyle.css">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <ImageView fx:id="user_ic" layoutX="192.0" layoutY="126.0">
+               <image>
+                  <Image url="@../../../../../../Downloads/svgtopng/user-regular.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="email_tf" layoutX="182.0" layoutY="165.0" prefHeight="35.0" prefWidth="252.0" promptText="Email" stylesheets="@../login/textFieldStyle.css">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <ImageView fx:id="email_ic" layoutX="191.0" layoutY="175.0">
+               <image>
+                  <Image url="@../../../../../../Downloads/svgtopng%20(1)/email.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="password_tf" layoutX="182.0" layoutY="215.0" prefHeight="35.0" prefWidth="252.0" promptText="Password" stylesheets="@../login/textFieldStyle.css">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <ImageView fx:id="pass_ic" layoutX="191.0" layoutY="225.0">
+               <image>
+                  <Image url="@../../../../../../Downloads/svgtopng%20(1)/key.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="signup_btn" layoutX="183.0" layoutY="275.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" stylesheets="@../btnStyle.css" text="Create an account">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Label fx:id="have_account_lbl" layoutX="194.0" layoutY="328.0" text="You already have an account" textAlignment="CENTER" textFill="#0e59ef" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

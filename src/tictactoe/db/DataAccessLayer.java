@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tictactoe.AlertMessage;
+import tictactoe.dto.DTOPlayer;
 
 /**
  *
@@ -18,6 +21,7 @@ import tictactoe.AlertMessage;
 public class DataAccessLayer {
 
     private static final String SELECT_QUERY = "SELECT * FROM PLAYER WHERE USERNAME = ? and PASSWORD = ?";
+    private static final String INSERT_QUERY = "INSERT INTO PLAYER(USERNAME,EMAIL,PASSWORD) VALUES (?,?,?)";
 
     public static boolean validate(String userName, String password) {
 
@@ -42,6 +46,34 @@ public class DataAccessLayer {
             AlertMessage.infoBox(e.getLocalizedMessage(), "Error!", null);
         }
         return false;
+    }
+
+    public static int register(DTOPlayer player) {
+        Connection connection = MyConnection.getConnection();
+        PreparedStatement preparedStatement = null;
+        int result = 0;
+
+        try {
+            if (MyConnection.isDbConnected(connection)) {
+                if(player.getUserName()!=null && player.getPassword()!=null
+                        && player.getEmail()!=null){
+                preparedStatement = connection.prepareStatement(INSERT_QUERY);
+                preparedStatement.setString(1, player.getUserName());
+                preparedStatement.setString(2, player.getEmail());
+                preparedStatement.setString(3, player.getPassword());
+
+                result = preparedStatement.executeUpdate();
+                }
+                preparedStatement.close();
+                connection.close();
+
+            }
+        } catch (SQLException ex) {
+            AlertMessage.infoBox(ex.getLocalizedMessage(), "Error!", null);
+
+        }
+
+        return result;
     }
 
 }
