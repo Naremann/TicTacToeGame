@@ -49,6 +49,15 @@ public  class GameLevelsBase extends BorderPane {
         high_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         high_btn.setText("High Level");
         high_btn.setTextFill(javafx.scene.paint.Color.WHITE);
+        //*****************
+          high_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                  // GameBoardUI gameBoard = new GameBoardUI(true);
+                   Mynav.navigateTo(new GameBoardUI(true), event);
+                 }
+        });
+        //*******************
         high_btn.setFont(new Font(24.0));
 
         level_lbl.setLayoutX(223.0);
