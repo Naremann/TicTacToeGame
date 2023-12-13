@@ -34,7 +34,7 @@ public  class WinnerBase extends BorderPane {
         
         
         /////////////////////////////
-        String resourcePath = "/moh/Winner.fxml";
+        String resourcePath = "/video/Winner.fxml";
         URL location = getClass().getResource(resourcePath);
         FXMLLoader fxmlLoader = new FXMLLoader(location);
 
@@ -46,7 +46,7 @@ public  class WinnerBase extends BorderPane {
       
         
         System.out.println("WinnerController class loaded.");
-        String videoPath = "/moh/win.mp4";
+        String videoPath = "/video/win.mp4";
         Media media = new Media(getClass().getResource(videoPath).toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediavv.setMediaPlayer(mediaPlayer);

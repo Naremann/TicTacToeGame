@@ -14,7 +14,9 @@ import javafx.scene.layout.FlowPane;
 import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.text.Font;
 import mynev.Mynav;
+import register.RegisterScreenBase;
 import tictactoe.login.LoginScreenBase;
+
 /**
  *
  * @author HimaMarey
@@ -91,7 +93,7 @@ public class ChooseGameUI extends AnchorPane {
         onlineBtn.setPrefHeight(174.0);
         onlineBtn.setPrefWidth(223.0);
         FlowPane.setMargin(onlineBtn, new Insets(12.0));
-
+         
         String img = ChooseGameUI.class.getResource("online.png").toExternalForm();
         onlineBtn.setStyle("-fx-background-image: url('" + img + "'); "+
                  "-fx-background-size: 100% 100%;"+
@@ -101,10 +103,11 @@ public class ChooseGameUI extends AnchorPane {
         onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new LoginScreenBase(), event);
+                   Mynav.navigateTo(new GameBoardUI(), event);
                  }
         });
         //////////************
+        
         flowPane.getChildren().add(label);
         flowPane.getChildren().add(locallyBtn);
         getChildren().add(flowPane);

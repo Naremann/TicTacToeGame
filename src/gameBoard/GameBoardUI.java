@@ -5,6 +5,9 @@
  */
 package gameBoard;
 
+import homePage.XOgameUI;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -20,6 +23,11 @@ import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import mynev.Mynav;
+import tictactoe.gamelevels.GameLevelsBase;
+import tictactoe.login.LoginScreenBase;
+import video.WinnerBase;
+
 
 /**
  *
@@ -157,6 +165,12 @@ public class GameBoardUI extends AnchorPane {
         exitBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fdfcfc"));
         FlowPane.setMargin(exitBtn, new Insets(4.0));
         exitBtn.setFont(new Font(18.0));
+        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new XOgameUI(), event);
+                 }
+        });
 
         gride.setLayoutX(14.0);
         gride.setLayoutY(47.0);
@@ -278,9 +292,19 @@ public class GameBoardUI extends AnchorPane {
         exitBtn.setPrefWidth(112.0);
         exitBtn.setStyle("-fx-background-color: red;");
         exitBtn.setText("Exit");
+        //*********************
+        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new XOgameUI(), event);
+                 }
+        });
+        //////////************
         exitBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fdfcfc"));
+        
         FlowPane.setMargin(exitBtn, new Insets(4.0));
         exitBtn.setFont(new Font(18.0));
+        
 
         gride.setLayoutX(14.0);
         gride.setLayoutY(47.0);
@@ -326,6 +350,7 @@ public class GameBoardUI extends AnchorPane {
             btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
             if (isWinner()) {
                 winnerAlert(isX ? "Player X" : "Player O");
+                Mynav.navigateTo(new WinnerBase());
                 updateScore(isX);
                 resetGride();
             } else if (gameOver()) {
@@ -347,6 +372,7 @@ public class GameBoardUI extends AnchorPane {
                  if (isWinner()) {
            
                 winnerAlert("YOU");
+                Mynav.navigateTo(new WinnerBase());
                 updateScore(isX);
                 resetGride();
             } else if (gameOver()) {
