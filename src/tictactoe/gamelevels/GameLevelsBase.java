@@ -66,6 +66,15 @@ public  class GameLevelsBase extends BorderPane {
         med_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         med_btn.setText("Medium Level");
         med_btn.setTextFill(javafx.scene.paint.Color.WHITE);
+         //*****************
+          med_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                  // GameBoardUI gameBoard = new GameBoardUI(true);
+                   Mynav.navigateTo(new GameBoardUI(true), event);
+                 }
+        });
+        //*******************
         med_btn.setFont(new Font(24.0));
 
         low_btn.setLayoutX(307.0);
