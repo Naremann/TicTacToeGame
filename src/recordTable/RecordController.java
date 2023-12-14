@@ -20,11 +20,7 @@ import javafx.scene.control.ListView;
 public class RecordController implements Initializable {
     
    
-    private ListView<String> myListView;
-    
-    private Label label;
-    
-    String[] myRecord={"SAMI","",""};
+
     
     
     @FXML
@@ -35,7 +31,7 @@ public class RecordController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        myListView.getItems().addAll(myRecord);
+       
     }    
     
 }
