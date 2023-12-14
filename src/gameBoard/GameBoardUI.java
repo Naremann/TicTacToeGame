@@ -5,6 +5,7 @@
  */
 package gameBoard;
 
+import homePage.XOgameUI;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -36,6 +37,9 @@ import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import mynev.Mynav;
+import video.WinnerBase;
 
 
 /**
@@ -232,6 +236,12 @@ public class GameBoardUI extends AnchorPane {
         exitBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fdfcfc"));
         FlowPane.setMargin(exitBtn, new Insets(4.0));
         exitBtn.setFont(new Font(18.0));
+        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new XOgameUI(), event);
+                 }
+        });
 
         gride.setLayoutX(14.0);
         gride.setLayoutY(47.0);
@@ -364,7 +374,13 @@ public class GameBoardUI extends AnchorPane {
         exitBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fdfcfc"));
         FlowPane.setMargin(exitBtn, new Insets(4.0));
         exitBtn.setFont(new Font(18.0));
-
+        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   Mynav.navigateTo(new XOgameUI(), event);
+                 }
+        });
+        
         gride.setLayoutX(14.0);
         gride.setLayoutY(47.0);
         gride.setPrefHeight(198.0);
@@ -419,6 +435,7 @@ public class GameBoardUI extends AnchorPane {
                     Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
                     isRecord=false;
+                     Mynav.navigateTo(new WinnerBase());
                 winnerAlert(isX ? "Player X" : "Player O");
                 updateScore(isX);
                 resetGride();
@@ -449,7 +466,7 @@ public class GameBoardUI extends AnchorPane {
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
                 
                  if (isWinner()) {
-           
+            Mynav.navigateTo(new WinnerBase());
                 winnerAlert("YOU");
                 updateScore(isX);
                 resetGride();
@@ -491,7 +508,7 @@ public class GameBoardUI extends AnchorPane {
 } 
     void winnerAlert(String winner)
     {
-     //   showCustomAlert();
+    
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("END GAME");
         alert.setHeaderText(null);
