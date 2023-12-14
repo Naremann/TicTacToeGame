@@ -100,7 +100,7 @@ public class ChooseGameUI extends AnchorPane {
                  "-fx-background-position: center center;"
                 );
         //*********************
-        onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+         onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
                    Mynav.navigateTo(new LoginScreenBase(), event);
