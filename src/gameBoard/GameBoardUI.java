@@ -90,7 +90,7 @@ public class GameBoardUI extends AnchorPane {
         } catch (IOException ex) {
             Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        isRecord =false;
+        isRecord =true;
         moves = new ArrayList<>();
         rMoves = new ArrayList<>();
         xCount=0;
@@ -162,8 +162,9 @@ public class GameBoardUI extends AnchorPane {
         FlowPane.setMargin(recBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         recBtn.setFont(new Font(18.0));
         recBtn.setOnAction(event -> {
-            isRecord= true;
             recordMovesToFile();
+            isRecord= true;
+            
         });
         againBtn.setMnemonicParsing(false);
         againBtn.setPrefHeight(35.0);
@@ -424,11 +425,12 @@ public class GameBoardUI extends AnchorPane {
             btn.setText(isX ? "X" : "O");
 
             mark = isX ? "X" : "O";
-            if(isRecord)
-                recordMove(btn);
+            
+           recordMove(btn);
 
             btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
             if (isWinner()) {
+                recordMovesToFile();
                 try {
                     writer.flush();
                 } catch (IOException ex) {
@@ -441,7 +443,7 @@ public class GameBoardUI extends AnchorPane {
                 resetGride();
                 
             } else if (gameOver()) {
-
+                recordMovesToFile();
                 try {
                     writer.flush();
                 } catch (IOException ex) {
@@ -608,8 +610,10 @@ public class GameBoardUI extends AnchorPane {
                     writer.write("&");
                     writer.newLine();
                 }
+                
             }
             moves.clear();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
