@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import mynev.Mynav;
+import tictactoe.gamelevels.GameLevelsBase;
 
 public  class XOgameUI extends BorderPane {
 
@@ -100,7 +101,7 @@ public  class XOgameUI extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                   Mynav.navigateTo(new GameLevelsBase(), event);
                  }
         });
         //*******************
