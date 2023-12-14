@@ -9,22 +9,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import recordTable.RecordList;
-import tictactoe.login.LoginScreenBase;
+import tictactoe.gamelevels.GameLevelsBase;
 
 
 public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = new LoginScreenBase();
+        Parent root = new XOgameUI();
         String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "'); "+
                  "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;"
                 );
-        
-        
         Scene scene = new Scene(root);
         
         stage.setScene(scene);

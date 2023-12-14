@@ -36,8 +36,8 @@ public  class RecordList extends BorderPane {
         lbPlayer2 = new Label();
         listView = new ListView();
         
-        ObservableList<String> myListView = FXCollections.observableArrayList("Sami","","");
-
+       ObservableList<String> myListView = FXCollections.observableArrayList("\tSAMY\t\t\t\t\tDEC17  17:30:15\t\t\t\t RAMI","\tSARA\t\t\t\t\tDEC17  17:30:15\t\t\t\t HADEER","\tSALAH\t\t\t\t\tDEC17  17:30:15\t\t\t\t AMGED");
+        ListView<String> listView = new ListView<String>(myListView);
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);

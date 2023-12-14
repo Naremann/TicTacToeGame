@@ -12,6 +12,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -29,8 +33,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+
 
 /**
  *
@@ -66,12 +72,15 @@ public class GameBoardUI extends AnchorPane {
     private boolean isX;
     int xCount;
     int oCount;
+
     protected String mark;
      private final List<String> moves;
     private final List<String> rMoves;
     BufferedWriter writer;
     boolean isRecord;
+
     public GameBoardUI() {
+
            try {
             writer = new BufferedWriter(new FileWriter("Record History.txt",true));
         } catch (IOException ex) {
@@ -243,9 +252,19 @@ public class GameBoardUI extends AnchorPane {
 
     }
     
-     public GameBoardUI(boolean playWithComputer) {
+     public GameBoardUI(boolean playWithComputer) 
+     {
+                    try {
+            writer = new BufferedWriter(new FileWriter("Record History.txt",true));
+        } catch (IOException ex) {
+            Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        isRecord =false;
+        moves = new ArrayList<>();
+        rMoves = new ArrayList<>();
          
         this.playWithComputer = playWithComputer;
+
         xCount=0;
         oCount=0;
         grideSize = 3;
@@ -314,16 +333,14 @@ public class GameBoardUI extends AnchorPane {
         recBtn.setText("Record Game");
         FlowPane.setMargin(recBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         recBtn.setFont(new Font(18.0));
-
+        
         againBtn.setMnemonicParsing(false);
         againBtn.setPrefHeight(35.0);
         againBtn.setPrefWidth(235.0);
         againBtn.setText("Play Again");
         FlowPane.setMargin(againBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         againBtn.setFont(new Font(18.0));
-        againBtn.setOnAction(event -> {
-            resetGride();
-        });
+        
 
         resetBtn.setMnemonicParsing(false);
         resetBtn.setPrefHeight(35.0);
@@ -364,7 +381,7 @@ public class GameBoardUI extends AnchorPane {
         flowPane0.getChildren().add(exitBtn);
         getChildren().add(flowPane0);
         getChildren().add(gride); 
-    }
+     }
     void drawBtn()
     {
         for (int row = 0; row < grideSize; row++) {
@@ -389,9 +406,11 @@ public class GameBoardUI extends AnchorPane {
     {
         if (btn.getText().isEmpty()) {
             btn.setText(isX ? "X" : "O");
+
             mark = isX ? "X" : "O";
             if(isRecord)
                 recordMove(btn);
+
             btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
             if (isWinner()) {
                 try {
@@ -405,13 +424,16 @@ public class GameBoardUI extends AnchorPane {
                 resetGride();
                 
             } else if (gameOver()) {
+
                 try {
                     writer.flush();
                 } catch (IOException ex) {
                     Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
                     isRecord=false;
+
                 grideFullAlert();
+                
                // resetGride();
             } else {
                 isX = !isX;
@@ -466,10 +488,7 @@ public class GameBoardUI extends AnchorPane {
     else {
         isX = !isX;
     }
-}
-     
-     
-     
+} 
     void winnerAlert(String winner)
     {
      //   showCustomAlert();
@@ -559,6 +578,7 @@ public class GameBoardUI extends AnchorPane {
         dialog.getDialogPane().setContent(contentBox);
         dialog.showAndWait();
     }
+
     private void recordMovesToFile() {
         try  {
             writer = new BufferedWriter(new FileWriter("Record History.txt",true));
