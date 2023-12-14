@@ -22,8 +22,6 @@ public class TicTacToe extends Application {
                  "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;"
                 );
-        
-        
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
