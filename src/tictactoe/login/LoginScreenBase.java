@@ -123,7 +123,7 @@ public class LoginScreenBase extends BorderPane {
             if (!flag) {
                 AlertMessage.infoBox("Please enter correct Email and Password", null, "Failed");
             } else {
-                Mynav.navigateTo(new GameBoardUI(), event);
+               // Mynav.navigateTo(new GameBoardUI(), event);
 
                 //AlertMessage.infoBox("Login Successful!", null, "Succeed");
             }

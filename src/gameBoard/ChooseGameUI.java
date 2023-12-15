@@ -71,7 +71,7 @@ public class ChooseGameUI extends AnchorPane {
         locallyBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new GameBoardUI(), event);
+                   Mynav.navigateTo(new LocallGame(), event);
                  }
         });
         
