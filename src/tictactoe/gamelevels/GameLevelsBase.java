@@ -54,7 +54,7 @@ public  class GameLevelsBase extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                  // Mynav.navigateTo(new GameBoardUI(true), event);
                  }
         });
         //*******************
@@ -80,7 +80,7 @@ public  class GameLevelsBase extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                  // Mynav.navigateTo(new GameBoardUI(true), event);
                  }
         });
         //*******************
@@ -100,7 +100,7 @@ public  class GameLevelsBase extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                   //Mynav.navigateTo(new GameBoardUI(true), event);
                  }
         });
         //*******************

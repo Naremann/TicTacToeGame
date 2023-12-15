@@ -51,7 +51,7 @@ import video.WinnerBase;
 
 
 
-public class GameBoardUI extends AnchorPane {
+public abstract class GameBoardUI extends AnchorPane {
 
     protected final FlowPane flowPane;
     protected final Label XN;
@@ -70,19 +70,19 @@ public class GameBoardUI extends AnchorPane {
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
     
-    private boolean playWithComputer ;
+    protected boolean playWithComputer ;
     
-    private final int grideSize;
-    private Button[][] grideButtons;
-    private boolean isX;
-    int xCount;
-    int oCount;
+    protected final int grideSize;
+    protected Button[][] grideButtons;
+    protected boolean isX;
+    protected int xCount;
+    protected int oCount;
 
     protected String mark;
-     private final List<String> moves;
-    private final List<String> rMoves;
-    BufferedWriter writer;
-    boolean isRecord;
+    protected final List<String> moves;
+    protected final List<String> rMoves;
+    protected BufferedWriter writer;
+    protected boolean isRecord;
 
     public GameBoardUI() {
 
@@ -249,7 +249,6 @@ public class GameBoardUI extends AnchorPane {
         gride.setLayoutY(47.0);
         gride.setPrefHeight(198.0);
         gride.setPrefWidth(320.0);
-
         flowPane.getChildren().add(XN);
         flowPane.getChildren().add(XSF);
         flowPane.getChildren().add(ON);
@@ -400,7 +399,7 @@ public class GameBoardUI extends AnchorPane {
         getChildren().add(flowPane0);
         getChildren().add(gride); 
      }
-    void drawBtn()
+    protected void drawBtn()
     {
         for (int row = 0; row < grideSize; row++) {
             for (int col = 0; col < grideSize; col++) {
@@ -420,51 +419,7 @@ public class GameBoardUI extends AnchorPane {
             }
         }
     }
-    void onBtnClicked(Button btn)
-    {
-        if (btn.getText().isEmpty()) {
-            btn.setText(isX ? "X" : "O");
-
-            mark = isX ? "X" : "O";
-            
-           recordMove(btn);
-
-            btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
-            if (isWinner()) {
-                recordMovesToFile();
-                try {
-                    writer.flush();
-                } catch (IOException ex) {
-                    Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    isRecord=false;
-                try {
-                    AlertMessage.showWinAlert();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    // Mynav.navigateTo(new WinnerBase());
-                winnerAlert(isX ? "Player X" : "Player O");
-                updateScore(isX);
-                resetGride();
-                
-            } else if (gameOver()) {
-                recordMovesToFile();
-                try {
-                    writer.flush();
-                } catch (IOException ex) {
-                    Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    isRecord=false;
-
-                grideFullAlert();
-                
-               // resetGride();
-            } else {
-                isX = !isX;
-            }
-        }
-    }
+    abstract void onBtnClicked(Button btn);
     //pLay with pc easy mode.
      void onBtnClickedAI(Button btn)
     {
@@ -496,7 +451,7 @@ public class GameBoardUI extends AnchorPane {
         }
     }
      
-     private void makeComputerMove() {
+    protected void makeComputerMove() {
     int row, col;
     do {
         row = (int) (Math.random() * grideSize);
@@ -519,7 +474,7 @@ public class GameBoardUI extends AnchorPane {
         isX = !isX;
     }
 } 
-    void winnerAlert(String winner)
+    protected void winnerAlert(String winner)
     {
     
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -528,7 +483,7 @@ public class GameBoardUI extends AnchorPane {
         alert.setContentText(winner + " WON!");
         alert.showAndWait();
     }
-    boolean isWinner()
+    protected boolean isWinner()
     {
         String symbol = isX ? "X" : "O";
         for (int i = 0; i < grideSize; i++) {
@@ -555,7 +510,7 @@ public class GameBoardUI extends AnchorPane {
         }
         return false;
     }
-    private boolean gameOver() {
+    protected boolean gameOver() {
         for (Button[] row : grideButtons) {
             for (Button button : row) {
                 if (button.getText().isEmpty()) {
@@ -565,7 +520,7 @@ public class GameBoardUI extends AnchorPane {
         }
         return true;
     }
-    private void resetGride() {
+    protected void resetGride() {
         for (Button[] row : grideButtons) {
             for (Button button : row) {
                 button.setText("");
@@ -574,14 +529,14 @@ public class GameBoardUI extends AnchorPane {
         }
         isX = true;
     }
-    private void grideFullAlert() {
+    protected void grideFullAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText(null);
         alert.setContentText("NOBODY WON!");
         alert.showAndWait();
     }
-    private void updateScore(boolean isPlayerX) {
+    protected void updateScore(boolean isPlayerX) {
         if (isPlayerX) {
             xCount++;
             XSF.setText(String.valueOf(xCount));
@@ -593,7 +548,7 @@ public class GameBoardUI extends AnchorPane {
         }
     }
     
-    private void showCustomAlert() {
+    protected void showCustomAlert() {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("CUSTOM ALERT");
         dialog.setHeaderText(null);
@@ -609,7 +564,7 @@ public class GameBoardUI extends AnchorPane {
         dialog.showAndWait();
     }
 
-    private void recordMovesToFile() {
+    protected void recordMovesToFile() {
         try  {
             writer = new BufferedWriter(new FileWriter("Record History.txt",true));
             for (int i = 0 ; i<moves.size();i++) {
@@ -629,13 +584,13 @@ public class GameBoardUI extends AnchorPane {
             e.printStackTrace();
         }
     }
-     private void recordMove(Button btn) {
+     protected void recordMove(Button btn) {
         int row = gride.getRowIndex(btn);
         int col = gride.getColumnIndex(btn);
         String move = String.format("%s,%s,%s", mark, row, col);
         moves.add(move);
     }
-     private void loadMovesFromFile() {
+     protected void loadMovesFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Record History.txt"))) {
             String line;
             StringBuilder record = new StringBuilder();
