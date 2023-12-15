@@ -245,14 +245,14 @@ public class GameBoardUI extends AnchorPane {
         recBtn.setMnemonicParsing(false);
         recBtn.setPrefHeight(35.0);
         recBtn.setPrefWidth(235.0);
-        recBtn.setText("Record Game");
+        recBtn.setText("RECORD GAME");
         FlowPane.setMargin(recBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         recBtn.setFont(new Font(18.0));
 
         againBtn.setMnemonicParsing(false);
         againBtn.setPrefHeight(35.0);
         againBtn.setPrefWidth(235.0);
-        againBtn.setText("Play Again");
+        againBtn.setText("PLAY AGAIN");
         FlowPane.setMargin(againBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         againBtn.setFont(new Font(18.0));
         againBtn.setOnAction(event -> {
@@ -262,7 +262,7 @@ public class GameBoardUI extends AnchorPane {
         resetBtn.setMnemonicParsing(false);
         resetBtn.setPrefHeight(35.0);
         resetBtn.setPrefWidth(112.0);
-        resetBtn.setText("Reset");
+        resetBtn.setText("RESET");
         FlowPane.setMargin(resetBtn, new Insets(4.0, 4.0, 4.0, 8.0));
         resetBtn.setFont(new Font(18.0));
         resetBtn.setOnAction(event -> {
@@ -277,7 +277,7 @@ public class GameBoardUI extends AnchorPane {
         exitBtn.setPrefHeight(35.0);
         exitBtn.setPrefWidth(112.0);
         exitBtn.setStyle("-fx-background-color: red;");
-        exitBtn.setText("Exit");
+        exitBtn.setText("EXIT");
         exitBtn.setTextFill(javafx.scene.paint.Color.valueOf("#fdfcfc"));
         FlowPane.setMargin(exitBtn, new Insets(4.0));
         exitBtn.setFont(new Font(18.0));
@@ -373,7 +373,7 @@ public class GameBoardUI extends AnchorPane {
     grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
     if (isWinner()) {
-        winnerAlert("Computer"); 
+        winnerAlert("COMPUTER"); 
         updateScore(false);
         resetGride();
     } 
@@ -445,7 +445,7 @@ public class GameBoardUI extends AnchorPane {
     }
     private void grideFullAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Game Over");
+        alert.setTitle("GAME OVER");
         alert.setHeaderText(null);
         alert.setContentText("NOBODY WON!");
         alert.showAndWait();

@@ -17,7 +17,7 @@ public class XoGame extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = new XOgameUI();
+        Parent root = new GameBoardUI();
         String image = XOgameUI.class.getResource("bkdnd.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "'); "+
                 "-fx-background-size: 100% 100%;"+
