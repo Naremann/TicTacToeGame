@@ -39,6 +39,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import mynev.Mynav;
+import tictactoe.AlertMessage;
 import video.WinnerBase;
 
 
@@ -437,7 +438,12 @@ public class GameBoardUI extends AnchorPane {
                     Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
                     isRecord=false;
-                     Mynav.navigateTo(new WinnerBase());
+                try {
+                    AlertMessage.showWinAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    // Mynav.navigateTo(new WinnerBase());
                 winnerAlert(isX ? "Player X" : "Player O");
                 updateScore(isX);
                 resetGride();
@@ -468,10 +474,15 @@ public class GameBoardUI extends AnchorPane {
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
                 
                  if (isWinner()) {
-            Mynav.navigateTo(new WinnerBase());
-                winnerAlert("YOU");
-                updateScore(isX);
-                resetGride();
+                    try {
+                        AlertMessage.showWinAlert();
+                        // Mynav.navigateTo(new WinnerBase());
+                        winnerAlert("YOU");
+                        updateScore(isX);
+                        resetGride();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
             } else if (gameOver()) {
                 grideFullAlert();
               
