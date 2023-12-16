@@ -1,5 +1,11 @@
 package register;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Insets;
@@ -17,7 +23,9 @@ import mynev.Mynav;
 import tictactoe.AlertMessage;
 import tictactoe.TicTacToe;
 import tictactoe.db.DataAccessLayer;
-import tictactoe.dto.DTOPlayer;
+import dto.DTOPlayer;
+import java.io.DataInputStream;
+import java.io.PrintStream;
 import tictactoe.login.LoginScreenBase;
 
 public class RegisterScreenBase extends BorderPane {
@@ -33,6 +41,11 @@ public class RegisterScreenBase extends BorderPane {
     protected final ImageView pass_ic;
     protected final Button signup_btn;
     protected final Label have_account_lbl;
+
+    Socket socket = null;
+    ObjectInputStream in = null;
+    ObjectOutputStream out = null;
+ 
 
     public RegisterScreenBase() {
 
@@ -118,28 +131,51 @@ public class RegisterScreenBase extends BorderPane {
         signup_btn.setText("Create an account");
         signup_btn.setFont(new Font(18.0));
         signup_btn.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-            String userName = username_tf.getText();
-            String email = email_tf.getText();
-            String password = password_tf.getText();
-            DTOPlayer player = new DTOPlayer(userName, email, password);
-            
-            if (userName.isEmpty() || email.isEmpty() || password.isEmpty()  ) {
+            try {
+                String userName = username_tf.getText();
+                String email = email_tf.getText();
+                String password = password_tf.getText();
+                DTOPlayer player = new DTOPlayer();
 
+                socket = new Socket("127.0.0.1", 4000);
+                out = new ObjectOutputStream(socket.getOutputStream());
+                in = new ObjectInputStream(socket.getInputStream());
+
+              
+
+                String mesg;
+                try {
+                    player.setEmail(email);
+                    player.setPassword(password);
+                    player.setUserName(userName);
+                    out.writeObject(player);
+                    mesg = (String) in.readObject();
+                    System.out.println("msg : " + mesg);
+                } catch (ClassNotFoundException ex) {
+                    System.out.println("can't send data" + ex);
+                }
+
+                /* DTOPlayer player = new DTOPlayer(userName, email, password);
+                
+                if (userName.isEmpty() || email.isEmpty() || password.isEmpty()  ) {
+                
                 AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
-                        "Please fill up the form properly");
+                "Please fill up the form properly");
                 return;
-            }
-            
-            int isValid=DataAccessLayer.register(player);
-       
-            if (isValid==0) {
+                }
+                
+                int isValid=DataAccessLayer.register(player);
+                
+                if (isValid==0) {
                 AlertMessage.infoBox("Try again", null, "Failed");
-            } else {
+                } else {
                 AlertMessage.infoBox("Register Successful!", null, "Succeed");
                 navigateToLoginScreen(event);
+                }*/
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.out.println("can't connect");
             }
-            
-            
 
         });
 
@@ -167,14 +203,14 @@ public class RegisterScreenBase extends BorderPane {
         anchorPane.getChildren().add(have_account_lbl);
 
     }
-    
-    public void navigateToLoginScreen(Event event){
+
+    public void navigateToLoginScreen(Event event) {
         Parent root = new LoginScreenBase();
-            String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
-            root.setStyle("-fx-background-image: url('" + image + "'); "
-                    + "-fx-background-size: 100% 100%;"
-                    + "-fx-background-position: center center;"
-            );
-            Mynav.navigateTo(root,event );
+        String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "'); "
+                + "-fx-background-size: 100% 100%;"
+                + "-fx-background-position: center center;"
+        );
+        Mynav.navigateTo(root, event);
     }
 }
