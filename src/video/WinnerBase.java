@@ -1,6 +1,7 @@
 package video;
 
 import gameBoard.ChooseGameUI;
+import gameBoard.GameBoardUI;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -107,8 +108,10 @@ public class WinnerBase extends BorderPane {
         btnhome.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new ChooseGameUI(), event);
+                   Mynav.navigateTo(new GameBoardUI(false), event);
                     mediaPlayer.stop();
+                  
+                    
                  }
         });
     }

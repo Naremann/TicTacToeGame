@@ -74,8 +74,8 @@ public class GameBoardUI extends AnchorPane {
     private final int grideSize;
     private Button[][] grideButtons;
     private boolean isX;
-    int xCount;
-    int oCount;
+    static int xCount = 0;
+    static int oCount = 0;
 
     protected String mark;
      private final List<String> moves;
@@ -93,8 +93,7 @@ public class GameBoardUI extends AnchorPane {
         isRecord =false;
         moves = new ArrayList<>();
         rMoves = new ArrayList<>();
-        xCount=0;
-        oCount=0;
+       
         grideSize = 3;
         isX = true;
         grideButtons = new Button[grideSize][grideSize];
@@ -275,8 +274,6 @@ public class GameBoardUI extends AnchorPane {
          
         this.playWithComputer = playWithComputer;
 
-        xCount=0;
-        oCount=0;
         grideSize = 3;
         isX = true;
         grideButtons = new Button[grideSize][grideSize];
@@ -437,6 +434,7 @@ public class GameBoardUI extends AnchorPane {
                     isRecord=false;
                      Mynav.navigateTo(new WinnerBase());
                 winnerAlert(isX ? "Player X" : "Player O");
+          
                 updateScore(isX);
                 resetGride();
                 
@@ -467,6 +465,7 @@ public class GameBoardUI extends AnchorPane {
                 
                  if (isWinner()) {
             Mynav.navigateTo(new WinnerBase());
+            
                 winnerAlert("YOU");
                 updateScore(isX);
                 resetGride();
