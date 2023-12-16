@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -61,7 +62,6 @@ public abstract class GameBoardUI extends AnchorPane {
     protected final TextField OSF;
     protected final FlowPane flowPane0;
     protected final Button recBtn;
-    protected final Button againBtn;
     protected final Button resetBtn;
     protected final Button exitBtn;
     protected final GridPane gride;
@@ -70,32 +70,17 @@ public abstract class GameBoardUI extends AnchorPane {
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-    
-    //protected boolean playWithComputer ;
-    
     protected final int grideSize;
     protected Button[][] grideButtons;
     protected boolean isX;
     protected int xCount;
     protected int oCount;
-
     protected String mark;
     protected final List<String> moves;
     protected final List<String> rMoves;
-    protected BufferedWriter writer;
     protected boolean isRecord;
-   
-    
-    
-
     public GameBoardUI() {
-
-           try {
-            writer = new BufferedWriter(new FileWriter("Record History.txt",true));
-        } catch (IOException ex) {
-            Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        isRecord =true;
+        isRecord =false;
         moves = new ArrayList<>();
         rMoves = new ArrayList<>();
         xCount=0;
@@ -110,7 +95,6 @@ public abstract class GameBoardUI extends AnchorPane {
         OSF = new TextField();
         flowPane0 = new FlowPane();
         recBtn = new Button();
-        againBtn = new Button();
         resetBtn = new Button();
         exitBtn = new Button();
         gride = new GridPane();
@@ -168,59 +152,8 @@ public abstract class GameBoardUI extends AnchorPane {
         FlowPane.setMargin(recBtn, new Insets(4.0, 8.0, 4.0, 8.0));
         recBtn.setFont(new Font(18.0));
         recBtn.setOnAction(event -> {
-            recordMovesToFile();
             isRecord= true;
-            
         });
-        againBtn.setMnemonicParsing(false);
-        againBtn.setPrefHeight(35.0);
-        againBtn.setPrefWidth(235.0);
-        againBtn.setText("Play Again");
-        FlowPane.setMargin(againBtn, new Insets(4.0, 8.0, 4.0, 8.0));
-        againBtn.setFont(new Font(18.0));
-        againBtn.setOnAction((ActionEvent event) -> {
-            resetGride();
-                 loadMovesFromFile();
-            System.out.println(rMoves);
-            new Thread() {
-                public void run() {
-                    String str = rMoves.get(1) + "#";
-                    while (!str.isEmpty()) {
-                        int hashtagIndex = str.indexOf('#');
-                        if (hashtagIndex < 0) {
-                            break; // No more valid moves
-                        }
-
-                        String s = str.substring(0, hashtagIndex);
-                        if (s.length() >= 5) {
-                            int row = Character.getNumericValue(s.charAt(2));
-                            int col = Character.getNumericValue(s.charAt(4));
-
-                            if (row >= 0 && row < grideButtons.length && col >= 0 && col < grideButtons[row].length) {
-                                // To update the UI from a non-UI thread, you need to use Platform.runLater()
-                                final String buttonText = Character.toString(s.charAt(0));
-                                Platform.runLater(() -> grideButtons[row][col].setText(buttonText));
-                            }
-                        }
-
-                        System.out.println(s);
-
-                        int index = hashtagIndex + 1;
-                        if (index < str.length()) {
-                            str = str.substring(index);
-                        } else {
-                            break; // No more characters after the last '#'
-                        }
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
-                    }
-                }
-            }.start();
-        });
-
         resetBtn.setMnemonicParsing(false);
         resetBtn.setPrefHeight(35.0);
         resetBtn.setPrefWidth(112.0);
@@ -260,9 +193,10 @@ public abstract class GameBoardUI extends AnchorPane {
         flowPane.getChildren().add(OSF);
         getChildren().add(flowPane);
         flowPane0.getChildren().add(recBtn);
-        flowPane0.getChildren().add(againBtn);
         flowPane0.getChildren().add(resetBtn);
         flowPane0.getChildren().add(exitBtn);
+        
+        
         getChildren().add(flowPane0);
         getChildren().add(gride);
 
@@ -338,7 +272,6 @@ public abstract class GameBoardUI extends AnchorPane {
         for (Button[] row : grideButtons) {
             for (Button button : row) {
                 button.setText("");
-                button.setDisable(false);
             }
         }
         isX = true;
@@ -380,7 +313,9 @@ public abstract class GameBoardUI extends AnchorPane {
 
     protected void recordMovesToFile() {
         try  {
-            writer = new BufferedWriter(new FileWriter("Record History.txt",true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Record History.txt",true));
+            Date date = new Date();
+            writer.write(XN.getText()+"!"+ON.getText()+"!"+date.toString()+"!"+XSF.getText()+"!"+OSF.getText()+"!?");
             for (int i = 0 ; i<moves.size();i++) {
                 writer.write(moves.get(i));
                 writer.write("#");
@@ -393,7 +328,7 @@ public abstract class GameBoardUI extends AnchorPane {
                 
             }
             moves.clear();
-            
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

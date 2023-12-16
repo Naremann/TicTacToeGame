@@ -26,7 +26,6 @@ import tictactoe.AlertMessage;
         
         super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));  
         super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18)); 
-
     }
     @Override
     void onBtnClicked(Button btn) {
