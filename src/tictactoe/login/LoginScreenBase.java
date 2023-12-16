@@ -1,6 +1,14 @@
 package tictactoe.login;
 
+import dto.DTOPlayer;
+import gameBoard.ChooseGameUI;
 import gameBoard.GameBoardUI;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +51,16 @@ public class LoginScreenBase extends BorderPane {
     protected final TextField username_tf;
     protected final ImageView imageView1;
 
+    Socket socket = null;
+    ObjectInputStream in = null;
+    ObjectOutputStream out = null;
+
+    DataInputStream ear;
+    PrintStream mouth;
+
     public LoginScreenBase() {
+
+        System.out.println("login");
 
         anchorPane = new AnchorPane();
         login_lbl = new Label();
@@ -103,7 +120,65 @@ public class LoginScreenBase extends BorderPane {
         signin_btn.setText("Sign in");
         signin_btn.setFont(new Font(18.0));
         signin_btn.setOnAction((ActionEvent event) -> {
-            System.out.println(username_tf.getText());
+
+            try {
+                String userName = username_tf.getText();
+                String password = pass_tf.getText();
+                DTOPlayer player = new DTOPlayer();
+
+                socket = new Socket("127.0.0.1", 4000);
+
+                ear = new DataInputStream(socket.getInputStream());
+                mouth = new PrintStream(socket.getOutputStream());
+                mouth.println("login");
+                String msg = ear.readLine();
+                System.out.println("The Server says: " + msg);
+                mouth.close();
+                ear.close();
+                
+                socket = new Socket("127.0.0.1", 4000);
+
+                out = new ObjectOutputStream(socket.getOutputStream());
+                in = new ObjectInputStream(socket.getInputStream());
+
+                String mesg;
+                try {
+
+                    player.setPassword(password);
+                    player.setUserName(userName);
+                    out.writeObject(player);
+                    mesg = (String) in.readObject();
+                    System.out.println("msg : " + mesg);
+                    if(mesg.equals("success")){
+                        Mynav.navigateTo(new ChooseGameUI(),event);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    System.out.println("can't send data" + ex);
+                }
+
+                /* DTOPlayer player = new DTOPlayer(userName, email, password);
+                
+                if (userName.isEmpty() || email.isEmpty() || password.isEmpty()  ) {
+                
+                AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
+                "Please fill up the form properly");
+                return;
+                }
+                
+                int isValid=DataAccessLayer.register(player);
+                
+                if (isValid==0) {
+                AlertMessage.infoBox("Try again", null, "Failed");
+                } else {
+                AlertMessage.infoBox("Register Successful!", null, "Succeed");
+                navigateToLoginScreen(event);
+                }*/
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.out.println("can't connect");
+            }
+
+            /*System.out.println(username_tf.getText());
             System.out.println(pass_tf.getText());
             if (username_tf.getText().isEmpty()) {
 
@@ -126,7 +201,7 @@ public class LoginScreenBase extends BorderPane {
                // Mynav.navigateTo(new GameBoardUI(), event);
 
                 //AlertMessage.infoBox("Login Successful!", null, "Succeed");
-            }
+            }*/
         });
 
         imageView.setFitHeight(21.0);
