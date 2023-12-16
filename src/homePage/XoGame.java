@@ -1,6 +1,7 @@
 package homePage;
 //
-import gameBoard.GameBoardUI;
+import gameBoard.PlayWithPc;
+import gameBoard.PlayerNamesUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,8 +25,6 @@ public class XoGame extends Application {
         root.setStyle("-fx-background-image: url('" + image + "'); "+
                 "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;");
-        
-        
         
         Scene scene = new Scene(root);
         stage.setScene(scene);

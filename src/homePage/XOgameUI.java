@@ -2,6 +2,7 @@ package homePage;
 
 import gameBoard.ChooseGameUI;
 import gameBoard.GameBoardUI;
+import gameBoard.PlayerNamesUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -91,7 +92,7 @@ public  class XOgameUI extends BorderPane {
                  public void handle(ActionEvent event){  
                    Mynav.navigateTo(new ChooseGameUI(), event);
                  }
-        });
+        });   
         
         
         //************

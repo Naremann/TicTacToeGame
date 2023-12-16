@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import tictactoe.AlertMessage;
 
 /**
@@ -17,7 +19,17 @@ import tictactoe.AlertMessage;
  */
 public class LocallGame extends GameBoardUI
 {
-    LocallGame(){}
+
+    public LocallGame(String player1_Name, String player2_Name) {
+        //throw new UnsupportedOperationException("Not supported yet."); 
+        super.XN.setText("" + player1_Name);
+        super.ON.setText("" + player2_Name);
+        
+        super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));  
+        super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18)); 
+
+    }
+    public LocallGame(){}
      void onBtnClicked(Button btn)
     {
         if (btn.getText().isEmpty()) {

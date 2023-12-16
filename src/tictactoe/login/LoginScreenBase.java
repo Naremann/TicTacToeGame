@@ -26,7 +26,7 @@ import javafx.scene.media.MediaView;
 import static javax.management.Query.value;
 import mynev.Mynav;
 import register.RegisterScreenBase;
-import static sun.audio.AudioPlayer.player;
+//import static sun.audio.AudioPlayer.player;
 import tictactoe.AlertMessage;
 import tictactoe.TicTacToe;
 
