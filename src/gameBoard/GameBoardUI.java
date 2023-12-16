@@ -287,29 +287,7 @@ public abstract class GameBoardUI extends AnchorPane {
     abstract void onBtnClicked(Button btn);
    
      
-    protected void makeComputerMove() {
-    int row, col;
-    do {
-        row = (int) (Math.random() * grideSize);
-        col = (int) (Math.random() * grideSize);
-    } while (!grideButtons[row][col].getText().isEmpty());
-
-    grideButtons[row][col].setText("O");
-    grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
-
-    if (isWinner()) {
-        winnerAlert("COMPUTER"); 
-        updateScore(false);
-        resetGride();
-    } 
-    else if (gameOver()) {
-        grideFullAlert();
-        resetGride();
-    } 
-    else {
-        isX = !isX;
-    }
-} 
+    
     protected void winnerAlert(String winner)
     {
     
