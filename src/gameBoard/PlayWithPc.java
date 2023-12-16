@@ -8,6 +8,8 @@ package gameBoard;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import tictactoe.AlertMessage;
 
 /**
@@ -16,7 +18,16 @@ import tictactoe.AlertMessage;
  */
 // Play with PC "EASY MODE".
  public class PlayWithPc extends GameBoardUI {
+     
+     public PlayWithPc(){}
+     public PlayWithPc(String player1_Name) {
+        super.XN.setText("" + player1_Name);
+        super.ON.setText("Computer" );
+        
+        super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));  
+        super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18)); 
 
+    }
     @Override
     void onBtnClicked(Button btn) {
        
@@ -44,5 +55,28 @@ import tictactoe.AlertMessage;
             }
         }
     }
-  }
+    protected void makeComputerMove() {
+    int row, col;
+    do {
+        row = (int) (Math.random() * grideSize);
+        col = (int) (Math.random() * grideSize);
+    } while (!grideButtons[row][col].getText().isEmpty());
+
+    grideButtons[row][col].setText("O");
+    grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
+
+    if (isWinner()) {
+        winnerAlert("COMPUTER"); 
+        updateScore(false);
+        resetGride();
+    } 
+    else if (gameOver()) {
+        grideFullAlert();
+        resetGride();
+    } 
+    else {
+        isX = !isX;
+    }
+   } 
+ }
 
