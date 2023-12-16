@@ -2,6 +2,7 @@ package homePage;
 
 import gameBoard.ChooseGameUI;
 import gameBoard.GameBoardUI;
+import gameBoard.PlayerNamesUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -11,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import mynev.Mynav;
+import recordTable.RecordList;
+import tictactoe.gamelevels.GameLevelsBase;
 
 public  class XOgameUI extends BorderPane {
 
@@ -74,6 +77,9 @@ public  class XOgameUI extends BorderPane {
         btnHistory.setStyle("-fx-background-color: gray;");
         btnHistory.setText("SHOW RECORD");
         btnHistory.setFont(new Font("Arial Bold", 18.0));
+        btnHistory.addEventHandler(ActionEvent.ACTION, (event) -> {
+            Mynav.navigateTo(new RecordList(),event);
+        });
 
         btnwFriend.setLayoutX(47.0);
         btnwFriend.setLayoutY(128.0);
@@ -86,7 +92,7 @@ public  class XOgameUI extends BorderPane {
                  public void handle(ActionEvent event){  
                    Mynav.navigateTo(new ChooseGameUI(), event);
                  }
-        });
+        });   
         
         
         //************
@@ -100,7 +106,7 @@ public  class XOgameUI extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                   Mynav.navigateTo(new GameLevelsBase(), event);
                  }
         });
         //*******************

@@ -1,10 +1,15 @@
 package tictactoe.gamelevels;
 
+import gameBoard.GameBoardUI;
+import gameBoard.PlayWithPc;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import mynev.Mynav;
 
 public  class GameLevelsBase extends BorderPane {
 
@@ -45,6 +50,14 @@ public  class GameLevelsBase extends BorderPane {
         high_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         high_btn.setText("High Level");
         high_btn.setTextFill(javafx.scene.paint.Color.WHITE);
+        //*****************
+          low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                   Mynav.navigateTo(new PlayWithPc(), event);
+                 }
+        });
+        //*******************
         high_btn.setFont(new Font(24.0));
 
         level_lbl.setLayoutX(223.0);
@@ -62,6 +75,15 @@ public  class GameLevelsBase extends BorderPane {
         med_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         med_btn.setText("Medium Level");
         med_btn.setTextFill(javafx.scene.paint.Color.WHITE);
+         //*****************
+          med_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                  // GameBoardUI gameBoard = new GameBoardUI(true);
+                  // Mynav.navigateTo(new GameBoardUI(true), event);
+                 }
+        });
+        //*******************
         med_btn.setFont(new Font(24.0));
 
         low_btn.setLayoutX(307.0);
@@ -73,6 +95,15 @@ public  class GameLevelsBase extends BorderPane {
         low_btn.setTextFill(javafx.scene.paint.Color.WHITE);
         low_btn.setFont(new Font(24.0));
         low_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
+        //*****************
+         low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){
+                  // GameBoardUI gameBoard = new GameBoardUI(true);
+                   //Mynav.navigateTo(new GameBoardUI(true), event);
+                 }
+        });
+        //*******************
         setCenter(anchorPane);
 
         anchorPane.getChildren().add(high_btn);

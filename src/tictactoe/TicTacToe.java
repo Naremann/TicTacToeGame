@@ -16,14 +16,12 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = new GameLevelsBase();
+        Parent root = new XOgameUI();
         String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "'); "+
                  "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;"
                 );
-        
-        
         Scene scene = new Scene(root);
         
         stage.setScene(scene);

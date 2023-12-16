@@ -1,11 +1,13 @@
 package tictactoe.login;
 
+import gameBoard.GameBoardUI;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,8 +23,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import static sun.audio.AudioPlayer.player;
+import static javax.management.Query.value;
+import mynev.Mynav;
+import register.RegisterScreenBase;
+//import static sun.audio.AudioPlayer.player;
 import tictactoe.AlertMessage;
+import tictactoe.TicTacToe;
 
 public class LoginScreenBase extends BorderPane {
 
@@ -117,8 +123,9 @@ public class LoginScreenBase extends BorderPane {
             if (!flag) {
                 AlertMessage.infoBox("Please enter correct Email and Password", null, "Failed");
             } else {
- 
-               AlertMessage.infoBox("Login Successful!", null, "Succeed");
+               // Mynav.navigateTo(new GameBoardUI(), event);
+
+                //AlertMessage.infoBox("Login Successful!", null, "Succeed");
             }
         });
 
@@ -131,7 +138,7 @@ public class LoginScreenBase extends BorderPane {
 
         imageView0.setLayoutX(178.0);
         imageView0.setLayoutY(185.0);
-        imageView0.setImage(new Image(getClass().getResource("/tictactoe/images/key.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("/tictactoe/media/key.png").toExternalForm()));
 
         have_account_lbl.setLayoutX(208.0);
         have_account_lbl.setLayoutY(271.0);
@@ -140,6 +147,15 @@ public class LoginScreenBase extends BorderPane {
         have_account_lbl.setTextFill(javafx.scene.paint.Color.valueOf("#0e59ef"));
         have_account_lbl.setUnderline(true);
         have_account_lbl.setFont(new Font(18.0));
+        have_account_lbl.setOnMouseClicked((event) -> {
+            Parent root = new RegisterScreenBase();
+            String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
+            root.setStyle("-fx-background-image: url('" + image + "'); "
+                    + "-fx-background-size: 100% 100%;"
+                    + "-fx-background-position: center center;"
+            );
+            Mynav.navigateTo(root, event);
+        });
 
         username_tf.setLayoutX(170.0);
         username_tf.setLayoutY(130.0);
@@ -151,7 +167,7 @@ public class LoginScreenBase extends BorderPane {
 
         imageView1.setLayoutX(178.0);
         imageView1.setLayoutY(140.0);
-        imageView1.setImage(new Image(getClass().getResource("/tictactoe/images/user.png").toExternalForm()));
+        imageView1.setImage(new Image(getClass().getResource("/tictactoe/media/user.png").toExternalForm()));
         setCenter(anchorPane);
 
         anchorPane.getChildren().add(login_lbl);

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package gameBoard;
+import gameBoard.PlayerNamesUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,7 +15,9 @@ import javafx.scene.layout.FlowPane;
 import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.text.Font;
 import mynev.Mynav;
+import register.RegisterScreenBase;
 import tictactoe.login.LoginScreenBase;
+
 /**
  *
  * @author HimaMarey
@@ -69,7 +72,7 @@ public class ChooseGameUI extends AnchorPane {
         locallyBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new GameBoardUI(), event);
+                   Mynav.navigateTo(new PlayerNamesUI(), event);
                  }
         });
         
@@ -86,25 +89,28 @@ public class ChooseGameUI extends AnchorPane {
         label0.setPrefWidth(253.0);
         label0.setText("Online Game");
         label0.setFont(new Font("System Bold", 18.0));
-
+   
         onlineBtn.setMnemonicParsing(false);
         onlineBtn.setPrefHeight(174.0);
         onlineBtn.setPrefWidth(223.0);
         FlowPane.setMargin(onlineBtn, new Insets(12.0));
-
+         
         String img = ChooseGameUI.class.getResource("online.png").toExternalForm();
         onlineBtn.setStyle("-fx-background-image: url('" + img + "'); "+
                  "-fx-background-size: 100% 100%;"+
                  "-fx-background-position: center center;"
                 );
         //*********************
-        onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+         onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
                    Mynav.navigateTo(new LoginScreenBase(), event);
+                   
                  }
         });
         //////////************
+               
+       
         flowPane.getChildren().add(label);
         flowPane.getChildren().add(locallyBtn);
         getChildren().add(flowPane);
@@ -114,4 +120,3 @@ public class ChooseGameUI extends AnchorPane {
 
     }
 }
-
