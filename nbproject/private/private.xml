@@ -5,8 +5,11 @@
         <group>
             <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/register/RegisterScreenBase.java</file>
             <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/login/LoginScreenBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/db/DataAccessLayer.java</file>
             <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/dto/DTOPlayer.java</file>
             <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/GameBoardUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/ChooseGameUI.java</file>
         </group>
     </open-files>
 </project-private>

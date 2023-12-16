@@ -45,9 +45,15 @@ public class RegisterScreenBase extends BorderPane {
     Socket socket = null;
     ObjectInputStream in = null;
     ObjectOutputStream out = null;
+    
+    DataInputStream ear;
+    PrintStream mouth;
+    
  
 
     public RegisterScreenBase() {
+        
+         System.out.println("register");
 
         anchorPane = new AnchorPane();
         regisster_lbl = new Label();
@@ -136,6 +142,17 @@ public class RegisterScreenBase extends BorderPane {
                 String email = email_tf.getText();
                 String password = password_tf.getText();
                 DTOPlayer player = new DTOPlayer();
+                
+                 socket = new Socket("127.0.0.1", 4000);
+
+                ear = new DataInputStream(socket.getInputStream());
+                mouth = new PrintStream(socket.getOutputStream());
+                mouth.println("register");
+                String msg = ear.readLine();
+                System.out.println("The Server says: " + msg);
+                mouth.close();
+                ear.close();
+                
 
                 socket = new Socket("127.0.0.1", 4000);
                 out = new ObjectOutputStream(socket.getOutputStream());
