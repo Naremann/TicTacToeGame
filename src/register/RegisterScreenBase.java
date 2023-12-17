@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Insets;
@@ -22,7 +20,6 @@ import javafx.scene.text.Font;
 import mynev.Mynav;
 import tictactoe.AlertMessage;
 import tictactoe.TicTacToe;
-import tictactoe.db.DataAccessLayer;
 import dto.DTOPlayer;
 import java.io.DataInputStream;
 import java.io.PrintStream;
@@ -45,15 +42,13 @@ public class RegisterScreenBase extends BorderPane {
     Socket socket = null;
     ObjectInputStream in = null;
     ObjectOutputStream out = null;
-    
+
     DataInputStream ear;
     PrintStream mouth;
-    
- 
 
     public RegisterScreenBase() {
-        
-         System.out.println("register");
+
+        System.out.println("register");
 
         anchorPane = new AnchorPane();
         regisster_lbl = new Label();
@@ -141,9 +136,12 @@ public class RegisterScreenBase extends BorderPane {
                 String userName = username_tf.getText();
                 String email = email_tf.getText();
                 String password = password_tf.getText();
+
+                validateData(userName, email, password);
+
                 DTOPlayer player = new DTOPlayer();
-                
-                 socket = new Socket("127.0.0.1", 4000);
+
+                socket = new Socket("127.0.0.1", 4000);
 
                 ear = new DataInputStream(socket.getInputStream());
                 mouth = new PrintStream(socket.getOutputStream());
@@ -152,13 +150,10 @@ public class RegisterScreenBase extends BorderPane {
                 System.out.println("The Server says: " + msg);
                 mouth.close();
                 ear.close();
-                
 
                 socket = new Socket("127.0.0.1", 4000);
                 out = new ObjectOutputStream(socket.getOutputStream());
                 in = new ObjectInputStream(socket.getInputStream());
-
-              
 
                 String mesg;
                 try {
@@ -168,28 +163,21 @@ public class RegisterScreenBase extends BorderPane {
                     out.writeObject(player);
                     mesg = (String) in.readObject();
                     System.out.println("msg : " + mesg);
+                    if (mesg.equals("success")) {
+                        AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(),"Success",
+                            "Successfully registered");
+                        Mynav.navigateTo(new LoginScreenBase(), event);
+                    }
                 } catch (ClassNotFoundException ex) {
+                    AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "can't send data!",
+                            ex.getLocalizedMessage());
                     System.out.println("can't send data" + ex);
                 }
 
-                /* DTOPlayer player = new DTOPlayer(userName, email, password);
-                
-                if (userName.isEmpty() || email.isEmpty() || password.isEmpty()  ) {
-                
-                AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
-                "Please fill up the form properly");
-                return;
-                }
-                
-                int isValid=DataAccessLayer.register(player);
-                
-                if (isValid==0) {
-                AlertMessage.infoBox("Try again", null, "Failed");
-                } else {
-                AlertMessage.infoBox("Register Successful!", null, "Succeed");
-                navigateToLoginScreen(event);
-                }*/
+            
             } catch (IOException ex) {
+                AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "can't connect",
+                            ex.getLocalizedMessage());
                 ex.printStackTrace();
                 System.out.println("can't connect");
             }
@@ -229,5 +217,15 @@ public class RegisterScreenBase extends BorderPane {
                 + "-fx-background-position: center center;"
         );
         Mynav.navigateTo(root, event);
+    }
+
+    private void validateData(String userName, String email, String password) {
+        if (userName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+
+            AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
+                    "Please fill up the form properly");
+            return;
+        }
+
     }
 }
