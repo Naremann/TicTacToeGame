@@ -3,21 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/D:/java%20project/TicTacToeGame/src/gameBoard/ChooseGameUI.java</file>
-            <file>file:/D:/java%20project/TicTacToeGame/src/homePage/XoGame.java</file>
-            <file>file:/D:/java%20project/TicTacToeGame/src/video/WinnerBase.java</file>
-            <file>file:/D:/java%20project/TicTacToeGame/src/gameBoard/GameBoardUI.java</file>
-            <file>file:/D:/java%20project/TicTacToeGame/src/homePage/XOgameUI.java</file>
-
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/PlayWithPc.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/mynev/Mynav.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/LocallGame.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/tictactoe/login/LoginScreenBase.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/ChooseGameUI.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/tictactoe/login/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/GameBoardUI.java</file>
-
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/register/RegisterScreenBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/login/LoginScreenBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/db/DataAccessLayer.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/dto/DTOPlayer.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/GameBoardUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/ChooseGameUI.java</file>
         </group>
     </open-files>
 </project-private>
