@@ -38,6 +38,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import mynev.Mynav;
@@ -339,7 +341,7 @@ public abstract class GameBoardUI extends AnchorPane {
         String move = String.format("%s,%s,%s", mark, row, col);
         moves.add(move);
     }
-     protected void loadMovesFromFile() {
+protected void loadMovesFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Record History.txt"))) {
             String line;
             StringBuilder record = new StringBuilder();
@@ -357,5 +359,6 @@ public abstract class GameBoardUI extends AnchorPane {
             e.printStackTrace();
         }
     }
+     
 }
 
