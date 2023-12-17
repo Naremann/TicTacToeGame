@@ -3,17 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/register/RegisterScreenBase.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/LocallGame.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/login/LoginScreenBase.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/db/DataAccessLayer.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/PlayerNamesUI.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/AlertMessage.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/dto/DTOPlayer.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/recordTable/RecordList.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/GameBoardUI.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/ChooseGameUI.java</file>
+
         </group>
     </open-files>
 </project-private>

@@ -5,6 +5,7 @@
  */
 package mynev;
 
+import gameBoard.DisplayRecord;
 import java.awt.event.MouseEvent;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  *
@@ -56,6 +58,10 @@ public class Mynav {
         stage.show();
         stage.setResizable(false);
 }
+
+    public static void navigateTo(DisplayRecord displayRecord, Window window) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }
