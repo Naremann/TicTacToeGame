@@ -3,16 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.dto;
+package dto;
+
+import java.io.Serializable;
 
 /**
  *
  * @author user
  */
-public class DTOPlayer {
+public class DTOPlayer implements Serializable{
     private String userName;
     private String email;
     private String password;
+
+    public DTOPlayer() {
+    }
+    
+    
 
     public DTOPlayer(String userName, String email, String password) {
         this.userName = userName;

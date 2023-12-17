@@ -85,8 +85,7 @@ public abstract class GameBoardUI extends AnchorPane {
         isRecord =false;
         moves = new ArrayList<>();
         rMoves = new ArrayList<>();
-        xCount=0;
-        oCount=0;
+       
         grideSize = 3;
         isX = true;
         grideButtons = new Button[grideSize][grideSize];
@@ -204,7 +203,7 @@ public abstract class GameBoardUI extends AnchorPane {
 
     }
    
-    
+
     protected void drawBtn()
     {
         for (int row = 0; row < grideSize; row++) {
@@ -220,6 +219,7 @@ public abstract class GameBoardUI extends AnchorPane {
             }
         }
     }
+
     abstract void onBtnClicked(Button btn);
    
      
@@ -317,7 +317,7 @@ public abstract class GameBoardUI extends AnchorPane {
         try  {
             BufferedWriter writer = new BufferedWriter(new FileWriter("Record History.txt",true));
             Date date = new Date();
-            writer.write(XN.getText()+"!"+ON.getText()+"!"+date.toString()+"!"+XSF.getText()+"!"+OSF.getText()+"!?");
+            writer.write(XN.getText()+"!"+ON.getText()+"!"+date.toString()+"!"+XSF.getText()+"!"+OSF.getText()+"!?#");
             for (int i = 0 ; i<moves.size();i++) {
                 writer.write(moves.get(i));
                 writer.write("#");
@@ -327,7 +327,7 @@ public abstract class GameBoardUI extends AnchorPane {
                     writer.write("&");
                     writer.newLine();
                 }
-                
+         
             }
             moves.clear();
             writer.flush();
@@ -351,6 +351,7 @@ protected void loadMovesFromFile() {
                    
                     rMoves.add(record.toString());
                     record.setLength(0); // Clear StringBuilder for the next record
+                    
                 } else {
                     record.append(line).append("\n");
                 }

@@ -1,6 +1,14 @@
 package tictactoe.login;
 
+import dto.DTOPlayer;
+import gameBoard.ChooseGameUI;
 import gameBoard.GameBoardUI;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +51,16 @@ public class LoginScreenBase extends BorderPane {
     protected final TextField username_tf;
     protected final ImageView imageView1;
 
+    Socket socket = null;
+    ObjectInputStream in = null;
+    ObjectOutputStream out = null;
+
+    DataInputStream ear;
+    PrintStream mouth;
+
     public LoginScreenBase() {
+
+        System.out.println("login");
 
         anchorPane = new AnchorPane();
         login_lbl = new Label();
@@ -103,30 +120,54 @@ public class LoginScreenBase extends BorderPane {
         signin_btn.setText("Sign in");
         signin_btn.setFont(new Font(18.0));
         signin_btn.setOnAction((ActionEvent event) -> {
-            System.out.println(username_tf.getText());
-            System.out.println(pass_tf.getText());
-            if (username_tf.getText().isEmpty()) {
 
-                AlertMessage.showAlert(AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
-                        "Please enter your username");
-                return;
-            }
-            if (pass_tf.getText().isEmpty()) {
-                AlertMessage.showAlert(AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
-                        "Please enter a password");
+            try {
+                String userName = username_tf.getText();
+                String password = pass_tf.getText();
 
-                return;
-            }
-            String username = username_tf.getText();
-            String password = pass_tf.getText();
-            boolean flag = DataAccessLayer.validate(username, password);
-            if (!flag) {
-                AlertMessage.infoBox("Please enter correct Email and Password", null, "Failed");
-            } else {
-               // Mynav.navigateTo(new GameBoardUI(), event);
+                validateData(userName, password);
 
-                //AlertMessage.infoBox("Login Successful!", null, "Succeed");
+                DTOPlayer player = new DTOPlayer();
+
+                socket = new Socket("127.0.0.1", 4000);
+
+                ear = new DataInputStream(socket.getInputStream());
+                mouth = new PrintStream(socket.getOutputStream());
+                mouth.println("login");
+                String msg = ear.readLine();
+                System.out.println("The Server says: " + msg);
+                mouth.close();
+                ear.close();
+
+                socket = new Socket("127.0.0.1", 4000);
+
+                out = new ObjectOutputStream(socket.getOutputStream());
+                in = new ObjectInputStream(socket.getInputStream());
+
+                String mesg;
+                try {
+
+                    player.setPassword(password);
+                    player.setUserName(userName);
+                    out.writeObject(player);
+                    mesg = (String) in.readObject();
+                    System.out.println("msg : " + mesg);
+                    if (mesg.equals("success")) {
+                        Mynav.navigateTo(new ChooseGameUI(), event);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "can't send data",
+                        ex.getLocalizedMessage());
+                    System.out.println("can't send data" + ex);
+                }
+
+            } catch (IOException ex) {
+                AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "can't connect!",
+                        ex.getLocalizedMessage());
+                ex.printStackTrace();
+                System.out.println("can't connect");
             }
+
         });
 
         imageView.setFitHeight(21.0);
@@ -179,6 +220,16 @@ public class LoginScreenBase extends BorderPane {
         anchorPane.getChildren().add(have_account_lbl);
         anchorPane.getChildren().add(username_tf);
         anchorPane.getChildren().add(imageView1);
+
+    }
+
+    private void validateData(String userName, String password) {
+        if (userName.isEmpty() || password.isEmpty()) {
+
+            AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
+                    "Please fill up the form properly");
+            return;
+        }
 
     }
 }
