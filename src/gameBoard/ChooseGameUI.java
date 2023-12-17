@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package gameBoard;
+import gameBoard.PlayerNamesUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -71,7 +72,7 @@ public class ChooseGameUI extends AnchorPane {
         locallyBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new GameBoardUI(), event);
+                   Mynav.navigateTo(new PlayerNamesUI(), event);
                  }
         });
         
@@ -104,10 +105,12 @@ public class ChooseGameUI extends AnchorPane {
             @Override
                  public void handle(ActionEvent event){  
                    Mynav.navigateTo(new LoginScreenBase(), event);
+                   
                  }
         });
         //////////************
-        
+               
+       
         flowPane.getChildren().add(label);
         flowPane.getChildren().add(locallyBtn);
         getChildren().add(flowPane);
@@ -117,4 +120,3 @@ public class ChooseGameUI extends AnchorPane {
 
     }
 }
-

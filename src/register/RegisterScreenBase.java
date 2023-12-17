@@ -1,6 +1,7 @@
 package register;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -135,6 +136,7 @@ public class RegisterScreenBase extends BorderPane {
                 AlertMessage.infoBox("Try again", null, "Failed");
             } else {
                 AlertMessage.infoBox("Register Successful!", null, "Succeed");
+                navigateToLoginScreen(event);
             }
             
             
@@ -149,13 +151,7 @@ public class RegisterScreenBase extends BorderPane {
         have_account_lbl.setUnderline(true);
         have_account_lbl.setFont(new Font(18.0));
         have_account_lbl.setOnMouseClicked((event) -> {
-            Parent root = new LoginScreenBase();
-            String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
-            root.setStyle("-fx-background-image: url('" + image + "'); "
-                    + "-fx-background-size: 100% 100%;"
-                    + "-fx-background-position: center center;"
-            );
-            Mynav.navigateTo(root, event);
+            navigateToLoginScreen(event);
         });
         setCenter(anchorPane);
 
@@ -170,5 +166,15 @@ public class RegisterScreenBase extends BorderPane {
         anchorPane.getChildren().add(signup_btn);
         anchorPane.getChildren().add(have_account_lbl);
 
+    }
+    
+    public void navigateToLoginScreen(Event event){
+        Parent root = new LoginScreenBase();
+            String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
+            root.setStyle("-fx-background-image: url('" + image + "'); "
+                    + "-fx-background-size: 100% 100%;"
+                    + "-fx-background-position: center center;"
+            );
+            Mynav.navigateTo(root,event );
     }
 }

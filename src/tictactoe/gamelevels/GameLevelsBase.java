@@ -1,6 +1,7 @@
 package tictactoe.gamelevels;
 
 import gameBoard.GameBoardUI;
+import gameBoard.PlayWithPc;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -50,11 +51,10 @@ public  class GameLevelsBase extends BorderPane {
         high_btn.setText("High Level");
         high_btn.setTextFill(javafx.scene.paint.Color.WHITE);
         //*****************
-          high_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+          low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){
-                  // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                   Mynav.navigateTo(new PlayWithPc(), event);
                  }
         });
         //*******************
@@ -80,7 +80,7 @@ public  class GameLevelsBase extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                  // Mynav.navigateTo(new GameBoardUI(true), event);
                  }
         });
         //*******************
@@ -100,7 +100,7 @@ public  class GameLevelsBase extends BorderPane {
             @Override
                  public void handle(ActionEvent event){
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new GameBoardUI(true), event);
+                   //Mynav.navigateTo(new GameBoardUI(true), event);
                  }
         });
         //*******************

@@ -1,5 +1,6 @@
 package tictactoe.login;
 
+import gameBoard.GameBoardUI;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ import javafx.scene.media.MediaView;
 import static javax.management.Query.value;
 import mynev.Mynav;
 import register.RegisterScreenBase;
-import static sun.audio.AudioPlayer.player;
+//import static sun.audio.AudioPlayer.player;
 import tictactoe.AlertMessage;
 import tictactoe.TicTacToe;
 
@@ -122,8 +123,9 @@ public class LoginScreenBase extends BorderPane {
             if (!flag) {
                 AlertMessage.infoBox("Please enter correct Email and Password", null, "Failed");
             } else {
+               // Mynav.navigateTo(new GameBoardUI(), event);
 
-                AlertMessage.infoBox("Login Successful!", null, "Succeed");
+                //AlertMessage.infoBox("Login Successful!", null, "Succeed");
             }
         });
 
