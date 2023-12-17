@@ -124,6 +124,9 @@ public class LoginScreenBase extends BorderPane {
             try {
                 String userName = username_tf.getText();
                 String password = pass_tf.getText();
+
+                validateData(userName, password);
+
                 DTOPlayer player = new DTOPlayer();
 
                 socket = new Socket("127.0.0.1", 4000);
@@ -135,7 +138,7 @@ public class LoginScreenBase extends BorderPane {
                 System.out.println("The Server says: " + msg);
                 mouth.close();
                 ear.close();
-                
+
                 socket = new Socket("127.0.0.1", 4000);
 
                 out = new ObjectOutputStream(socket.getOutputStream());
@@ -149,59 +152,22 @@ public class LoginScreenBase extends BorderPane {
                     out.writeObject(player);
                     mesg = (String) in.readObject();
                     System.out.println("msg : " + mesg);
-                    if(mesg.equals("success")){
-                        Mynav.navigateTo(new ChooseGameUI(),event);
+                    if (mesg.equals("success")) {
+                        Mynav.navigateTo(new ChooseGameUI(), event);
                     }
                 } catch (ClassNotFoundException ex) {
+                    AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "can't send data",
+                        ex.getLocalizedMessage());
                     System.out.println("can't send data" + ex);
                 }
 
-                /* DTOPlayer player = new DTOPlayer(userName, email, password);
-                
-                if (userName.isEmpty() || email.isEmpty() || password.isEmpty()  ) {
-                
-                AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
-                "Please fill up the form properly");
-                return;
-                }
-                
-                int isValid=DataAccessLayer.register(player);
-                
-                if (isValid==0) {
-                AlertMessage.infoBox("Try again", null, "Failed");
-                } else {
-                AlertMessage.infoBox("Register Successful!", null, "Succeed");
-                navigateToLoginScreen(event);
-                }*/
             } catch (IOException ex) {
+                AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "can't connect!",
+                        ex.getLocalizedMessage());
                 ex.printStackTrace();
                 System.out.println("can't connect");
             }
 
-            /*System.out.println(username_tf.getText());
-            System.out.println(pass_tf.getText());
-            if (username_tf.getText().isEmpty()) {
-
-                AlertMessage.showAlert(AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
-                        "Please enter your username");
-                return;
-            }
-            if (pass_tf.getText().isEmpty()) {
-                AlertMessage.showAlert(AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
-                        "Please enter a password");
-
-                return;
-            }
-            String username = username_tf.getText();
-            String password = pass_tf.getText();
-            boolean flag = DataAccessLayer.validate(username, password);
-            if (!flag) {
-                AlertMessage.infoBox("Please enter correct Email and Password", null, "Failed");
-            } else {
-               // Mynav.navigateTo(new GameBoardUI(), event);
-
-                //AlertMessage.infoBox("Login Successful!", null, "Succeed");
-            }*/
         });
 
         imageView.setFitHeight(21.0);
@@ -254,6 +220,16 @@ public class LoginScreenBase extends BorderPane {
         anchorPane.getChildren().add(have_account_lbl);
         anchorPane.getChildren().add(username_tf);
         anchorPane.getChildren().add(imageView1);
+
+    }
+
+    private void validateData(String userName, String password) {
+        if (userName.isEmpty() || password.isEmpty()) {
+
+            AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "Form Error!",
+                    "Please fill up the form properly");
+            return;
+        }
 
     }
 }
