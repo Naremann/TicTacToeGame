@@ -2,6 +2,7 @@
 package tictactoe;
 
 import gameBoard.ChooseGameUI;
+import gameBoard.DisplayRecord;
 import gameBoard.GameBoardUI;
 import homePage.XOgameUI;
 import javafx.application.Application;
@@ -18,7 +19,9 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+
         Parent root = new ChooseGameUI();
+
         String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "'); "+
                  "-fx-background-size: 100% 100%;"+
