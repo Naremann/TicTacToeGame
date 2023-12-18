@@ -104,7 +104,7 @@ public class ChooseGameUI extends AnchorPane {
          onlineBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new LoginScreenBase(), event);
+                   Mynav.navigateTo(new TackIP(), event);
                    
                  }
         });
