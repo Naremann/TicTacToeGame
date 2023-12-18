@@ -166,7 +166,7 @@ public class RegisterScreenBase extends BorderPane {
                     if (mesg.equals("success")) {
                         AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(),"Success",
                             "Successfully registered");
-                        Mynav.navigateTo(new LoginScreenBase(), event);
+                        Mynav.navigateTo(new LoginScreenBase(""), event);
                     }
                 } catch (ClassNotFoundException ex) {
                     AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "can't send data!",
@@ -210,7 +210,7 @@ public class RegisterScreenBase extends BorderPane {
     }
 
     public void navigateToLoginScreen(Event event) {
-        Parent root = new LoginScreenBase();
+        Parent root = new LoginScreenBase("");
         String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "'); "
                 + "-fx-background-size: 100% 100%;"
