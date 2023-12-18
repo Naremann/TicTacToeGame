@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import recordTable.RecordList;
 import register.RegisterScreenBase;
 import tictactoe.gamelevels.GameLevelsBase;
 import tictactoe.login.LoginScreenBase;
