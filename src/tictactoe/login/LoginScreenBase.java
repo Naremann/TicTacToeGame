@@ -1,5 +1,8 @@
 package tictactoe.login;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dto.DTOPlayer;
 import gameBoard.ChooseGameUI;
 import gameBoard.GameBoardUI;
@@ -33,7 +36,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import static javax.management.Query.value;
 import mynev.Mynav;
+import network.NetWork;
 import register.RegisterScreenBase;
+import remotePlay.Invite;
 //import static sun.audio.AudioPlayer.player;
 import tictactoe.AlertMessage;
 import tictactoe.TicTacToe;
@@ -51,17 +56,15 @@ public class LoginScreenBase extends BorderPane {
     protected final TextField username_tf;
     protected final ImageView imageView1;
 
-    Socket socket = null;
-    ObjectInputStream in = null;
-    ObjectOutputStream out = null;
+    NetWork network;
 
-    DataInputStream ear;
-    PrintStream mouth;
-
-    public LoginScreenBase() {
-
-        System.out.println("login");
-
+    public LoginScreenBase(String IP) {
+        
+        try {
+            network =new NetWork(IP);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginScreenBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
         anchorPane = new AnchorPane();
         login_lbl = new Label();
         label = new Label();
@@ -120,54 +123,25 @@ public class LoginScreenBase extends BorderPane {
         signin_btn.setText("Sign in");
         signin_btn.setFont(new Font(18.0));
         signin_btn.setOnAction((ActionEvent event) -> {
-
-            try {
-                String userName = username_tf.getText();
-                String password = pass_tf.getText();
-
-                validateData(userName, password);
-
-                DTOPlayer player = new DTOPlayer();
-
-                socket = new Socket("127.0.0.1", 4000);
-
-                ear = new DataInputStream(socket.getInputStream());
-                mouth = new PrintStream(socket.getOutputStream());
-                mouth.println("login");
-                String msg = ear.readLine();
-                System.out.println("The Server says: " + msg);
-                mouth.close();
-                ear.close();
-
-                socket = new Socket("127.0.0.1", 4000);
-
-                out = new ObjectOutputStream(socket.getOutputStream());
-                in = new ObjectInputStream(socket.getInputStream());
-
-                String mesg;
-                try {
-
-                    player.setPassword(password);
-                    player.setUserName(userName);
-                    out.writeObject(player);
-                    mesg = (String) in.readObject();
-                    System.out.println("msg : " + mesg);
-                    if (mesg.equals("success")) {
-                        Mynav.navigateTo(new ChooseGameUI(), event);
-                    }
-                } catch (ClassNotFoundException ex) {
-                    AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "can't send data",
-                        ex.getLocalizedMessage());
-                    System.out.println("can't send data" + ex);
-                }
-
-            } catch (IOException ex) {
-                AlertMessage.showAlert(Alert.AlertType.ERROR, signin_btn.getScene().getWindow(), "can't connect!",
-                        ex.getLocalizedMessage());
-                ex.printStackTrace();
-                System.out.println("can't connect");
+            Gson gson = new GsonBuilder().create();
+            String userName = username_tf.getText();
+            String password = pass_tf.getText();
+            validateData(userName, password);
+            DTOPlayer player = new DTOPlayer(userName,password);
+            JsonObject jObject = new JsonObject();
+            jObject.addProperty("username", player.getUserName());
+            jObject.addProperty("password", player.getPassword());
+            String jString = gson.toJson(jObject);
+            network.sendMessage(jString);
+            String ms =network.reciveMessage();
+            if(ms.equals("user found"))
+            {
+                Mynav.navigateTo(new Invite(), event);
+            }else
+            {
+                AlertMessage.infoBox("Not Found Clenit Please chack your Data or Sign Up", "Not Found Clenit", "Not Found");
+                System.out.println("Not Found Clenit ");
             }
-
         });
 
         imageView.setFitHeight(21.0);
