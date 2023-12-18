@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import recordTable.RecordList;
 import register.RegisterScreenBase;
 import tictactoe.gamelevels.GameLevelsBase;
 import tictactoe.login.LoginScreenBase;
@@ -20,7 +21,7 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = new ChooseGameUI();
+        Parent root = new XOgameUI();
 
         String image = TicTacToe.class.getResource("app.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "'); "+

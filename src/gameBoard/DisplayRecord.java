@@ -15,23 +15,23 @@ import javafx.scene.control.Button;
  */
 public class DisplayRecord extends GameBoardUI{
 
-    public DisplayRecord(String record)
+    public DisplayRecord(int index)
     {
-        playRecord();
+        playRecord(index);
         recBtn.setText("Play Again");
         recBtn.setOnAction((ActionEvent event) -> {
-           playRecord();
+           playRecord(index);
         });
     }
     
-    void playRecord()
+    void playRecord(int index)
     {
             resetGride();
             loadMovesFromFile();
             new Thread() {
                 public void run() {
                     //String d=rMoves.get(0) + "?";
-                    String str = rMoves.get(0) + "#";
+                    String str = rMoves.get(index) + "#";
                      
                     while (!str.isEmpty()) {
                         // int x = str.indexOf('?')+1;
