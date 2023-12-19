@@ -160,16 +160,14 @@ public class RecordList extends BorderPane {
                         }
                         String rest = remainingPart.toString();
                         Mynav.navigateTo(new DisplayRecord(0), event);
-                        System.out.println("what i am sending: " + selectedRecord);
+                        //System.out.println("what i am sending: " + selectedRecord);
                         
                     }
                 }
             }
         });
 
-        // listView.setCellFactory(param -> {
-        //return cell;
-        // });
+       
         listView.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -195,7 +193,7 @@ public class RecordList extends BorderPane {
         
     }
 
-// ...
+
     private void loadMovesFromFile(ObservableList<String> movesList) {
         try (BufferedReader reader = new BufferedReader(new FileReader("Record History.txt"))) {
             String line;
@@ -208,7 +206,7 @@ public class RecordList extends BorderPane {
                     if (recordParts.length == 6) {
                         String formattedRecord = String.format("%-30s%-30s%-30s", "\t" + recordParts[0], recordParts[2], "\t\t" + recordParts[1]);
 
-// Use Platform.runLater to update UI components on the JavaFX Application Thread
+
                         Platform.runLater(() -> {
                             movesList.add(formattedRecord);
                             System.out.println("Added to movesList: " + formattedRecord);
@@ -244,9 +242,7 @@ public class RecordList extends BorderPane {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 System.out.println(listView.getSelectionModel().getSelectedIndex());
                 Mynav.navigateTo(new DisplayRecord(listView.getSelectionModel().getSelectedIndex()));
-// Your action here
-                //Mynav.navigateTo(new DisplayRecord(rest), event);
-                // System.out.println("Selected item: " + newValue);
+
             }
         });
     }

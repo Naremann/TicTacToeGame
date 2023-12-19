@@ -33,12 +33,18 @@ import tictactoe.AlertMessage;
         if (btn.getText().isEmpty()) {
             if (super.isX) {
                 btn.setText("X");
+               mark = isX ? "X" : "O";
+               System.out.println(isRecord);
+               if(isRecord)
+               recordMove(btn);
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
                 if (isWinner()) {
+                    if(isRecord)
+                        recordMovesToFile();
+                    isRecord=false;
                     try {
                         AlertMessage.showWinAlert();
-                        // Mynav.navigateTo(new WinnerBase());
                         winnerAlert("YOU");
                         updateScore(isX);
                         super.resetGride();
@@ -46,6 +52,9 @@ import tictactoe.AlertMessage;
                         Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else if (super.gameOver()) {
+                    if(isRecord)
+                        recordMovesToFile();
+                    isRecord=false;
                     super.grideFullAlert();
                 } else {
                     super.isX = !super.isX;

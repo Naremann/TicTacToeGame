@@ -35,7 +35,7 @@ public class LocallGame extends GameBoardUI
 
             mark = isX ? "X" : "O";
             System.out.println(isRecord);
-           if(isRecord)
+            if(isRecord)
             recordMove(btn);
            btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
            if (isWinner()) 
