@@ -169,6 +169,11 @@ public  class PlayerNamesUI extends BorderPane {
                 Mynav.navigateTo(new LocallGame(player1_Name,player2_Name), event);
             }
         });
+       
+        btnBack.setOnAction(event -> {  
+                Mynav.navigateTo(new XOgameUI(), event);
+        });
+        
         
         BorderPane.setMargin(gridPane0, new Insets(80.0, 75.0, 50.0, 75.0));
         gridPane0.setPadding(new Insets(0.0, 0.0, 25.0, 0.0));
