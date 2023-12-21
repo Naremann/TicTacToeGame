@@ -31,7 +31,7 @@ public class TackIP extends BorderPane{
     protected RowConstraints rowConstraints3;
     protected Label lbPlayer1;
     public TextField IPField;
-    private String IPAddress ;
+    public static String IPAddress ;
  
 
     public TackIP() {
