@@ -121,29 +121,13 @@ public class LoginScreenBase extends BorderPane {
             validateData(userName, password);
             DTOPlayer player = new DTOPlayer(userName,password);
             JsonObject jObject = new JsonObject();
+            jObject.addProperty("key", "login");
             jObject.addProperty("username", player.getUserName());
             jObject.addProperty("password", player.getPassword());
             String jString = gson.toJson(jObject);
-            try {
-            network =new NetWork(IP);
-            network.sendMessage(jString);
-            String ms =network.reciveMessage();
-            if(ms.equals("user found"))
-            {
-                Mynav.navigateTo(new Invite(), event);
-            }else
-            {
-                AlertMessage.infoBox("Not Found Clenit Please chack your Data or Sign Up", "Not Found Clenit", "Not Found");
-                pass_tf.clear();
-                username_tf.clear();
-                System.out.println("Not Found Clenit ");
-            }
-        } catch (IOException ex) {
-             alert("Server is down now");
-                username_tf.clear();
-                pass_tf.clear();
-        }
-            
+           network =new NetWork(IP);
+           network.sendMessage(jString);
+           network.reciveMessage();
         });
 
         imageView.setFitHeight(21.0);
