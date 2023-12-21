@@ -9,9 +9,6 @@ package network;
  *
  * @author HimaMarey
  */
-
-
-
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
@@ -32,7 +29,8 @@ import javax.json.JsonReader;
 import mynev.Mynav;
 import register.RegisterScreenBase;
 import remotePlay.Invite;
-
+import tictactoe.AlertMessage;
+import tictactoe.login.LoginScreenBase;
 
 public class NetWork {
 
@@ -64,12 +62,13 @@ public class NetWork {
         new Thread() {
             @Override
             public void run() {
-                printStream.println(message);       
+                printStream.println(message);
                 System.out.println(message);
 
             }
         }.start();
     }
+
     public void reciveMessage() {
         new Thread() {
             @Override
@@ -87,23 +86,18 @@ public class NetWork {
                         JsonReader jsonReader = (JsonReader) Json.createReader(new StringReader(message));
                         JsonObject object = jsonReader.readObject();
                         JsonParser jsonParser = new JsonParser();
-                        switch (object.getString("key"))
-                        {
-                            case "login":
-                            {
-                                if (object.getString("msg").equals("login successfully"))
-                                {
+                        switch (object.getString("key")) {
+                            case "login": {
+                                if (object.getString("msg").equals("login successfully")) {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                           showAlert(object.getString("msg"));
-                                           Mynav.navigateTo(new Invite());
+                                            showAlert(object.getString("msg"));
+                                            Mynav.navigateTo(new Invite());
                                         }
                                     });
                                 } else if (object.getString("msg").equals("Invalid Password please Try again")
-                                        ||object.getString("msg").equals("Invalid username please Sign up")
-                                        ) 
-                                {
+                                        || object.getString("msg").equals("Invalid username please Sign up")) {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
@@ -113,19 +107,24 @@ public class NetWork {
                                 }
                             }
                             break;
+                            case "register":
+                                handleMessageReceive(object);
+                                break;
                         }
                     }
                 } catch (SocketException ex) {
-                        showAlert("Server is Down");
+                    showAlert("Server is Down");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
-        }.start();    
+        }.start();
     }
+
     public String getIp() {
         return IP;
     }
+
     public void closeConnection() {
         try {
             if (dataInputStream != null) {
@@ -141,8 +140,8 @@ public class NetWork {
             Logger.getLogger(NetWork.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    void showAlert(String message){
+
+    void showAlert(String message) {
         Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
 
         informationAlert.setTitle("");
@@ -150,5 +149,26 @@ public class NetWork {
         informationAlert.setContentText(message);
 
         informationAlert.showAndWait();
+    }
+
+    void handleMessageReceive(JsonObject jsonObject) {
+        if (jsonObject.getString("msg").equals("registed successfully")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    AlertMessage.showAlert(Alert.AlertType.INFORMATION, null, null, jsonObject.getString("msg"));
+                    Mynav.navigateTo(new LoginScreenBase(IP));
+                }
+
+            });
+        } else {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    AlertMessage.showAlert(Alert.AlertType.INFORMATION, null, null, jsonObject.getString("msg"));
+
+                }
+            });
+        }
     }
 }
