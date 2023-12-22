@@ -55,16 +55,8 @@ public class LoginScreenBase extends BorderPane {
     protected final Label have_account_lbl;
     protected final TextField username_tf;
     protected final ImageView imageView1;
-
     NetWork network;
-
     public LoginScreenBase(String IP) {
-        
-        try {
-            network =new NetWork(IP);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginScreenBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
         anchorPane = new AnchorPane();
         login_lbl = new Label();
         label = new Label();
@@ -132,6 +124,8 @@ public class LoginScreenBase extends BorderPane {
             jObject.addProperty("username", player.getUserName());
             jObject.addProperty("password", player.getPassword());
             String jString = gson.toJson(jObject);
+            try {
+            network =new NetWork(IP);
             network.sendMessage(jString);
             String ms =network.reciveMessage();
             if(ms.equals("user found"))
@@ -140,8 +134,16 @@ public class LoginScreenBase extends BorderPane {
             }else
             {
                 AlertMessage.infoBox("Not Found Clenit Please chack your Data or Sign Up", "Not Found Clenit", "Not Found");
+                pass_tf.clear();
+                username_tf.clear();
                 System.out.println("Not Found Clenit ");
             }
+        } catch (IOException ex) {
+             alert("Server is down now");
+                username_tf.clear();
+                pass_tf.clear();
+        }
+            
         });
 
         imageView.setFitHeight(21.0);
@@ -205,5 +207,13 @@ public class LoginScreenBase extends BorderPane {
             return;
         }
 
+    }
+    private void alert(String data)
+    {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText(data);
+                alert.showAndWait();
     }
 }
