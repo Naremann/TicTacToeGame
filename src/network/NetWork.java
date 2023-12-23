@@ -10,7 +10,10 @@ package network;
  * @author HimaMarey
  */
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import dto.DTOPlayer;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -19,6 +22,8 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -29,18 +34,21 @@ import javax.json.JsonReader;
 import mynev.Mynav;
 import register.RegisterScreenBase;
 import remotePlay.Invite;
+import remotePlay.listviewBase;
 import tictactoe.AlertMessage;
 import tictactoe.login.LoginScreenBase;
 
 public class NetWork {
 
+    private static NetWork singleInstance;
     protected DataInputStream dataInputStream;
     protected Socket socket;
     protected BufferedReader bufferedReader;
     protected PrintStream printStream;
     String message;
     protected String IP;
-
+   public listviewBase listviewBas; 
+    List<DTOPlayer> onlinePlayers = new ArrayList<>();
     public NetWork(String ServerIP) {
         try {
             if (socket == null || !socket.isConnected() || socket.isClosed()) {
@@ -50,12 +58,19 @@ public class NetWork {
                 printStream = new PrintStream(socket.getOutputStream());
                 reciveMessage();
             }
-
-            IP = socket.getLocalAddress().getHostAddress();
+            IP = ServerIP;
+            //IP = socket.getLocalAddress().getHostAddress();
 
         } catch (IOException ex) {
             showAlert("Invalid Server IP");
         }
+    }
+    
+    public static synchronized NetWork getInstance(String IP) {
+        if (singleInstance == null) {
+            singleInstance = new NetWork(IP);
+        }
+        return singleInstance;
     }
 
     public void sendMessage(String message) {
@@ -93,7 +108,7 @@ public class NetWork {
                                         @Override
                                         public void run() {
                                             showAlert(object.getString("msg"));
-                                            Mynav.navigateTo(new Invite());
+                                            Mynav.navigateTo(new listviewBase(IP));
                                         }
                                     });
                                 } else if (object.getString("msg").equals("Invalid Password please Try again")
@@ -110,6 +125,35 @@ public class NetWork {
                             case "register":
                                 handleMessageReceive(object);
                                 break;
+                                
+                            case "onlinePlayers":
+                            {
+//                                JsonParser jsonParser = new JsonParser();
+//                            JsonObject json = jsonParser.parse(message).getAsJsonObject();
+//                            
+//                            System.out.println("hema mar3y hena :"+newJson);
+                            com.google.gson.JsonObject modifiedJson = jsonParser.parse(message).getAsJsonObject();
+
+                            //if (modifiedJson.has("onlinePlayers")) {
+                                System.out.println(object.get("onlinePlayersList"));
+                                JsonElement playersElement = modifiedJson.get("onlinePlayersList");
+                                 System.out.println(playersElement);
+                                if (playersElement.isJsonArray()) {
+                                    JsonArray playersArray = playersElement.getAsJsonArray();
+                                    
+                                    
+                                   // onlinePlayers.clear();
+                                    for (JsonElement playerElement : playersArray) {
+                                        DTOPlayer player = new Gson().fromJson(playerElement, DTOPlayer.class);
+                                        //  if (player.getFullName().equals("My name") == false) {
+                                        
+                                        onlinePlayers.add(player);
+                                        //}
+                                    }
+                                }
+                                    listviewBas.receiveOnlinePlayers(onlinePlayers);
+                            }
+                            break;
                         }
                     }
                 } catch (SocketException ex) {
