@@ -168,12 +168,12 @@ public class MediumLevelWithPc extends GameBoardUI {
 
     }
 
-    private int checkForThirdEmptyCell(String mark, String s1, String s2, String s3) {
-        if (s1.equals(mark) && s1.equals(s2) && s3.isEmpty()) {
+    private int checkForThirdEmptyCell(String mark, String btnText1, String btnText2, String btnText3) {
+        if (btnText1.equals(mark) && btnText1.equals(btnText2) && btnText3.isEmpty()) {
             return 3;
-        } else if (s1.equals(mark) && s1.equalsIgnoreCase(s3) && s2.isEmpty()) {
+        } else if (btnText1.equals(mark) && btnText1.equalsIgnoreCase(btnText3) && btnText2.isEmpty()) {
             return 2;
-        } else if (s2.equals(mark) && s2.equalsIgnoreCase(s3) && s1.isEmpty()) {
+        } else if (btnText2.equals(mark) && btnText2.equalsIgnoreCase(btnText3) && btnText1.isEmpty()) {
             return 1;
         } else {
             return 0;
