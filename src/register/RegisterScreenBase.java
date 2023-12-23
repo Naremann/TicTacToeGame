@@ -1,9 +1,8 @@
 package register;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Insets;
@@ -21,8 +20,8 @@ import mynev.Mynav;
 import tictactoe.AlertMessage;
 import tictactoe.TicTacToe;
 import dto.DTOPlayer;
-import java.io.DataInputStream;
-import java.io.PrintStream;
+import gameBoard.TackIP;
+import network.NetWork;
 import tictactoe.login.LoginScreenBase;
 
 public class RegisterScreenBase extends BorderPane {
@@ -39,12 +38,7 @@ public class RegisterScreenBase extends BorderPane {
     protected final Button signup_btn;
     protected final Label have_account_lbl;
 
-    Socket socket = null;
-    ObjectInputStream in = null;
-    ObjectOutputStream out = null;
-
-    DataInputStream ear;
-    PrintStream mouth;
+    NetWork network;
 
     public RegisterScreenBase() {
 
@@ -132,54 +126,23 @@ public class RegisterScreenBase extends BorderPane {
         signup_btn.setText("Create an account");
         signup_btn.setFont(new Font(18.0));
         signup_btn.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-            try {
-                String userName = username_tf.getText();
-                String email = email_tf.getText();
-                String password = password_tf.getText();
 
-                validateData(userName, email, password);
-
-                DTOPlayer player = new DTOPlayer();
-
-                socket = new Socket("127.0.0.1", 4000);
-
-                ear = new DataInputStream(socket.getInputStream());
-                mouth = new PrintStream(socket.getOutputStream());
-                mouth.println("register");
-                String msg = ear.readLine();
-                System.out.println("The Server says: " + msg);
-                mouth.close();
-                ear.close();
-
-                socket = new Socket("127.0.0.1", 4000);
-                out = new ObjectOutputStream(socket.getOutputStream());
-                in = new ObjectInputStream(socket.getInputStream());
-
-                String mesg;
-                try {
-                    player.setEmail(email);
-                    player.setPassword(password);
-                    player.setUserName(userName);
-                    out.writeObject(player);
-                    mesg = (String) in.readObject();
-                    System.out.println("msg : " + mesg);
-                    if (mesg.equals("success")) {
-                        AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(),"Success",
-                            "Successfully registered");
-                        Mynav.navigateTo(new LoginScreenBase(""), event);
-                    }
-                } catch (ClassNotFoundException ex) {
-                    AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "can't send data!",
-                            ex.getLocalizedMessage());
-                    System.out.println("can't send data" + ex);
-                }
-
-            
-            } catch (IOException ex) {
-                AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "can't connect",
-                            ex.getLocalizedMessage());
-                ex.printStackTrace();
-                System.out.println("can't connect");
+            String userName = username_tf.getText();
+            String email = email_tf.getText();
+            String password = password_tf.getText();
+            if (validateData(userName, email, password)) {
+                System.out.println((validateData(userName, email, password)));
+                Gson gson = new GsonBuilder().create();
+                DTOPlayer player = new DTOPlayer(userName, email, password);
+                JsonObject jObject = new JsonObject();
+                jObject.addProperty("key", "register");
+                jObject.addProperty("username", player.getUserName());
+                jObject.addProperty("email", player.getEmail());
+                jObject.addProperty("password", player.getPassword());
+                String jString = gson.toJson(jObject);
+                network = new NetWork(TackIP.IPAddress);
+                network.sendMessage(jString);
+                network.reciveMessage();
             }
 
         });
@@ -219,13 +182,14 @@ public class RegisterScreenBase extends BorderPane {
         Mynav.navigateTo(root, event);
     }
 
-    private void validateData(String userName, String email, String password) {
+    private boolean validateData(String userName, String email, String password) {
+        boolean result = true;
         if (userName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-
             AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
                     "Please fill up the form properly");
-            return;
+            result = false;
         }
+        return result;
 
     }
 }

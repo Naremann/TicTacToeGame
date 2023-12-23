@@ -156,7 +156,7 @@ public class PNameSingleUI extends BorderPane{
                 alert.showAndWait();
             } else {
                
-                Mynav.navigateTo(new PlayWithPc(player1_Name), event);
+                Mynav.navigateTo(new GameLevelsBase(player1_Name), event);
             }
         });
        
