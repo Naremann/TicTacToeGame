@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/PlayWithPc.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/PNameSingleUI.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/homePage/XOgameUI.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/homePage/XoGame.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/recordTable/RecordList.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/tictactoe/gamelevels/GameLevelsBase.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/HardLevelWithPc.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/GameBoardUI.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/network/NetWork.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/PNameSingleUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/mynev/Mynav.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/LocallGame.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/DisplayRecord.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/model/Moves.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/PlayerNamesUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/MediumLevelWithPc.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/GameBoardUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/gamelevels/GameLevelsBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/PlayWithPc.java</file>
         </group>
     </open-files>
 </project-private>
