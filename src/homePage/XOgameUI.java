@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import mynev.Mynav;
 import recordTable.RecordList;
+import remotePlay.ListviewRequestBase;
+import remotePlay.RequestScreen;
 import tictactoe.gamelevels.GameLevelsBase;
 
 public  class XOgameUI extends BorderPane {
@@ -69,6 +71,10 @@ public  class XOgameUI extends BorderPane {
         btnRequest.setStyle("-fx-background-color: gray;");
         btnRequest.setText("REQUESTS");
         btnRequest.setFont(new Font("Arial Bold", 18.0));
+        btnRequest.addEventHandler(ActionEvent.ACTION, (event) -> {
+            Mynav.navigateTo(new ListviewRequestBase(),event);
+        });
+        
 
         btnHistory.setLayoutX(50.0);
         btnHistory.setLayoutY(25.0);
