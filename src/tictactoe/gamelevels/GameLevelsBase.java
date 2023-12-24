@@ -1,6 +1,7 @@
 package tictactoe.gamelevels;
 
 import gameBoard.GameBoardUI;
+import gameBoard.HardLevelWithPc;
 import gameBoard.PlayWithPc;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,8 +19,10 @@ public  class GameLevelsBase extends BorderPane {
     protected final Label level_lbl;
     protected final Button med_btn;
     protected final Button low_btn;
+    
+   // public GameLevelsBase(){}
 
-    public GameLevelsBase() {
+    public GameLevelsBase(String player1_Name) {
 
         anchorPane = new AnchorPane();
         high_btn = new Button();
@@ -51,10 +54,10 @@ public  class GameLevelsBase extends BorderPane {
         high_btn.setText("High Level");
         high_btn.setTextFill(javafx.scene.paint.Color.WHITE);
         //*****************
-          low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+          high_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){
-                   Mynav.navigateTo(new PlayWithPc(), event);
+                   Mynav.navigateTo(new HardLevelWithPc(player1_Name), event);
                  }
         });
         //*******************
@@ -99,8 +102,7 @@ public  class GameLevelsBase extends BorderPane {
          low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){
-                  // GameBoardUI gameBoard = new GameBoardUI(true);
-                   //Mynav.navigateTo(new GameBoardUI(true), event);
+                   Mynav.navigateTo(new PlayWithPc(player1_Name), event);
                  }
         });
         //*******************
@@ -112,4 +114,6 @@ public  class GameLevelsBase extends BorderPane {
         anchorPane.getChildren().add(low_btn);
 
     }
+
+
 }
