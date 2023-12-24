@@ -12,6 +12,10 @@ package remotePlay;
 /*public class Invite {
     
 }*/
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dto.DTORequest;
+import dto.MyPlayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,7 +25,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
+//import javax.json.JsonObject;
 import mynev.Mynav;
+import network.NetWork;
+import com.google.gson.JsonObject;
 //import xo.Xorequest;
 
 public  class Invite extends AnchorPane {
@@ -30,8 +37,9 @@ public  class Invite extends AnchorPane {
     protected final Label label;
     protected final TextField textField;
     protected final Button invite;
+    NetWork network;
 
-    public Invite() {
+    public Invite(String IP) {
 
         flowPane = new FlowPane();
         label = new Label();
@@ -68,9 +76,26 @@ public  class Invite extends AnchorPane {
         //************
         invite.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
-                 public void handle(ActionEvent event){  
-                 //  Mynav.navigateTo(new Xorequest(), event);
-                 }
+                public void handle(ActionEvent event){ 
+                    invite.setDisable(true);
+                    Gson gson = new GsonBuilder().create();
+                    
+                    String senderUsername = MyPlayer.userName;
+                    String receiverUsername = textField.getText();
+                    
+                    DTORequest request = new DTORequest(senderUsername, receiverUsername);
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("key", "invite");
+                    jsonObject.addProperty("senderUsername", request.getUserNameSender());
+                    jsonObject.addProperty("receiverUsername", request.getUserNameReceiver());
+                    
+                    String jsonRequest = gson.toJson(jsonObject);
+
+                    network =NetWork.getInstance(IP);
+                    network.sendMessage(jsonRequest);
+                    
+                    network.reciveMessage();
+                }
         });
                 
                 

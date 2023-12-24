@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dto.DTOPlayer;
+import dto.MyPlayer;
 import gameBoard.ChooseGameUI;
 import gameBoard.GameBoardUI;
 import java.io.DataInputStream;
@@ -166,7 +167,7 @@ public class LoginScreenBase extends BorderPane {
         username_tf.setPromptText("Username");
         username_tf.getStylesheets().add("/tictactoe/cssstyle/textFieldStyle.css");
         username_tf.setPadding(new Insets(0.0, 0.0, 0.0, 30.0));
-
+        
         imageView1.setLayoutX(178.0);
         imageView1.setLayoutY(140.0);
         imageView1.setImage(new Image(getClass().getResource("/tictactoe/media/user.png").toExternalForm()));

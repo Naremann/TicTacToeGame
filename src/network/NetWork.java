@@ -130,6 +130,12 @@ public class NetWork {
                                 handleMessageReceive(object);
                                 break;
                                 
+                            case "invite":
+                            {
+                                
+                            }
+                            break;
+                                
                             case "onlinePlayers":
                             {
 //                                JsonParser jsonParser = new JsonParser();
