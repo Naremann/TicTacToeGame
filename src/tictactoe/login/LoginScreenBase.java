@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import tictactoe.db.DataAccessLayer;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -48,7 +49,7 @@ public class LoginScreenBase extends BorderPane {
     protected final AnchorPane anchorPane;
     protected final Label login_lbl;
     protected final Label label;
-    protected final TextField pass_tf;
+    protected final PasswordField pass_tf;
     protected final Button signin_btn;
     protected final ImageView imageView;
     protected final ImageView imageView0;
@@ -60,7 +61,7 @@ public class LoginScreenBase extends BorderPane {
         anchorPane = new AnchorPane();
         login_lbl = new Label();
         label = new Label();
-        pass_tf = new TextField();
+        pass_tf = new PasswordField();
         signin_btn = new Button();
         imageView = new ImageView();
         imageView0 = new ImageView();
