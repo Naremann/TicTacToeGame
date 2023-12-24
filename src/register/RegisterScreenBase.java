@@ -150,7 +150,7 @@ public class RegisterScreenBase extends BorderPane {
                 jObject.addProperty("email", player.getEmail());
                 jObject.addProperty("password", player.getPassword());
                 String jString = gson.toJson(jObject);
-                network = new NetWork(TackIP.IPAddress);
+                network =  NetWork.getInstance(TackIP.IPAddress);
                 network.sendMessage(jString);
                 network.reciveMessage();
             }
