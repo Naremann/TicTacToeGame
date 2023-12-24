@@ -78,7 +78,8 @@ public class NetWork {
         new Thread() {
             @Override
             public void run() {
-                printStream.println(message);
+                if(socket != null)
+                    printStream.println(message);
                 System.out.println(message);
 
             }
@@ -86,6 +87,7 @@ public class NetWork {
     }
 
     public void reciveMessage() {
+        if(socket != null)
         new Thread() {
             @Override
             public void run() {
