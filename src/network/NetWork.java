@@ -14,6 +14,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import dto.DTOPlayer;
+import dto.MyPlayer;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class NetWork {
     protected String IP;
    public listviewBase listviewBas; 
     List<DTOPlayer> onlinePlayers = new ArrayList<>();
-    public NetWork(String ServerIP) {
+    private NetWork(String ServerIP) {
         try {
             if (socket == null || !socket.isConnected() || socket.isClosed()) {
                 socket = new Socket(ServerIP, 4000);
@@ -108,6 +109,7 @@ public class NetWork {
                                         @Override
                                         public void run() {
                                             showAlert(object.getString("msg"));
+                                            MyPlayer.userName=object.getString("username");
                                             Mynav.navigateTo(new listviewBase(IP));
                                         }
                                     });

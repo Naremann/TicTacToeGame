@@ -126,7 +126,7 @@ public class LoginScreenBase extends BorderPane {
             jObject.addProperty("username", player.getUserName());
             jObject.addProperty("password", player.getPassword());
             String jString = gson.toJson(jObject);
-           network =new NetWork(IP);
+           network =NetWork.getInstance(IP);
            network.sendMessage(jString);
            network.reciveMessage();
         });
