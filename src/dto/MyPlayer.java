@@ -5,12 +5,17 @@
  */
 package dto;
 
+import java.util.List;
+
 /**
  *
  * @author Orignal Vip
  */
 public class MyPlayer {
     public static String userName=null;
-        public static String ip=null;
+    public static String ip=null;
+    public static int index;
+    
+    public static List <DTOPlayer> onlinePlayers;
     
 }
