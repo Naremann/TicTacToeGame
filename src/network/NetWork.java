@@ -25,10 +25,13 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -38,6 +41,8 @@ import remotePlay.Invite;
 import remotePlay.listviewBase;
 import tictactoe.AlertMessage;
 import tictactoe.login.LoginScreenBase;
+//import com.google.gson.JsonObject;
+
 
 public class NetWork {
 
@@ -48,7 +53,8 @@ public class NetWork {
     protected PrintStream printStream;
     String message;
     protected String IP;
-   public listviewBase listviewBas; 
+    public listviewBase listviewBas;
+    private boolean waitingForResponse = false;
     List<DTOPlayer> onlinePlayers = new ArrayList<>();
     private NetWork(String ServerIP) {
         try {
@@ -75,19 +81,18 @@ public class NetWork {
     }
 
     public void sendMessage(String message) {
+        
         new Thread() {
             @Override
             public void run() {
                 if(socket != null)
-                    printStream.println(message);
+                printStream.println(message);
                 System.out.println(message);
-
             }
         }.start();
     }
 
     public void reciveMessage() {
-        if(socket != null)
         new Thread() {
             @Override
             public void run() {
@@ -113,6 +118,7 @@ public class NetWork {
                                             showAlert(object.getString("msg"));
                                             MyPlayer.userName=object.getString("username");
                                             Mynav.navigateTo(new listviewBase(IP));
+                                            
                                         }
                                     });
                                 } else if (object.getString("msg").equals("Invalid Password please Try again")
@@ -131,10 +137,8 @@ public class NetWork {
                                 break;
                                 
                             case "invite":
-                            {
-                                
-                            }
-                            break;
+                                 handleRequestReceive(object); 
+                                 break;
                                 
                             case "onlinePlayers":
                             {
@@ -161,6 +165,7 @@ public class NetWork {
                                         //}
                                     }
                                 }
+                                    MyPlayer.onlinePlayers = onlinePlayers;
                                     listviewBas.receiveOnlinePlayers(onlinePlayers);
                             }
                             break;
@@ -225,4 +230,74 @@ public class NetWork {
             });
         }
     }
+    
+   void handleRequestReceive(JsonObject jsonObject) {
+        if (jsonObject.getString("msg").equals("Invite Sent Successfully")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                        
+                        showRequestAlert("Invitation",jsonObject.getString("msg"));
+                       
+                        
+                    /*if (waitingForResponse) {
+                       // boolean response = showRequestAlert("Invitation",jsonObject.getString("msg"));
+                        jsonObject.addProperty("response", response);
+                        sendJSONObject(App.getPlayerSoc(), jsonObject);
+
+                        if (response) {
+                        //Mynav.navigateTo(new the online game(IP));
+                        }
+
+                        else {
+                            Alert refusalAlert = new Alert(Alert.AlertType.INFORMATION);
+                            refusalAlert.setTitle("Invitation Refused");
+                            refusalAlert.setContentText("Your Invitation Was Refused.");
+                            refusalAlert.showAndWait();
+                        }
+                        waitingForResponse = false;
+                    }*/
+
+                }
+            });
+        }
+        else {
+                Platform.runLater(new Runnable(){
+                    @Override
+                    public void run() {
+                        System.out.println("Alert ");
+                        showRequestAlert("Error",jsonObject.getString("msg"));
+                    }
+                    
+                });
+                }
+                System.out.println("alert is called");
+                
+        }
+   
+    
+     void showRequestAlert(String title , String header) {
+        //waitingForResponse = true; 
+        
+       System.out.println("Show alert.............");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(null);
+
+        ButtonType buttonNo = new ButtonType("IGNORE", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType buttonYes = new ButtonType("ACCEPT");
+
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        //return result.isPresent() && result.get() == buttonYes;
 }
+}
+   
+  
+
+
+    
+

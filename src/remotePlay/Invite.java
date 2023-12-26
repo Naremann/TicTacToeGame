@@ -25,10 +25,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
-//import javax.json.JsonObject;
 import mynev.Mynav;
 import network.NetWork;
 import com.google.gson.JsonObject;
+import dto.DTOPlayer;
+import java.util.List;
+import dto.MyPlayer;
+import static java.util.Collections.list;
 //import xo.Xorequest;
 
 public  class Invite extends AnchorPane {
@@ -77,26 +80,40 @@ public  class Invite extends AnchorPane {
         invite.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                 public void handle(ActionEvent event){ 
+                    
                     invite.setDisable(true);
                     Gson gson = new GsonBuilder().create();
                     
                     String senderUsername = MyPlayer.userName;
+                    System.out.println(senderUsername);
                     String receiverUsername = textField.getText();
+                    System.out.println(receiverUsername);
                     
-                    DTORequest request = new DTORequest(senderUsername, receiverUsername);
+                    DTORequest request = new DTORequest();
+                    request.setUserNameReceiver(receiverUsername);
+                    request.setUserNameSender(senderUsername);
+                    //int index = listviewBase.getIndexOfOnlinePlayers(MyPlayer.onlinePlayers, receiverUsername);
+                    
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("key", "invite");
                     jsonObject.addProperty("senderUsername", request.getUserNameSender());
                     jsonObject.addProperty("receiverUsername", request.getUserNameReceiver());
+                   // jsonObject.addProperty("index", index);
+                    for (int i = 0; i < MyPlayer.onlinePlayers.size(); i++){
+                        System.out.println(MyPlayer.onlinePlayers.get(i));
+                    }
+                   // int index = listviewBase.getIndexOfOnlinePlayers(MyPlayer.onlinePlayers, receiverUsername);
+                    
+                  //  jsonObject.addProperty("index",index);
                     
                     String jsonRequest = gson.toJson(jsonObject);
-
+         
                     network =NetWork.getInstance(IP);
-                    network.sendMessage(jsonRequest);
-                    
+                    network.sendMessage(jsonRequest); 
                     network.reciveMessage();
                 }
         });
+        
                 
                 
       //******************
@@ -106,5 +123,8 @@ public  class Invite extends AnchorPane {
         getChildren().add(flowPane);
 
     }
+    
+    
+
 }
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dto.DTOPlayer;
+import dto.DTORequest;
 import dto.MyPlayer;
 import homePage.XOgameUI;
 import java.util.List;
@@ -22,8 +23,9 @@ public  class listviewBase extends AnchorPane {
 
     protected final ListView listview;
     Button  btnexit;
-
+    int index;
     String IP;
+    NetWork network;
     public listviewBase(String Ip) 
     {
         btnexit = new Button();
@@ -57,20 +59,60 @@ public  class listviewBase extends AnchorPane {
 
         listview.setPrefHeight(450.0);
         listview.setPrefWidth(650.0);
+        
+        
 
         getChildren().add(listview);
             getChildren().add(btnexit);
 
     }
-    public void receiveOnlinePlayers(List<DTOPlayer> onlinePlayers) { 
+    public void receiveOnlinePlayers(List<DTOPlayer> onlinePlayers) {
         listview.getItems().clear();
         ObservableList<InviteBase> cellList = FXCollections.observableArrayList();
-        for (DTOPlayer player : onlinePlayers) {
+        for (int i = 0; i < onlinePlayers.size(); i++) {
+           
             InviteBase cell = new InviteBase();
-            cell.label1.setText(player.getUserName());
-            if(player.getUserName().equals(MyPlayer.userName))
+            cell.label1.setText(onlinePlayers.get(i).getUserName());
+            cell.btninvite.setOnAction(new EventHandler<ActionEvent>() {   
+                @Override
+                public void handle(ActionEvent event) {
+                    // btninvite.setDisable(true);
+                    Gson gson = new GsonBuilder().create();
+                    
+                    String senderUsername = MyPlayer.userName;
+                    System.out.println(senderUsername);
+                    String receiverUsername = cell.label1.getText();
+                    //System.out.println(receiverUsername);
+                    
+                    DTORequest request = new DTORequest();
+                    request.setUserNameReceiver(receiverUsername);
+                    request.setUserNameSender(senderUsername);
+                    
+                    //index = getIndexOfOnlinePlayers(MyPlayer.onlinePlayers, receiverUsername);
+                    
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("key", "invite");
+                    jsonObject.addProperty("senderUsername", request.getUserNameSender());
+                    jsonObject.addProperty("receiverUsername", request.getUserNameReceiver());
+                    //jsonObject.addProperty("index", String.valueOf(index));
+                    
+                    //int index = listviewBase.getIndexOfOnlinePlayers(MyPlayer.onlinePlayers, receiverUsername);
+                    
+                    //  jsonObject.addProperty("index",index);
+                    
+                    String jsonRequest = gson.toJson(jsonObject);
+         
+                    network =NetWork.getInstance(IP);
+                    network.sendMessage(jsonRequest);
+                    //network.reciveMessage();
+                }
+            });
+
+            if (onlinePlayers.get(i).getUserName().equals(MyPlayer.userName)) {
+                MyPlayer.index = i;
                 continue;
-            
+            }
+
             listview.getItems().add(cell);
         }
     }
@@ -84,6 +126,16 @@ public  class listviewBase extends AnchorPane {
     }
 
     
-    
+     int getIndexOfOnlinePlayers(List<DTOPlayer> onlinePlayers, String username) {
+    int index = -1; // Initialize to -1 to indicate that the username was not found
+    for (int i = 0; i < onlinePlayers.size(); i++) {
+        if (onlinePlayers.get(i).getUserName().equals(username)) {
+            index = i; // Update the index when the username is found
+            break; // Exit the loop since the username is found
+        }
+    }
+
+    return index;
+}
    
 }

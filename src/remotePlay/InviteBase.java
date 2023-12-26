@@ -1,9 +1,12 @@
 package remotePlay;
 
+import gameBoard.TackIP;
+import homePage.XOgameUI;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import mynev.Mynav;
 
 public  class InviteBase extends AnchorPane {
 
@@ -54,6 +57,11 @@ public  class InviteBase extends AnchorPane {
         btninvite.setText("invite");
         btninvite.setTextFill(javafx.scene.paint.Color.valueOf("#fffdfd"));
         btninvite.setFont(new Font(18.0));
+        
+        
+        
+        
+        
 
         getChildren().add(label1);
         getChildren().add(label2);
