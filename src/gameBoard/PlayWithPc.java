@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import tictactoe.AlertMessage;
+import video.VideoAlert;
 
 /**
  *
@@ -43,14 +44,19 @@ import tictactoe.AlertMessage;
                     if(isRecord)
                         recordMovesToFile();
                     isRecord=false;
-                    try {
+                     try {
+                    VideoAlert.showWinAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                   /* try {
                         AlertMessage.showWinAlert();
                         winnerAlert("YOU");
                         updateScore(isX);
                         super.resetGride();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    }*/
                 } else if (super.gameOver()) {
                     if(isRecord)
                         recordMovesToFile();

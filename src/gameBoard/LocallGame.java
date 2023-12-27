@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import tictactoe.AlertMessage;
+import video.VideoAlert;
 
 /**
  *
@@ -19,7 +20,7 @@ import tictactoe.AlertMessage;
  */
 public class LocallGame extends GameBoardUI
 {
-
+   
     public LocallGame(String player1_Name, String player2_Name) {
         //throw new UnsupportedOperationException("Not supported yet."); 
         XN.setText("" + player1_Name);
@@ -44,10 +45,15 @@ public class LocallGame extends GameBoardUI
                     recordMovesToFile();
                 isRecord=false;
                 try {
-                    AlertMessage.showWinAlert();
+                    VideoAlert.showWinAlert();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
+               /* try {
+                   AlertMessage.showWinAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
                     // Mynav.navigateTo(new WinnerBase());
                 winnerAlert(isX ? "Player X" : "Player O");
                 updateScore(isX);
