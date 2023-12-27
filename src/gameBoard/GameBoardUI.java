@@ -73,7 +73,7 @@ public abstract class GameBoardUI extends AnchorPane {
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
     protected final int grideSize;
-    protected Button[][] grideButtons;
+    public Button[][] grideButtons;
     protected boolean isX;
     protected int xCount;
     protected int oCount;
