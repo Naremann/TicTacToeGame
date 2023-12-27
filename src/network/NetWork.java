@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import dto.DTOPlayer;
 import dto.DTORequest;
 import dto.MyPlayer;
+import gameBoard.OnlineGame;
 //import gameBoard.OnlineGame;
 import gameBoard.TackIP;
 import java.io.BufferedReader;
@@ -351,7 +352,7 @@ public class NetWork {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-              //  new OnlineGame().grideButtons[Integer.parseInt(row)][Integer.parseInt(col)].setText("O");
+                new OnlineGame().grideButtons[Integer.parseInt(row)][Integer.parseInt(col)].setText("O");
             }
 
         });
