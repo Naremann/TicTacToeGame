@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import tictactoe.AlertMessage;
+import video.VideoAlert;
 
 public class HardLevelWithPc extends GameBoardUI {
 
@@ -114,7 +115,8 @@ public class HardLevelWithPc extends GameBoardUI {
         isRecord = false;
 
         try {
-            AlertMessage.showWinAlert();
+            //AlertMessage.showWinAlert();
+            VideoAlert.showLoseAlert();
             winnerAlert(winner);
             updateScore(winner.equals("YOU"));
             resetGride();

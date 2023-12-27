@@ -8,6 +8,7 @@ import dto.DTORequest;
 import dto.MyPlayer;
 import homePage.XOgameUI;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,6 +68,11 @@ public  class listviewBase extends AnchorPane {
 
     }
     public void receiveOnlinePlayers(List<DTOPlayer> onlinePlayers) {
+        Platform.runLater(()->{
+            
+            
+            
+        
         listview.getItems().clear();
         ObservableList<InviteBase> cellList = FXCollections.observableArrayList();
         for (int i = 0; i < onlinePlayers.size(); i++) {
@@ -115,6 +121,7 @@ public  class listviewBase extends AnchorPane {
 
             listview.getItems().add(cell);
         }
+        });
     }
     void requestPlayers()
     {

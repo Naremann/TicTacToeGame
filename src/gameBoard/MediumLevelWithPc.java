@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import static sun.audio.AudioPlayer.player;
 import tictactoe.AlertMessage;
+import video.VideoAlert;
 
 /**
  *
@@ -50,14 +51,19 @@ public class MediumLevelWithPc extends GameBoardUI {
                         recordMovesToFile();
                     }
                     isRecord = false;
-                    try {
+                     try {
+                    VideoAlert.showWinAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    /*try {
                         AlertMessage.showWinAlert();
                         winnerAlert("YOU");
                         updateScore(isX);
                         super.resetGride();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    }*/
                 } else if (super.gameOver()) {
                     if (isRecord) {
                         recordMovesToFile();
