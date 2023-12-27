@@ -10,11 +10,15 @@ package network;
  * @author HimaMarey
  */
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import dto.DTOPlayer;
+import dto.DTORequest;
 import dto.MyPlayer;
+//import gameBoard.OnlineGame;
+import gameBoard.TackIP;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -43,8 +47,8 @@ import tictactoe.AlertMessage;
 import tictactoe.login.LoginScreenBase;
 //import com.google.gson.JsonObject;
 
-
 public class NetWork {
+    String recieverResponse = null;
 
     private static NetWork singleInstance;
     protected DataInputStream dataInputStream;
@@ -56,6 +60,7 @@ public class NetWork {
     public listviewBase listviewBas;
     private boolean waitingForResponse = false;
     List<DTOPlayer> onlinePlayers = new ArrayList<>();
+
     private NetWork(String ServerIP) {
         try {
             if (socket == null || !socket.isConnected() || socket.isClosed()) {
@@ -72,7 +77,7 @@ public class NetWork {
             showAlert("Invalid Server IP");
         }
     }
-    
+
     public static synchronized NetWork getInstance(String IP) {
         if (singleInstance == null) {
             singleInstance = new NetWork(IP);
@@ -81,12 +86,13 @@ public class NetWork {
     }
 
     public void sendMessage(String message) {
-        
+
         new Thread() {
             @Override
             public void run() {
-                if(socket != null)
-                printStream.println(message);
+                if (socket != null) {
+                    printStream.println(message);
+                }
                 System.out.println(message);
             }
         }.start();
@@ -116,9 +122,9 @@ public class NetWork {
                                         @Override
                                         public void run() {
                                             showAlert(object.getString("msg"));
-                                            MyPlayer.userName=object.getString("username");
+                                            MyPlayer.userName = object.getString("username");
                                             Mynav.navigateTo(new listviewBase(IP));
-                                            
+
                                         }
                                     });
                                 } else if (object.getString("msg").equals("Invalid Password please Try again")
@@ -135,40 +141,63 @@ public class NetWork {
                             case "register":
                                 handleMessageReceive(object);
                                 break;
-                                
+
                             case "invite":
-                                 handleRequestReceive(object); 
-                                 break;
-                                
-                            case "onlinePlayers":
-                            {
+                                handleRequestReceive(object);
+                                break;
+
+                            case "onlinePlayers": {
 //                                JsonParser jsonParser = new JsonParser();
 //                            JsonObject json = jsonParser.parse(message).getAsJsonObject();
 //                            
 //                            System.out.println("hema mar3y hena :"+newJson);
-                            com.google.gson.JsonObject modifiedJson = jsonParser.parse(message).getAsJsonObject();
+                                com.google.gson.JsonObject modifiedJson = jsonParser.parse(message).getAsJsonObject();
 
-                            //if (modifiedJson.has("onlinePlayers")) {
+                                //if (modifiedJson.has("onlinePlayers")) {
                                 System.out.println(object.get("onlinePlayersList"));
                                 JsonElement playersElement = modifiedJson.get("onlinePlayersList");
-                                 System.out.println(playersElement);
+                                System.out.println(playersElement);
                                 if (playersElement.isJsonArray()) {
                                     JsonArray playersArray = playersElement.getAsJsonArray();
-                                    
-                                    
-                                   // onlinePlayers.clear();
+
+                                    // onlinePlayers.clear();
                                     for (JsonElement playerElement : playersArray) {
                                         DTOPlayer player = new Gson().fromJson(playerElement, DTOPlayer.class);
                                         //  if (player.getFullName().equals("My name") == false) {
-                                        
+
                                         onlinePlayers.add(player);
                                         //}
                                     }
                                 }
-                                    MyPlayer.onlinePlayers = onlinePlayers;
-                                    listviewBas.receiveOnlinePlayers(onlinePlayers);
+                                MyPlayer.onlinePlayers = onlinePlayers;
+                                listviewBas.receiveOnlinePlayers(onlinePlayers);
                             }
                             break;
+                            case "saveMove":
+                                handleSaveMoveResponse(object);
+                            break;
+                            case "IGNORE":
+                            {
+                                Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            showAlert(object.getString("reciverName")+" Refuse your Invatation");
+                                        }
+                                    });
+                            }
+                            break;
+                            case "ACCEPT":
+                            {
+                                Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            System.out.println(object.getString("reciverName"));
+                                            System.out.println(object.getString("msg"));
+                                        }
+                                    });
+                            }
+                            break;
+                                
                         }
                     }
                 } catch (SocketException ex) {
@@ -210,6 +239,29 @@ public class NetWork {
         informationAlert.showAndWait();
     }
 
+    void handleRequestReceive(JsonObject jsonObject) {
+        if (jsonObject.getString("msg").equals("Invite Sent Successfully")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    MyPlayer.opponentName=jsonObject.getString("senderUsername");
+                    showRequestAlert("Invitation", MyPlayer.opponentName     + " Wants To Play With You.");
+                }
+            });
+        } else {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Alert ");
+                    showRequestAlert("Error", jsonObject.getString("msg"));
+                }
+
+            });
+        }
+        System.out.println("alert is called");
+
+    }
+
     void handleMessageReceive(JsonObject jsonObject) {
         if (jsonObject.getString("msg").equals("registed successfully")) {
             Platform.runLater(new Runnable() {
@@ -230,56 +282,8 @@ public class NetWork {
             });
         }
     }
-    
-   void handleRequestReceive(JsonObject jsonObject) {
-        if (jsonObject.getString("msg").equals("Invite Sent Successfully")) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                        
-                        showRequestAlert("Invitation",jsonObject.getString("msg"));
-                       
-                        
-                    /*if (waitingForResponse) {
-                       // boolean response = showRequestAlert("Invitation",jsonObject.getString("msg"));
-                        jsonObject.addProperty("response", response);
-                        sendJSONObject(App.getPlayerSoc(), jsonObject);
 
-                        if (response) {
-                        //Mynav.navigateTo(new the online game(IP));
-                        }
-
-                        else {
-                            Alert refusalAlert = new Alert(Alert.AlertType.INFORMATION);
-                            refusalAlert.setTitle("Invitation Refused");
-                            refusalAlert.setContentText("Your Invitation Was Refused.");
-                            refusalAlert.showAndWait();
-                        }
-                        waitingForResponse = false;
-                    }*/
-
-                }
-            });
-        }
-        else {
-                Platform.runLater(new Runnable(){
-                    @Override
-                    public void run() {
-                        System.out.println("Alert ");
-                        showRequestAlert("Error",jsonObject.getString("msg"));
-                    }
-                    
-                });
-                }
-                System.out.println("alert is called");
-                
-        }
-   
-    
-     void showRequestAlert(String title , String header) {
-        //waitingForResponse = true; 
-        
-       System.out.println("Show alert.............");
+    void showRequestAlert(String title, String header) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -292,12 +296,65 @@ public class NetWork {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        //return result.isPresent() && result.get() == buttonYes;
-}
-}
-   
-  
-
-
+        if (result.isPresent() && result.get() == buttonYes) {
+            recieverResponse = "ACCEPT";
+            Gson gson = new GsonBuilder().create();
+            com.google.gson.JsonObject jObject = new com.google.gson.JsonObject();
+            jObject.addProperty("key", "ACCEPT");
+            jObject.addProperty("senderName", MyPlayer.opponentName);
+            jObject.addProperty("reciverName", MyPlayer.userName);
+            String jString = gson.toJson(jObject);
+              System.out.println(jString);
+                    sendMessage(jString);
+            // Platform.runLater(() -> Mynav.navigateTo()); 
+        } else {
+            recieverResponse = "IGNORE";
+            Gson gson = new GsonBuilder().create();
+            com.google.gson.JsonObject jObject = new com.google.gson.JsonObject();
+            jObject.addProperty("key", "IGNORE");
+            jObject.addProperty("senderName", MyPlayer.opponentName);
+            jObject.addProperty("reciverName", MyPlayer.userName);
+            String jString = gson.toJson(jObject);
+              System.out.println(jString);
+                    sendMessage(jString);
+          
+        }
+        System.out.println(recieverResponse);
+         System.out.println(recieverResponse+"****************");
+        handleRecieverAlertMessage(recieverResponse);
+    }
     
+    void handleRecieverAlertMessage(String response){
+          Gson gson = new GsonBuilder().create();
+            com.google.gson.JsonObject jObject = new com.google.gson.JsonObject();
+            jObject.addProperty("key", "recieverResponse");
+            jObject.addProperty("response", recieverResponse);
+            jObject.addProperty("opponentNmae", MyPlayer.opponentName);
+            String jString = gson.toJson(jObject);
+                    sendMessage(jString);
+    }
+    
+    void showAlertToSender(String title, String message) {
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
+
+    void handleSaveMoveResponse(JsonObject jsonObject) {
+        String opponent = jsonObject.getString("opponentUserName");
+        String row = jsonObject.getString("row");
+        String col = jsonObject.getString("col");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+              //  new OnlineGame().grideButtons[Integer.parseInt(row)][Integer.parseInt(col)].setText("O");
+            }
+
+        });
+
+    }
+}
