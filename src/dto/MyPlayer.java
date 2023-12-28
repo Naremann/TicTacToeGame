@@ -15,6 +15,7 @@ public class MyPlayer {
     public static String userName=null;
     public static String opponentName = null;
     public static String ip=null;
+    public static String serverIP=null;
     public static int index;
     
     public static List <DTOPlayer> onlinePlayers;

@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import dto.DTOPlayer;
 import dto.DTORequest;
 import dto.MyPlayer;
+import gameBoard.OnlineGame;
 //import gameBoard.OnlineGame;
 import gameBoard.TackIP;
 import java.io.BufferedReader;
@@ -60,6 +61,7 @@ public class NetWork {
     public listviewBase listviewBas;
     private boolean waitingForResponse = false;
     List<DTOPlayer> onlinePlayers = new ArrayList<>();
+    public OnlineGame onlineGame;
 
     private NetWork(String ServerIP) {
         try {
@@ -75,8 +77,27 @@ public class NetWork {
 
         } catch (IOException ex) {
             showAlert("Invalid Server IP");
+            Mynav.navigateTo(new TackIP());
         }
     }
+//    public NetWork(OnlineGame g) {
+//        
+//        try {
+//            if (socket == null || !socket.isConnected() || socket.isClosed()) {
+//                socket = new Socket(MyPlayer.serverIP, 4000);
+//                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//                dataInputStream = new DataInputStream(socket.getInputStream());
+//                printStream = new PrintStream(socket.getOutputStream());
+//                reciveMessage();
+//            }
+//            NetWork.onlineGame=g;
+//            IP = socket.getLocalAddress().getHostAddress();
+//
+//        } catch (IOException ex) {
+//            showAlert("Invalid Server IP");
+//            Mynav.navigateTo(new TackIP());
+//        }
+//    }
 
     public static synchronized NetWork getInstance(String IP) {
         if (singleInstance == null) {
@@ -84,7 +105,7 @@ public class NetWork {
         }
         return singleInstance;
     }
-
+    
     public void sendMessage(String message) {
 
         new Thread() {
@@ -192,7 +213,9 @@ public class NetWork {
                                         @Override
                                         public void run() {
                                             System.out.println(object.getString("reciverName"));
-                                            System.out.println(object.getString("msg"));
+                                            //System.out.println(object.getString("msg"));
+                                            onlineGame=new OnlineGame(object.getString("senderName"),object.getString("reciverName"),true);
+                                             Mynav.navigateTo(onlineGame);
                                         }
                                     });
                             }
@@ -297,6 +320,8 @@ public class NetWork {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == buttonYes) {
+            onlineGame=new OnlineGame(MyPlayer.opponentName,MyPlayer.userName,false);
+            Mynav.navigateTo(onlineGame);
             recieverResponse = "ACCEPT";
             Gson gson = new GsonBuilder().create();
             com.google.gson.JsonObject jObject = new com.google.gson.JsonObject();
@@ -306,6 +331,7 @@ public class NetWork {
             String jString = gson.toJson(jObject);
               System.out.println(jString);
                     sendMessage(jString);
+                    
             // Platform.runLater(() -> Mynav.navigateTo()); 
         } else {
             recieverResponse = "IGNORE";
@@ -326,6 +352,7 @@ public class NetWork {
     
     void handleRecieverAlertMessage(String response){
           Gson gson = new GsonBuilder().create();
+          
             com.google.gson.JsonObject jObject = new com.google.gson.JsonObject();
             jObject.addProperty("key", "recieverResponse");
             jObject.addProperty("response", recieverResponse);
@@ -345,16 +372,21 @@ public class NetWork {
     }
 
     void handleSaveMoveResponse(JsonObject jsonObject) {
-        String opponent = jsonObject.getString("opponentUserName");
+        String opponent = jsonObject.getString("userName");
         String row = jsonObject.getString("row");
         String col = jsonObject.getString("col");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-              //  new OnlineGame().grideButtons[Integer.parseInt(row)][Integer.parseInt(col)].setText("O");
-            }
-
-        });
+        System.out.println(jsonObject.getString("userName")+"--------------------------------------------------------------");
+        System.out.println(jsonObject.getString("mark"));
+        System.out.println(row);
+        System.out.println(col);
+        onlineGame.getMove(jsonObject.getString("mark"),Integer.parseInt(row),Integer.parseInt(col));
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//              //  new OnlineGame("","").grideButtons[Integer.parseInt(row)][Integer.parseInt(col)].setText("O");
+//            }
+//
+//        });
 
     }
 }

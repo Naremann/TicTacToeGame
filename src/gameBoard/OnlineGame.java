@@ -7,7 +7,7 @@ package gameBoard;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+//import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,10 @@ import static javafx.scene.input.KeyCode.T;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import com.google.gson.JsonObject;
+import dto.MyPlayer;
+import javafx.application.Platform;
 import model.Moves;
+import network.NetWork;
 import static org.apache.derby.impl.sql.compile.SQLParserConstants.T;
 import tictactoe.AlertMessage;
 
@@ -29,11 +32,15 @@ import tictactoe.AlertMessage;
  */
 public class OnlineGame extends GameBoardUI {
     public static String  firstSymbol="X";
-    boolean isBlock=false;
+    boolean isBlock;
+    NetWork gameNetWork;
 
-    public OnlineGame() {
-        super.XN.setText("");
-        super.ON.setText("Computer");
+    public OnlineGame(String playerOne,String playerTwo , boolean turn) {
+        gameNetWork= NetWork.getInstance(MyPlayer.serverIP);
+        isX=turn;
+        isBlock=turn;
+        super.XN.setText(playerOne);
+        super.ON.setText(playerTwo);
 
         super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18));
@@ -43,14 +50,14 @@ public class OnlineGame extends GameBoardUI {
     void onBtnClicked(Button btn) {
 
         if (btn.getText().isEmpty()) {
-            if (super.isX) {
+            if (true) {
                 btn.setText("X");
                 int row = gride.getRowIndex(btn);
                 int col = gride.getColumnIndex(btn);
                
                 isBlock=false;
                 mark = isX ? "X" : "O";
-                sendMove("Mona", row, col);
+                sendMove(isX ? ON.getText():XN.getText(), row, col);
                 System.out.println(isRecord);
                 if (isRecord) {
                     recordMove(btn);
@@ -77,9 +84,9 @@ public class OnlineGame extends GameBoardUI {
                     isRecord = false;
                     super.grideFullAlert();
                 } else {
-                    super.isX = !super.isX;
-                    network.NetWork.getInstance(TackIP.IPAddress).reciveMessage();
-                    isBlock=true;
+                    //super.isX = !super.isX;
+                   // network.NetWork.getInstance(TackIP.IPAddress).reciveMessage();
+                    isBlock=false;
                 }
             }
         }
@@ -90,12 +97,25 @@ public class OnlineGame extends GameBoardUI {
         JsonObject jObject = new JsonObject();
         jObject.addProperty("key", "saveMove");
         jObject.addProperty("userName", opponentUserName);
-        jObject.addProperty("row", row);
-        jObject.addProperty("col", col);
+        System.out.println(opponentUserName);
+        jObject.addProperty("mark", mark);
+        jObject.addProperty("row", String.valueOf(row));
+        jObject.addProperty("col", String.valueOf(col));
         String jString = gson.toJson(jObject);
-        network.NetWork.getInstance(TackIP.IPAddress).sendMessage(jString);
-     
-
+        gameNetWork.sendMessage(jString);
     }
-
+    public void getMove(String mark,int row,int col ) {
+        System.out.println("mark = " +mark+" row "+row +" col "+ col);
+        System.out.println("mark = " +mark+" row "+row +" col "+ col);
+        System.out.println("mark = " +mark+" row "+row +" col "+ col);
+//        isBlock=true;
+//        grideButtons[row][col].setText(mark);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                grideButtons[row][col].setText(mark);
+                isBlock=true;
+            }
+        });
+    }
 }
