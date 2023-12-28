@@ -31,7 +31,7 @@ public class HardLevelWithPc extends GameBoardUI {
 
             btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
-            if (super.isWinner()) {
+            if (super.isWinner(mark)) {
                 handleGameEnd("YOU");
             } else if (super.gameOver()) {
                 handleGameEnd("TIE");
@@ -49,8 +49,8 @@ public class HardLevelWithPc extends GameBoardUI {
 
         grideButtons[row][col].setText("O");
         grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
-
-        if (super.isWinner()) {
+        mark = isX?"X":"O";
+        if (super.isWinner(mark)) {
             handleGameEnd("COMPUTER");
         } else if (super.gameOver()) {
             handleGameEnd("TIE");
@@ -83,7 +83,8 @@ public class HardLevelWithPc extends GameBoardUI {
     }
 
     private int minimax(int depth, boolean isMaximizing) {
-        if (super.isWinner()) {
+        mark = isX?"X":"O";
+        if (super.isWinner(mark)) {
             return isMaximizing ? -1 : 1;
         }
 

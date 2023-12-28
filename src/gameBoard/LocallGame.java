@@ -39,11 +39,9 @@ public class LocallGame extends GameBoardUI
             if(isRecord)
             recordMove(btn);
            btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
-           if (isWinner()) 
+           if (isWinner(mark)) 
            {
-                if(isRecord)
-                    recordMovesToFile();
-                isRecord=false;
+                
                 try {
                     VideoAlert.showWinAlert();
                 } catch (InterruptedException ex) {
@@ -55,8 +53,11 @@ public class LocallGame extends GameBoardUI
                     Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
                 }*/
                     // Mynav.navigateTo(new WinnerBase());
-                winnerAlert(isX ? "Player X" : "Player O");
+                winnerAlert(isX ? XN.getText() : ON.getText());
                 updateScore(isX);
+                if(isRecord)
+                    recordMovesToFile();
+                isRecord=false;
                 super.resetGride();
                 
             } else if (gameOver()) 

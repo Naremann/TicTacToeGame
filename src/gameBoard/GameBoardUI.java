@@ -233,9 +233,9 @@ public abstract class GameBoardUI extends AnchorPane {
         alert.setContentText(winner + " WON!");
         alert.showAndWait();
     }
-    protected boolean isWinner()
+    protected boolean isWinner(String symbol)
     {
-        String symbol = isX ? "X" : "O";
+        //String symbol = isX ? "X" : "O";
         for (int i = 0; i < grideSize; i++) {
             if (grideButtons[i][0].getText().equals(symbol)
                     && grideButtons[i][1].getText().equals(symbol)
@@ -317,7 +317,7 @@ public abstract class GameBoardUI extends AnchorPane {
         try  {
             BufferedWriter writer = new BufferedWriter(new FileWriter("Record History.txt",true));
             Date date = new Date();
-            writer.write(XN.getText()+"!"+ON.getText()+"!"+date.toString()+"!"+XSF.getText()+"!"+OSF.getText()+"!?#");
+            writer.write(XN.getText()+"!"+ON.getText()+"!"+date.toString()+"!"+String.valueOf(xCount)+"!"+String.valueOf(oCount)+"!?#");
             for (int i = 0 ; i<moves.size();i++) {
                 writer.write(moves.get(i));
                 writer.write("#");

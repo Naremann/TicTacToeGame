@@ -40,7 +40,7 @@ import video.VideoAlert;
                recordMove(btn);
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
-                if (isWinner()) {
+                if (isWinner(mark)) {
                     if(isRecord)
                         recordMovesToFile();
                     isRecord=false;
@@ -78,8 +78,8 @@ import video.VideoAlert;
 
     grideButtons[row][col].setText("O");
     grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
-
-    if (isWinner()) {
+    mark = isX?"X":"O";
+    if (isWinner(mark)) {
         winnerAlert("COMPUTER"); 
         updateScore(false);
         resetGride();

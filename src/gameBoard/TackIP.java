@@ -124,7 +124,7 @@ public class TackIP extends BorderPane{
         rowConstraints3.setPrefHeight(177.0);
         rowConstraints3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        lbPlayer1.setText("Pealse Enter Server IP Address");
+        lbPlayer1.setText("Pealse Enter Server IP");
         lbPlayer1.setFont(new Font("Arial Bold", 33.0));
         GridPane.setHalignment(lbPlayer1, javafx.geometry.HPos.CENTER);
         GridPane.setMargin(lbPlayer1, new Insets(100.0, 0.0, 25.0, 0.0));
