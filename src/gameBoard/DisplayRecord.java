@@ -8,6 +8,8 @@ package gameBoard;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import mynev.Mynav;
+import recordTable.RecordList;
 
 /**
  *
@@ -21,6 +23,10 @@ public class DisplayRecord extends GameBoardUI{
         recBtn.setText("Play Again");
         recBtn.setOnAction((ActionEvent event) -> {
            playRecord(index);
+        });
+        resetBtn.setText("Back");
+        resetBtn.setOnAction((ActionEvent event) -> {
+          Mynav.navigateTo(new RecordList(),event);
         });
     }
     

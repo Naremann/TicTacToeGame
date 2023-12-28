@@ -46,7 +46,7 @@ public class MediumLevelWithPc extends GameBoardUI {
                 }
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
-                if (isWinner()) {
+                if (isWinner(mark)) {
                     if (isRecord) {
                         recordMovesToFile();
                     }
@@ -105,7 +105,8 @@ public class MediumLevelWithPc extends GameBoardUI {
         }
 
         grideButtons[row][col].setText("O");
-        if (isWinner()) {
+        mark = isX?"X":"O";
+        if (isWinner(mark)) {
             winnerAlert("COMPUTER");
             updateScore(false);
             resetGride();

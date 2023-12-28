@@ -20,6 +20,7 @@ import dto.MyPlayer;
 import gameBoard.OnlineGame;
 //import gameBoard.OnlineGame;
 import gameBoard.TackIP;
+import homePage.XOgameUI;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -213,13 +214,16 @@ public class NetWork {
                                         @Override
                                         public void run() {
                                             System.out.println(object.getString("reciverName"));
-                                            //System.out.println(object.getString("msg"));
+                                            MyPlayer.opponentName=object.getString("reciverName");
                                             onlineGame=new OnlineGame(object.getString("senderName"),object.getString("reciverName"),true);
                                              Mynav.navigateTo(onlineGame);
                                         }
                                     });
                             }
                             break;
+                            case "exitPlayer":
+                                handleExitPlayer(message,object);
+                                break;
                                 
                         }
                     }
@@ -268,6 +272,7 @@ public class NetWork {
                 @Override
                 public void run() {
                     MyPlayer.opponentName=jsonObject.getString("senderUsername");
+                    System.out.println(MyPlayer.opponentName);
                     showRequestAlert("Invitation", MyPlayer.opponentName     + " Wants To Play With You.");
                 }
             });
@@ -375,18 +380,19 @@ public class NetWork {
         String opponent = jsonObject.getString("userName");
         String row = jsonObject.getString("row");
         String col = jsonObject.getString("col");
-        System.out.println(jsonObject.getString("userName")+"--------------------------------------------------------------");
-        System.out.println(jsonObject.getString("mark"));
-        System.out.println(row);
-        System.out.println(col);
         onlineGame.getMove(jsonObject.getString("mark"),Integer.parseInt(row),Integer.parseInt(col));
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//              //  new OnlineGame("","").grideButtons[Integer.parseInt(row)][Integer.parseInt(col)].setText("O");
-//            }
-//
-//        });
-
+    }
+    
+    void handleExitPlayer(String msg,JsonObject object)
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run() {
+                showAlertToSender("Game is End", object.getString("userName")+" Exit From The Game and You Are The Winner");
+                Mynav.navigateTo(new XOgameUI());
+            }
+        });
+        
     }
 }
