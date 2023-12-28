@@ -1,6 +1,7 @@
 
 package gameBoard;
 
+import dto.MyPlayer;
 import homePage.XOgameUI;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -147,7 +148,7 @@ public class TackIP extends BorderPane{
                 alert.setContentText("Please Enter Your Server IP Address.");
                 alert.showAndWait();
             } else {
-               
+                MyPlayer.serverIP=IPField.getText();
                 Mynav.navigateTo(new LoginScreenBase(IPAddress), event);
             }
         });
