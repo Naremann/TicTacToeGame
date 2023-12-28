@@ -2,6 +2,7 @@ package tictactoe.gamelevels;
 
 import gameBoard.GameBoardUI;
 import gameBoard.HardLevelWithPc;
+import gameBoard.MediumLevelWithPc;
 import gameBoard.PlayWithPc;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -82,8 +83,9 @@ public  class GameLevelsBase extends BorderPane {
           med_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){
+                     
                   // GameBoardUI gameBoard = new GameBoardUI(true);
-                  // Mynav.navigateTo(new GameBoardUI(true), event);
+                   Mynav.navigateTo(new MediumLevelWithPc(player1_Name), event);
                  }
         });
         //*******************
