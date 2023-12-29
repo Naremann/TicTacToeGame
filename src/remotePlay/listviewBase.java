@@ -58,13 +58,13 @@ public  class listviewBase extends AnchorPane {
         
        
 
-        listview.setPrefHeight(450.0);
+        listview.setPrefHeight(350.0);
         listview.setPrefWidth(650.0);
         
         
 
         getChildren().add(listview);
-            getChildren().add(btnexit);
+        getChildren().add(btnexit);
 
     }
     public void receiveOnlinePlayers(List<DTOPlayer> onlinePlayers) {

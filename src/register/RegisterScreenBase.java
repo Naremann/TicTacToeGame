@@ -14,6 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dto.DTOPlayer;
 import gameBoard.TackIP;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Insets;
@@ -27,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import mynev.Mynav;
 import network.NetWork;
@@ -140,8 +143,8 @@ public class RegisterScreenBase extends BorderPane {
             String email = email_tf.getText();
             String password = password_tf.getText();
             String confirm_password = password_tf1.getText();
-            if (validateData(userName, email, password,confirm_password)) {
-                System.out.println((validateData(userName, email, password,confirm_password)));
+            if (validateData(userName, email, password, confirm_password)) {
+                System.out.println((validateData(userName, email, password, confirm_password)));
                 Gson gson = new GsonBuilder().create();
                 DTOPlayer player = new DTOPlayer(userName, email, password);
                 JsonObject jObject = new JsonObject();
@@ -150,7 +153,7 @@ public class RegisterScreenBase extends BorderPane {
                 jObject.addProperty("email", player.getEmail());
                 jObject.addProperty("password", player.getPassword());
                 String jString = gson.toJson(jObject);
-                network =  NetWork.getInstance(TackIP.IPAddress);
+                network = NetWork.getInstance(TackIP.IPAddress);
                 network.sendMessage(jString);
                 network.reciveMessage();
             }
@@ -207,21 +210,28 @@ public class RegisterScreenBase extends BorderPane {
     }
 
     private boolean validateData(String userName, String email, String password, String confirmPass) {
+          String EMAIL_PATTERN = 
+    "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        
         boolean result = true;
         if (userName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPass.isEmpty()) {
             AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
                     "Please fill up the form properly");
             result = false;
-        }
-        else if(!confirmPass.equals(password)){
+        } else if (!confirmPass.equals(password)) {
             AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
                     "Incorrect Password");
-            result=false;
-        }
-        else if(password.length()<4){
+            result = false;
+        } else if (password.length() < 4) {
             AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
                     "Please enter a password more than or equal to four character");
+            result = false;
+        } else if ((!email.matches(EMAIL_PATTERN))) {
+            AlertMessage.showAlert(Alert.AlertType.ERROR, signup_btn.getScene().getWindow(), "Form Error!",
+                    "Please enter a valid email");
             result=false;
+            
         }
         return result;
 

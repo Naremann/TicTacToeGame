@@ -182,7 +182,7 @@ public class NetWork {
                                 if (playersElement.isJsonArray()) {
                                     JsonArray playersArray = playersElement.getAsJsonArray();
 
-                                    // onlinePlayers.clear();
+                                    onlinePlayers.clear();
                                     for (JsonElement playerElement : playersArray) {
                                         DTOPlayer player = new Gson().fromJson(playerElement, DTOPlayer.class);
                                         //  if (player.getFullName().equals("My name") == false) {

@@ -41,9 +41,11 @@ import video.VideoAlert;
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
                 if (isWinner(mark)) {
+                    updateScore(isX);
                     if(isRecord)
                         recordMovesToFile();
                     isRecord=false;
+                    resetGride();
                      try {
                     VideoAlert.showWinAlert();
                 } catch (InterruptedException ex) {
@@ -62,6 +64,7 @@ import video.VideoAlert;
                         recordMovesToFile();
                     isRecord=false;
                     super.grideFullAlert();
+                    resetGride();
                 } else {
                     super.isX = !super.isX;
                     makeComputerMove();
@@ -78,15 +81,25 @@ import video.VideoAlert;
 
     grideButtons[row][col].setText("O");
     grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
+    if (isRecord) {
+            Button btn =grideButtons[row][col];
+                    recordMove(btn);
+                }
     mark = isX?"X":"O";
     if (isWinner(mark)) {
         winnerAlert("COMPUTER"); 
         updateScore(false);
         resetGride();
+        if (isRecord) {
+                        recordMovesToFile();
+                    }
     } 
     else if (gameOver()) {
         grideFullAlert();
         resetGride();
+        if (isRecord) {
+                        recordMovesToFile();
+                    }
     } 
     else {
         isX = !isX;
