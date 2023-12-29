@@ -180,7 +180,7 @@ public abstract class GameBoardUI extends AnchorPane {
         exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
                  public void handle(ActionEvent event){  
-                   Mynav.navigateTo(new XOgameUI(), event);
+                   exitBtnClicked();
                  }
         });
 
@@ -360,6 +360,9 @@ protected void loadMovesFromFile() {
             e.printStackTrace();
         }
     }
-     
+     void exitBtnClicked()
+     {
+         Mynav.navigateTo(new XOgameUI());
+     }
 }
 
