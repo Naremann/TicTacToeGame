@@ -78,7 +78,7 @@ public class TackIP extends BorderPane{
         btnBack.setMnemonicParsing(false);
         btnBack.setPrefHeight(30.0);
         btnBack.setPrefWidth(90.0);
-        btnBack.setStyle("-fx-background-color: gray;");
+        btnBack.setStyle("-fx-background-color: gray;"+"-fx-text-fill: white;");
         btnBack.setText("BACK");
         GridPane.setMargin(btnBack, new Insets(0.0, 0.0, 30.0, 100.0));
         btnBack.setFont(new Font("Arial Bold", 18.0));
@@ -89,7 +89,7 @@ public class TackIP extends BorderPane{
         btnNext.setMnemonicParsing(false);
         btnNext.setPrefHeight(33.0);
         btnNext.setPrefWidth(91.0);
-        btnNext.setStyle("-fx-background-color: gray;");
+        btnNext.setStyle("-fx-background-color: gray;"+"-fx-text-fill: white;");
         btnNext.setText("NEXT");
         btnNext.setFont(new Font("Arial Bold", 18.0));
         GridPane.setMargin(btnNext, new Insets(0.0, 0.0, 30.0, 95.0));
@@ -124,7 +124,7 @@ public class TackIP extends BorderPane{
         rowConstraints3.setPrefHeight(177.0);
         rowConstraints3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        lbPlayer1.setText("Pealse Enter Server IP");
+        lbPlayer1.setText("Please Enter Server IP");
         lbPlayer1.setFont(new Font("Arial Bold", 33.0));
         GridPane.setHalignment(lbPlayer1, javafx.geometry.HPos.CENTER);
         GridPane.setMargin(lbPlayer1, new Insets(100.0, 0.0, 25.0, 0.0));

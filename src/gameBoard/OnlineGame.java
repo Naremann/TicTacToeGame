@@ -52,12 +52,12 @@ public class OnlineGame extends GameBoardUI {
 
         super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
-            @Override
-                 public void handle(ActionEvent event){  
-                   showEixtAlert("Exit Game","Are You Sure to Exit this Game ?");
-                 }
-        });
+//        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+//            @Override
+//                 public void handle(ActionEvent event){  
+//                   
+//                 }
+//        });
     }
 
     @Override
@@ -185,12 +185,18 @@ public class OnlineGame extends GameBoardUI {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == buttonYes)
+        if (result.isPresent() && result.get() == buttonNo)
         {
-           handleExitPlayer(MyPlayer.userName,MyPlayer.opponentName);
+            System.out.println("*********************");
         } else {
-           
-          
+            System.out.println("*********************");
+           handleExitPlayer(MyPlayer.userName,MyPlayer.opponentName);
         }
     }
+
+    @Override
+    void exitBtnClicked() {
+         showEixtAlert("Exit Game","Are You Sure to Exit this Game ?");
+    }
+    
 }
