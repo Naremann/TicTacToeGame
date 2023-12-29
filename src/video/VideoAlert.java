@@ -37,14 +37,14 @@ public class VideoAlert{
         alert.show();
     }
 
-    public static void showWinAlert() throws InterruptedException {
+    public static void showWinAlert(String winner) throws InterruptedException {
      // MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getClassLoader().getResource("win.mp4").toExternalForm()));
  
        MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getResource("/video/win.mp4").toExternalForm()));
 // MediaPlayer player = new MediaPlayer(new Media(new Object().getClass().getResource("/nextt/win.mp4").toExternalForm()));
         MediaView mediaView = new MediaView(player);
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("You won");
+        alert.setTitle("Congratulations "+winner);
         alert.setHeaderText("");
 
         VBox content = new VBox(20, mediaView);
@@ -62,6 +62,50 @@ public class VideoAlert{
        
         
     }
+    
+    public static void showPCWinAlert() throws InterruptedException {
+     // MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getClassLoader().getResource("win.mp4").toExternalForm()));
+ 
+       MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getResource("/video/pcwin.mp4").toExternalForm()));
+// MediaPlayer player = new MediaPlayer(new Media(new Object().getClass().getResource("/nextt/win.mp4").toExternalForm()));
+        MediaView mediaView = new MediaView(player);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Hard Luck!!!");
+        alert.setHeaderText("");
+
+        VBox content = new VBox(20, mediaView);
+        content.setMinSize(270, 250);
+
+        content.setAlignment(Pos.CENTER);
+        alert.getDialogPane().setContent(content);
+
+        alert.setOnShowing(e -> player.play());
+        alert.setOnCloseRequest(e -> player.stop());
+        alert.showAndWait();
+    }
+    
+    public static void showPlayerLoseAlert() throws InterruptedException {
+     // MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getClassLoader().getResource("win.mp4").toExternalForm()));
+ 
+       MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getResource("/video/playerlose.mp4").toExternalForm()));
+// MediaPlayer player = new MediaPlayer(new Media(new Object().getClass().getResource("/nextt/win.mp4").toExternalForm()));
+        MediaView mediaView = new MediaView(player);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Hard Luck!!!");
+        alert.setHeaderText("");
+
+        VBox content = new VBox(20, mediaView);
+        content.setMinSize(270, 250);
+
+        content.setAlignment(Pos.CENTER);
+        alert.getDialogPane().setContent(content);
+
+        alert.setOnShowing(e -> player.play());
+        alert.setOnCloseRequest(e -> player.stop());
+        alert.showAndWait(); 
+    }
+    
+    
     ///////////////////
     public static void showLoseAlert() throws InterruptedException {
      // MediaPlayer player = new MediaPlayer(new Media(VideoAlert.class.getClassLoader().getResource("win.mp4").toExternalForm()));
@@ -90,7 +134,7 @@ public class VideoAlert{
 // MediaPlayer player = new MediaPlayer(new Media(new Object().getClass().getResource("/nextt/win.mp4").toExternalForm()));
         MediaView mediaView = new MediaView(player);
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("You draw");
+        alert.setTitle("NO Body Win !!!!");
         alert.setHeaderText("");
 
         VBox content = new VBox(20, mediaView);

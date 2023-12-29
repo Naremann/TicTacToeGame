@@ -53,6 +53,8 @@ public  class listviewBase extends AnchorPane {
             @Override
                  public void handle(ActionEvent event){  
                    Mynav.navigateTo(new XOgameUI(), event);
+                   System.out.println(MyPlayer.userName);
+                   exitPlayer(MyPlayer.userName);
                  }
         });
         
@@ -79,6 +81,7 @@ public  class listviewBase extends AnchorPane {
            
             InviteBase cell = new InviteBase();
             cell.label1.setText(onlinePlayers.get(i).getUserName());
+            cell.label3.setText(String.valueOf(onlinePlayers.get(i).getScore()));
             cell.btninvite.setOnAction(new EventHandler<ActionEvent>() {   
                 @Override
                 public void handle(ActionEvent event) {
@@ -114,8 +117,8 @@ public  class listviewBase extends AnchorPane {
                 }
             });
 
-            if (onlinePlayers.get(i).getUserName().equals(MyPlayer.userName)) {
-                MyPlayer.index = i;
+            if (onlinePlayers.get(i).getUserName().equals(MyPlayer.userName)||onlinePlayers.get(i).getStatus().equals("onGame")) {
+                //MyPlayer.index = i;
                 continue;
             }
 
@@ -144,5 +147,15 @@ public  class listviewBase extends AnchorPane {
 
     return index;
 }
+     void exitPlayer(String userName)
+     {
+         Gson gson = new GsonBuilder().create();
+        JsonObject jObject = new JsonObject();
+        jObject.addProperty("key", "exitPlayer");
+        jObject.addProperty("userName", userName);
+        String jString = gson.toJson(jObject);
+        System.out.println(jString);
+        NetWork.getInstance(IP).sendMessage(jString);
+     }
    
 }

@@ -87,7 +87,7 @@ public class PNameSingleUI extends BorderPane{
         btnBack.setMnemonicParsing(false);
         btnBack.setPrefHeight(30.0);
         btnBack.setPrefWidth(90.0);
-        btnBack.setStyle("-fx-background-color: gray;");
+        btnBack.setStyle("-fx-background-color: gray;"+"-fx-text-fill: white;");
         btnBack.setText("BACK");
         GridPane.setMargin(btnBack, new Insets(0.0, 0.0, 30.0, 100.0));
         btnBack.setFont(new Font("Arial Bold", 18.0));
@@ -96,7 +96,7 @@ public class PNameSingleUI extends BorderPane{
         btnNext.setMnemonicParsing(false);
         btnNext.setPrefHeight(33.0);
         btnNext.setPrefWidth(91.0);
-        btnNext.setStyle("-fx-background-color: gray;");
+        btnNext.setStyle("-fx-background-color: gray;"+"-fx-text-fill: white;");
         btnNext.setText("NEXT");
         btnNext.setFont(new Font("Arial Bold", 18.0));
         GridPane.setMargin(btnNext, new Insets(0.0, 0.0, 30.0, 95.0));
