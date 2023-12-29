@@ -93,7 +93,7 @@ public class LoginScreenBase extends BorderPane {
 
         label.setLayoutX(210.0);
         label.setLayoutY(75.0);
-        label.setText("Sign in  to your acount");
+        label.setText("Sign in  to your account");
         label.setFont(new Font(18.0));
 
         AnchorPane.setBottomAnchor(pass_tf, 111.0);
