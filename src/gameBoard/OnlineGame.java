@@ -23,6 +23,8 @@ import dto.MyPlayer;
 import homePage.XOgameUI;
 import java.util.Optional;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -50,8 +52,11 @@ public class OnlineGame extends GameBoardUI {
 
         super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-        exitBtn.setOnAction(event ->{
-                    showEixtAlert("Exit Game","Are You Sure to Exit this Game ?");
+        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+                 public void handle(ActionEvent event){  
+                   showEixtAlert("Exit Game","Are You Sure to Exit this Game ?");
+                 }
         });
     }
 
@@ -87,6 +92,7 @@ public class OnlineGame extends GameBoardUI {
                     }
                     isRecord = false;
                         super.resetGride();
+                        isBlock=isX;
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -95,7 +101,9 @@ public class OnlineGame extends GameBoardUI {
                         recordMovesToFile();
                     }
                     isRecord = false;
+                    resetGride();
                     super.grideFullAlert();
+                    isBlock=isX;
                 } else 
                 {
                     isBlock=false;
@@ -122,6 +130,31 @@ public class OnlineGame extends GameBoardUI {
             public void run() {
                 grideButtons[row][col].setText(mark);
                 isBlock=true;
+                if (isRecord) {
+            Button btn =grideButtons[row][col];
+                    recordMove(btn);
+                }
+    
+            if (isWinner(mark)) {
+                updateScore(!isX);
+                resetGride();
+                if (isRecord) {
+                                recordMovesToFile();
+                            }
+                isBlock=isX;
+            } 
+            else if (gameOver()) {
+                grideFullAlert();
+                resetGride();
+                if (isRecord) {
+                                recordMovesToFile();
+                            }
+                isBlock=isX;
+            }else
+            {
+                isBlock=true;
+            }
+    
             }
         });
     }
