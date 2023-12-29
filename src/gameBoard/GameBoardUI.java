@@ -338,7 +338,7 @@ public abstract class GameBoardUI extends AnchorPane {
      protected void recordMove(Button btn) {
         int row = gride.getRowIndex(btn);
         int col = gride.getColumnIndex(btn);
-        String move = String.format("%s,%s,%s", mark, row, col);
+        String move = String.format("%s,%s,%s", btn.getText(), row, col);
         moves.add(move);
     }
 protected void loadMovesFromFile() {

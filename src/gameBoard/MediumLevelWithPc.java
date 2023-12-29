@@ -47,10 +47,11 @@ public class MediumLevelWithPc extends GameBoardUI {
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
                 if (isWinner(mark)) {
-                    if (isRecord) {
+                    updateScore(isX);
+                    if(isRecord)
                         recordMovesToFile();
-                    }
-                    isRecord = false;
+                    isRecord=false;
+                    super.resetGride();
                      try {
                     VideoAlert.showWinAlert();
                 } catch (InterruptedException ex) {
@@ -65,11 +66,11 @@ public class MediumLevelWithPc extends GameBoardUI {
                         Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
                     }*/
                 } else if (super.gameOver()) {
-                    if (isRecord) {
+                    if(isRecord)
                         recordMovesToFile();
-                    }
-                    isRecord = false;
+                    isRecord=false;
                     super.grideFullAlert();
+                    resetGride();
                 } else {
                     super.isX = !super.isX;
                     makeComputerMove();
@@ -105,14 +106,24 @@ public class MediumLevelWithPc extends GameBoardUI {
         }
 
         grideButtons[row][col].setText("O");
+        if (isRecord) {
+            Button btn =grideButtons[row][col];
+                    recordMove(btn);
+                }
         mark = isX?"X":"O";
         if (isWinner(mark)) {
             winnerAlert("COMPUTER");
             updateScore(false);
+            if (isRecord) {
+                        recordMovesToFile();
+                    }
             resetGride();
         } else if (gameOver()) {
             grideFullAlert();
             resetGride();
+            if (isRecord) {
+                        recordMovesToFile();
+                    }
         } else {
             isX = !isX;
         }
