@@ -32,7 +32,9 @@ import model.Moves;
 import mynev.Mynav;
 import network.NetWork;
 import static org.apache.derby.impl.sql.compile.SQLParserConstants.T;
+import remotePlay.listviewBase;
 import tictactoe.AlertMessage;
+import video.VideoAlert;
 
 /**
  *
@@ -52,12 +54,8 @@ public class OnlineGame extends GameBoardUI {
 
         super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-//        exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
-//            @Override
-//                 public void handle(ActionEvent event){  
-//                   
-//                 }
-//        });
+        flowPane0.getChildren().remove(resetBtn);
+        exitBtn.setPrefWidth(235.0);
     }
 
     @Override
@@ -82,27 +80,35 @@ public class OnlineGame extends GameBoardUI {
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
                 if (isWinner(mark)) {
-                    
                     try {
-                        AlertMessage.showWinAlert();
-                        winnerAlert(isX ? XN.getText():ON.getText());
+                    VideoAlert.showWinAlert(isX ? XN.getText() : ON.getText());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    isRecord = false;
+                    resetGride();
+                    isBlock=isX;
+                    int myScore=isX?xCount:oCount;
+                    updatePlayerScore(MyPlayer.userName,myScore);
+                    //winnerAlert(isX ? XN.getText():ON.getText());
                         updateScore(isX);
                         if (isRecord) {
-                        recordMovesToFile();
-                    }
-                    isRecord = false;
-                        super.resetGride();
-                        isBlock=isX;
+                            recordMovesToFile();
+                        }  
+                    
+                } else if (super.gameOver()) {
+                    try {
+                        VideoAlert.showDrawAlert();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else if (super.gameOver()) {
                     if (isRecord) {
                         recordMovesToFile();
                     }
                     isRecord = false;
                     resetGride();
-                    super.grideFullAlert();
+                    //super.grideFullAlert();
+                    //Mynav.navigateTo(new listviewBase(MyPlayer.serverIP));
                     isBlock=isX;
                 } else 
                 {
@@ -136,6 +142,11 @@ public class OnlineGame extends GameBoardUI {
                 }
     
             if (isWinner(mark)) {
+                try {
+                    VideoAlert.showPlayerLoseAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 updateScore(!isX);
                 resetGride();
                 if (isRecord) {
@@ -144,7 +155,12 @@ public class OnlineGame extends GameBoardUI {
                 isBlock=isX;
             } 
             else if (gameOver()) {
-                grideFullAlert();
+                try {
+                        VideoAlert.showDrawAlert();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                //grideFullAlert();
                 resetGride();
                 if (isRecord) {
                                 recordMovesToFile();
@@ -193,10 +209,39 @@ public class OnlineGame extends GameBoardUI {
            handleExitPlayer(MyPlayer.userName,MyPlayer.opponentName);
         }
     }
-
+    
+    void updatePlayerScore(String userName,int score)
+    {
+        Gson gson = new GsonBuilder().create();
+        JsonObject jObject = new JsonObject();
+        jObject.addProperty("key", "updateScore");
+        jObject.addProperty("userName", userName);
+        jObject.addProperty("score", String.valueOf(score));
+        String jString = gson.toJson(jObject);
+        gameNetWork.sendMessage(jString);
+    }
+    
+    void updatePlayerStatus(String userName,String status)
+    {
+        Gson gson = new GsonBuilder().create();
+        JsonObject jObject = new JsonObject();
+        jObject.addProperty("key", "updateScore");
+        jObject.addProperty("userName", userName);
+        jObject.addProperty("status", status);
+        String jString = gson.toJson(jObject);
+        gameNetWork.sendMessage(jString);
+    }
     @Override
     void exitBtnClicked() {
          showEixtAlert("Exit Game","Are You Sure to Exit this Game ?");
     }
     
+    @Override
+    protected void resetGride() {
+        for (Button[] row : grideButtons) {
+            for (Button button : row) {
+                button.setText("");
+            }
+        }
+    }  
 }

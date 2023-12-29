@@ -15,6 +15,24 @@ public class DTOPlayer implements Serializable{
     private String userName;
     private String email;
     private String password;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public DTOPlayer(String userName, String email, String password, String status, int score) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.score = score;
+    }
+    private int score;
 
     public DTOPlayer() {
     }
@@ -25,6 +43,21 @@ public class DTOPlayer implements Serializable{
         this.userName = userName;
         this.email = email;
         this.password = password;
+    }
+
+    public DTOPlayer(String userName, String email, String password, int score) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
     
 

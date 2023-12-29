@@ -43,7 +43,7 @@ public class LocallGame extends GameBoardUI
            {
                 
                 try {
-                    VideoAlert.showWinAlert();
+                    VideoAlert.showWinAlert(isX ? XN.getText() : ON.getText());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -53,7 +53,7 @@ public class LocallGame extends GameBoardUI
                     Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
                 }*/
                     // Mynav.navigateTo(new WinnerBase());
-                winnerAlert(isX ? XN.getText() : ON.getText());
+               // winnerAlert(isX ? XN.getText() : ON.getText());
                 updateScore(isX);
                 if(isRecord)
                     recordMovesToFile();
@@ -62,10 +62,15 @@ public class LocallGame extends GameBoardUI
                 
             } else if (gameOver()) 
             {
+                try {
+                        VideoAlert.showDrawAlert();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 if(isRecord)
                     recordMovesToFile();
                 isRecord=false;
-                super.grideFullAlert();
+                //super.grideFullAlert();
                 resetGride();
             } else {
                 isX = !isX;

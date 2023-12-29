@@ -53,7 +53,7 @@ public class MediumLevelWithPc extends GameBoardUI {
                     isRecord=false;
                     super.resetGride();
                      try {
-                    VideoAlert.showWinAlert();
+                    VideoAlert.showWinAlert(XN.getText());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -66,10 +66,15 @@ public class MediumLevelWithPc extends GameBoardUI {
                         Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
                     }*/
                 } else if (super.gameOver()) {
+                    try {
+                        VideoAlert.showDrawAlert();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     if(isRecord)
                         recordMovesToFile();
                     isRecord=false;
-                    super.grideFullAlert();
+                    //super.grideFullAlert();
                     resetGride();
                 } else {
                     super.isX = !super.isX;
@@ -112,14 +117,25 @@ public class MediumLevelWithPc extends GameBoardUI {
                 }
         mark = isX?"X":"O";
         if (isWinner(mark)) {
-            winnerAlert("COMPUTER");
+//            winnerAlert("COMPUTER");
+            try {
+                 VideoAlert.showPCWinAlert();
+             } catch (InterruptedException ex) {
+                 Logger.getLogger(PlayWithPc.class.getName()).log(Level.SEVERE, null, ex);
+             }
             updateScore(false);
             if (isRecord) {
                         recordMovesToFile();
                     }
             resetGride();
+         
         } else if (gameOver()) {
-            grideFullAlert();
+            try {
+                        VideoAlert.showDrawAlert();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            //grideFullAlert();
             resetGride();
             if (isRecord) {
                         recordMovesToFile();

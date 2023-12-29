@@ -47,7 +47,7 @@ import video.VideoAlert;
                     isRecord=false;
                     resetGride();
                      try {
-                    VideoAlert.showWinAlert();
+                    VideoAlert.showWinAlert(XN.getText());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LocallGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -60,10 +60,15 @@ import video.VideoAlert;
                         Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
                     }*/
                 } else if (super.gameOver()) {
+                    try {
+                        VideoAlert.showDrawAlert();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     if(isRecord)
                         recordMovesToFile();
                     isRecord=false;
-                    super.grideFullAlert();
+                    //super.grideFullAlert();
                     resetGride();
                 } else {
                     super.isX = !super.isX;
@@ -87,15 +92,26 @@ import video.VideoAlert;
                 }
     mark = isX?"X":"O";
     if (isWinner(mark)) {
-        winnerAlert("COMPUTER"); 
+        try {
+            VideoAlert.showPCWinAlert();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PlayWithPc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //winnerAlert("COMPUTER"); 
         updateScore(false);
         resetGride();
         if (isRecord) {
                         recordMovesToFile();
                     }
+        
     } 
     else if (gameOver()) {
-        grideFullAlert();
+        try {
+                        VideoAlert.showDrawAlert();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+        //grideFullAlert();
         resetGride();
         if (isRecord) {
                         recordMovesToFile();

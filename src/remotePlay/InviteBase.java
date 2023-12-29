@@ -48,9 +48,9 @@ public  class InviteBase extends AnchorPane {
         label3.setLayoutY(21.0);
         label3.setPrefHeight(17.0);
         label3.setPrefWidth(76.0);
-        label3.setText("Label");
+        //label3.setText("Label");
         label3.setFont(new Font(18.0));
-        label3.setVisible(false);
+        //label3.setVisible(false);
 
         btninvite.setLayoutX(494.0);
         btninvite.setLayoutY(15.0);
