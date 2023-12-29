@@ -20,8 +20,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import com.google.gson.JsonObject;
 import dto.MyPlayer;
+import homePage.XOgameUI;
+import java.util.Optional;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import model.Moves;
+import mynev.Mynav;
 import network.NetWork;
 import static org.apache.derby.impl.sql.compile.SQLParserConstants.T;
 import tictactoe.AlertMessage;
@@ -44,35 +50,42 @@ public class OnlineGame extends GameBoardUI {
 
         super.XN.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         super.ON.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        exitBtn.setOnAction(event ->{
+                    showEixtAlert("Exit Game","Are You Sure to Exit this Game ?");
+        });
     }
 
     @Override
     void onBtnClicked(Button btn) {
 
         if (btn.getText().isEmpty()) {
-            if (true) {
-                btn.setText("X");
+            if (isBlock) {
+                mark = isX ? "X" : "O";
+                btn.setText(mark);
                 int row = gride.getRowIndex(btn);
                 int col = gride.getColumnIndex(btn);
                
                 isBlock=false;
-                mark = isX ? "X" : "O";
-                sendMove(isX ? ON.getText():XN.getText(), row, col);
+                
+                String opponent=isX ? ON.getText():XN.getText();
+                System.out.println(opponent+"bo");
+                sendMove(opponent, row, col);
                 System.out.println(isRecord);
                 if (isRecord) {
                     recordMove(btn);
                 }
                 btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
-                if (isWinner()) {
-                    if (isRecord) {
+                if (isWinner(mark)) {
+                    
+                    try {
+                        AlertMessage.showWinAlert();
+                        winnerAlert(isX ? XN.getText():ON.getText());
+                        updateScore(isX);
+                        if (isRecord) {
                         recordMovesToFile();
                     }
                     isRecord = false;
-                    try {
-                        AlertMessage.showWinAlert();
-                        winnerAlert("YOU");
-                        updateScore(isX);
                         super.resetGride();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MediumLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,9 +96,8 @@ public class OnlineGame extends GameBoardUI {
                     }
                     isRecord = false;
                     super.grideFullAlert();
-                } else {
-                    //super.isX = !super.isX;
-                   // network.NetWork.getInstance(TackIP.IPAddress).reciveMessage();
+                } else 
+                {
                     isBlock=false;
                 }
             }
@@ -105,11 +117,6 @@ public class OnlineGame extends GameBoardUI {
         gameNetWork.sendMessage(jString);
     }
     public void getMove(String mark,int row,int col ) {
-        System.out.println("mark = " +mark+" row "+row +" col "+ col);
-        System.out.println("mark = " +mark+" row "+row +" col "+ col);
-        System.out.println("mark = " +mark+" row "+row +" col "+ col);
-//        isBlock=true;
-//        grideButtons[row][col].setText(mark);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -117,5 +124,40 @@ public class OnlineGame extends GameBoardUI {
                 isBlock=true;
             }
         });
+    }
+    
+    private void handleExitPlayer(String userName,String opponentName) {
+        Gson gson = new GsonBuilder().create();
+        JsonObject jObject = new JsonObject();
+        jObject.addProperty("key", "exitPlayer");
+        jObject.addProperty("userName", userName);
+        jObject.addProperty("opponentName", opponentName);
+        System.out.println(opponentName);
+        System.out.println(opponentName);
+        String jString = gson.toJson(jObject);
+        System.out.println(jString);
+        gameNetWork.sendMessage(jString);
+        
+        Mynav.navigateTo(new XOgameUI());
+    }
+    private void showEixtAlert(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(null);
+        ButtonType buttonNo = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType buttonYes = new ButtonType("Ok");
+
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == buttonYes)
+        {
+           handleExitPlayer(MyPlayer.userName,MyPlayer.opponentName);
+        } else {
+           
+          
+        }
     }
 }
