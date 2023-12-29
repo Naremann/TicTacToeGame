@@ -74,6 +74,7 @@ public  class PlayerNamesUI extends BorderPane {
         setPrefHeight(400.0);
         setPrefWidth(600.0);
 
+        
         BorderPane.setAlignment(gridPane, javafx.geometry.Pos.CENTER);
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -91,7 +92,10 @@ public  class PlayerNamesUI extends BorderPane {
         btnBack.setMnemonicParsing(false);
         btnBack.setPrefHeight(30.0);
         btnBack.setPrefWidth(90.0);
-        btnBack.setStyle("-fx-background-color: gray;");
+        btnBack.setStyle("-fx-background-color: gray;"+
+                         "-fx-text-fill: white;"+
+                         "-fx-background-radius: 15;");
+        btnBack.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         btnBack.setText("BACK");
         GridPane.setMargin(btnBack, new Insets(0.0, 0.0, 30.0, 100.0));
         btnBack.setFont(new Font("Arial Bold", 18.0));
@@ -100,7 +104,10 @@ public  class PlayerNamesUI extends BorderPane {
         btnNext.setMnemonicParsing(false);
         btnNext.setPrefHeight(33.0);
         btnNext.setPrefWidth(91.0);
-        btnNext.setStyle("-fx-background-color: gray;");
+        btnNext.setStyle("-fx-background-color: gray;"+
+                         "-fx-text-fill: white;"+
+                            "-fx-background-radius: 15;");
+        btnNext.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         btnNext.setText("NEXT");
         btnNext.setFont(new Font("Arial Bold", 18.0));
         GridPane.setMargin(btnNext, new Insets(0.0, 0.0, 30.0, 95.0));
@@ -135,43 +142,51 @@ public  class PlayerNamesUI extends BorderPane {
         rowConstraints3.setPrefHeight(177.0);
         rowConstraints3.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        lbPlayer1.setText("Player 1 Name");
-        lbPlayer1.setFont(new Font("Arial Bold", 24.0));
+        lbPlayer1.setText("Enter First Player Name");
+        lbPlayer1.setFont(new Font("Arial Bold", 20.0));
         GridPane.setMargin(lbPlayer1, new Insets(0.0, 0.0, 25.0, 0.0));
 
         GridPane.setRowIndex(lbPlayer2, 2);
-        lbPlayer2.setText("Player 2 Name");
+        lbPlayer2.setText("Enter Second Player Name");
         GridPane.setMargin(lbPlayer2, new Insets(50.0, 0.0, 0.0, 0.0));
-        lbPlayer2.setFont(new Font("Arial Bold", 24.0));
+        lbPlayer2.setFont(new Font("Arial Bold", 20.0));
 
         GridPane.setRowIndex(txtPlayer1, 1);
-        txtPlayer1.setPrefHeight(40.0);
+        txtPlayer1.setPrefHeight(41.0);
         txtPlayer1.setPrefWidth(475.0);
-       
+           
         GridPane.setRowIndex(txtPlayer2, 3);
         txtPlayer2.setPrefHeight(41.0);
         txtPlayer2.setPrefWidth(475.0);
         
-       
-        
        btnNext.setOnAction(event -> {  
            player1_Name = txtPlayer1.getText();
            player2_Name = txtPlayer2.getText(); 
-        if (player1_Name.isEmpty() || player2_Name.isEmpty()) {
-                
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning");
-                alert.setHeaderText(null);
-                alert.setContentText("Please Enter The Players Names.");
-                alert.showAndWait();
-            } else {
+           
+        if (checkSymbol(player1_Name) || checkSymbol(player2_Name) ||player1_Name.isEmpty() || player2_Name.isEmpty()) {
+               if(checkSymbol(player1_Name) || checkSymbol(player2_Name)){
+                Alert unacceptAlert = new Alert(Alert.AlertType.WARNING);
+                unacceptAlert.setTitle("Unvalid Input");
+                unacceptAlert.setHeaderText(null);
+                unacceptAlert.setContentText("Player names cannot contain #, !, or ?");
+                unacceptAlert.showAndWait();
+                }            
+               else if (player1_Name.isEmpty() || player2_Name.isEmpty()){                
+                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Empty Field");
+                emptyAlert.setHeaderText(null);
+                emptyAlert.setContentText("Please Enter The Players Names.");
+                emptyAlert.showAndWait();
+                }
+        }                              
+        else {
                
                 Mynav.navigateTo(new LocallGame(player1_Name,player2_Name), event);
             }
         });
-       
+              
         btnBack.setOnAction(event -> {  
-                Mynav.navigateTo(new XOgameUI(), event);
+                Mynav.navigateTo(new ChooseGameUI(), event);
         });
         
         
@@ -196,13 +211,7 @@ public  class PlayerNamesUI extends BorderPane {
 
     }
     
-    /*public String getPlayer1Name() {
-        return player1_Name;
-        }
-
-    public String getPlayer2Name() {
-        return player2_Name;
-        }*/
-    
-    
+   private boolean checkSymbol(String playerName) {
+        return playerName.contains("#") || playerName.contains("!") || playerName.contains("?");
+    }    
 }

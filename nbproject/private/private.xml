@@ -3,13 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/tictactoe/TicTacToe.java</file>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/TackIP.java</file>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/GameBoardUI.java</file>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/DisplayRecord.java</file>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/LocallGame.java</file>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/network/NetWork.java</file>
-            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/OnlineGame.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/remotePlay/Invite.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/PlayerNamesUI.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/PNameSingleUI.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/homePage/XOgameUI.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/dto/MyPlayer.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/remotePlay/listviewBase.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/tictactoe/TicTacToe.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/remotePlay/ListviewRequestBase.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/gameBoard/ChooseGameUI.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/homePage/XoGame.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/recordTable/RecordList.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/remotePlay/InviteBase.java</file>
+            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/TicTacToeGame/src/network/NetWork.java</file>
         </group>
     </open-files>
 </project-private>

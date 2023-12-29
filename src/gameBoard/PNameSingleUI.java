@@ -147,15 +147,24 @@ public class PNameSingleUI extends BorderPane{
        btnNext.setOnAction(event -> {  
            player1_Name = txtPlayer1.getText();
             
-        if (player1_Name.isEmpty()) {
-                
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning");
-                alert.setHeaderText(null);
-                alert.setContentText("Please Enter Your Name First.");
-                alert.showAndWait();
-            } else {
-               
+        if (checkSymbol(player1_Name)|| player1_Name.isEmpty()) {
+               if(checkSymbol(player1_Name)){
+                Alert unacceptAlert = new Alert(Alert.AlertType.WARNING);
+                unacceptAlert.setTitle("Unvalid Input");
+                unacceptAlert.setHeaderText(null);
+                unacceptAlert.setContentText("Player names cannot contain #, !, or ?");
+                unacceptAlert.showAndWait();
+                }            
+               else if (player1_Name.isEmpty()){                
+                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Empty Field");
+                emptyAlert.setHeaderText(null);
+                emptyAlert.setContentText("Please Enter The Players Names.");
+                emptyAlert.showAndWait();
+                }
+        }   
+         else {
+           
                 Mynav.navigateTo(new GameLevelsBase(player1_Name), event);
             }
         });
@@ -180,7 +189,9 @@ public class PNameSingleUI extends BorderPane{
         gridPane0.getRowConstraints().add(rowConstraints3);
         gridPane0.getChildren().add(lbPlayer1);
         gridPane0.getChildren().add(txtPlayer1);
-      
-
+     
     }
+       private boolean checkSymbol(String playerName) {
+        return playerName.contains("#") || playerName.contains("!") || playerName.contains("?");
+    } 
 }
