@@ -4,25 +4,30 @@ import gameBoard.GameBoardUI;
 import gameBoard.HardLevelWithPc;
 import gameBoard.MediumLevelWithPc;
 import gameBoard.PlayWithPc;
+import homePage.XOgameUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import mynev.Mynav;
 
-public  class GameLevelsBase extends BorderPane {
+public class GameLevelsBase extends BorderPane {
 
     protected final AnchorPane anchorPane;
     protected final Button high_btn;
     protected final Label level_lbl;
     protected final Button med_btn;
     protected final Button low_btn;
-    
-   // public GameLevelsBase(){}
+    protected final ImageView backImg;
 
+    // public GameLevelsBase(){}
     public GameLevelsBase(String player1_Name) {
 
         anchorPane = new AnchorPane();
@@ -30,6 +35,7 @@ public  class GameLevelsBase extends BorderPane {
         level_lbl = new Label();
         med_btn = new Button();
         low_btn = new Button();
+        backImg = new ImageView();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -45,6 +51,7 @@ public  class GameLevelsBase extends BorderPane {
         anchorPane.setMinWidth(600.0);
         anchorPane.setPrefHeight(420.0);
         anchorPane.setPrefWidth(600.0);
+        backImg.setImage(new Image(getClass().getResource("/tictactoe/media/backward.png").toExternalForm()));
 
         high_btn.setLayoutX(14.0);
         high_btn.setLayoutY(88.0);
@@ -55,11 +62,11 @@ public  class GameLevelsBase extends BorderPane {
         high_btn.setText("High Level");
         high_btn.setTextFill(javafx.scene.paint.Color.WHITE);
         //*****************
-          high_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+        high_btn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
-                 public void handle(ActionEvent event){
-                   Mynav.navigateTo(new HardLevelWithPc(player1_Name), event);
-                 }
+            public void handle(ActionEvent event) {
+                Mynav.navigateTo(new HardLevelWithPc(player1_Name), event);
+            }
         });
         //*******************
         high_btn.setFont(new Font(24.0));
@@ -70,6 +77,15 @@ public  class GameLevelsBase extends BorderPane {
         level_lbl.setPrefWidth(183.0);
         level_lbl.setText("Game Levels");
         level_lbl.setFont(new Font("System Bold", 24.0));
+        
+        
+        backImg.setLayoutX(23.0);
+        backImg.setLayoutY(23.0);
+        backImg.setOnMouseClicked((event) -> {
+              Mynav.navigateTo(new XOgameUI(),event);
+        });
+        
+       
 
         med_btn.setLayoutX(172.0);
         med_btn.setLayoutY(162.0);
@@ -79,14 +95,14 @@ public  class GameLevelsBase extends BorderPane {
         med_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         med_btn.setText("Medium Level");
         med_btn.setTextFill(javafx.scene.paint.Color.WHITE);
-         //*****************
-          med_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+        //*****************
+        med_btn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
-                 public void handle(ActionEvent event){
-                     
-                  // GameBoardUI gameBoard = new GameBoardUI(true);
-                   Mynav.navigateTo(new MediumLevelWithPc(player1_Name), event);
-                 }
+            public void handle(ActionEvent event) {
+
+                // GameBoardUI gameBoard = new GameBoardUI(true);
+                Mynav.navigateTo(new MediumLevelWithPc(player1_Name), event);
+            }
         });
         //*******************
         med_btn.setFont(new Font(24.0));
@@ -101,21 +117,22 @@ public  class GameLevelsBase extends BorderPane {
         low_btn.setFont(new Font(24.0));
         low_btn.getStylesheets().add("/tictactoe/cssstyle/btnStyle.css");
         //*****************
-         low_btn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+        low_btn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
-                 public void handle(ActionEvent event){
-                   Mynav.navigateTo(new PlayWithPc(player1_Name), event);
-                 }
+            public void handle(ActionEvent event) {
+                Mynav.navigateTo(new PlayWithPc(player1_Name), event);
+            }
         });
         //*******************
         setCenter(anchorPane);
 
         anchorPane.getChildren().add(high_btn);
+                anchorPane.getChildren().add(backImg);
+
         anchorPane.getChildren().add(level_lbl);
         anchorPane.getChildren().add(med_btn);
         anchorPane.getChildren().add(low_btn);
 
     }
-
 
 }
