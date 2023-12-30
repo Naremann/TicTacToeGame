@@ -1,0 +1,12 @@
+.button {
+    -fx-background-color: #6A6262;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+   
+}
+.button:focused {
+    -fx-background-color: #6A6262 ;
+}
+
+

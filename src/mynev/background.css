@@ -1,0 +1,16 @@
+.root{
+    -fx-background-color:
+            linear-gradient(#4568DC, #B06AB3),
+           repeating-image-pattern("tictactoe/app.jpg"),
+            radial-gradient(center 50% 50%, radius 50%, #FFFFFF33, #00000033);
+}
+
+
+/*.scene{
+    -fx-background-image: url("/tictactoe/app.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
+    -fx-background-color: #cccccc;
+
+}
+*/

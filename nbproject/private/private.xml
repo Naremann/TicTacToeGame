@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/tictactoe/TicTacToe.java</file>
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/dto/DTOPlayer.java</file>
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/remotePlay/listviewBase.java</file>
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/GameBoardUI.java</file>
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/dto/MyPlayer.java</file>
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/gameBoard/OnlineGame.java</file>
+            <file>file:/D:/ITI/Java/OX%20project/JAVA%20Project/TicTacToeGame/src/network/NetWork.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/LocallGame.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/network/NetWork.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/cssstyle/btnStyle.css</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/remotePlay/RequestBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/login/LoginScreenBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/remotePlay/listviewBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/ChooseGameUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/PlayWithPc.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/register/RegisterScreenBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/remotePlay/RequestScreen.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/MediumLevelWithPc.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/AlertMessage.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/TackIP.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/dto/DTORequest.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/gamelevels/GameLevelsBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/homePage/XOgameUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/remotePlay/Invite.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/DisplayRecord.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/dto/MyPlayer.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/HardLevelWithPc.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/OnlineGame.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/gameBoard/GameBoardUI.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/remotePlay/ListviewRequestBase.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/TicTacToe/src/remotePlay/InviteBase.java</file>
+        </group>
+    </open-files>
+</project-private>
