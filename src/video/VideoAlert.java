@@ -74,7 +74,7 @@ public class VideoAlert{
         alert.setHeaderText("");
 
         VBox content = new VBox(20, mediaView);
-        content.setMinSize(270, 250);
+        content.setMinSize(200, 250);
 
         content.setAlignment(Pos.CENTER);
         alert.getDialogPane().setContent(content);
@@ -147,5 +147,9 @@ public class VideoAlert{
         alert.setOnCloseRequest(e -> player.stop());
         alert.showAndWait();
       }
+
+    public static void showWinAlert() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

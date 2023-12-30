@@ -20,9 +20,9 @@ public class HardLevelWithPc extends GameBoardUI {
 
     @Override
     void onBtnClicked(Button btn) {
-        if (btn.getText().isEmpty() && super.isX) {
+        if (!super.gameOver() && btn.getText().isEmpty() && super.isX) {
             btn.setText("X");
-            super.mark = super.isX ? "X" : "O";
+            mark = isX ? "X" : "O";
             System.out.println(isRecord);
 
             if (isRecord) {
@@ -31,35 +31,79 @@ public class HardLevelWithPc extends GameBoardUI {
 
             btn.setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
 
-            if (super.isWinner(mark)) {
-                handleGameEnd("YOU");
+            if (isWinner(mark)) {
+                try {
+                    //handleGameEnd("YOU");
+                    VideoAlert.showWinAlert(XN.getText());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(HardLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                       updateScore(isX);
+                        resetGride();
+                        if (isRecord) {
+                        recordMovesToFile();
+                    }
             } else if (super.gameOver()) {
-                handleGameEnd("TIE");
+                try {
+                    // handleGameEnd("TIE");
+                    VideoAlert.showDrawAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(HardLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               //super.grideFullAlert();
+                super.resetGride();
+                if (isRecord) {
+                        recordMovesToFile();
+                    }
             } else {
-                super.isX = !super.isX;
+           
                 makeComputerMove();
+                
             }
         }
     }
 
     protected void makeComputerMove() {
-        int[] bestMove = findBestMove();
-        int row = bestMove[0];
-        int col = bestMove[1];
+        if (!super.gameOver()) {
+            int[] bestMove = findBestMove(Integer.MIN_VALUE, Integer.MAX_VALUE, 3); // Increase the search depth
+            int row = bestMove[0];
+            int col = bestMove[1];
 
-        grideButtons[row][col].setText("O");
-        grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
-        mark = isX?"X":"O";
-        if (super.isWinner(mark)) {
-            handleGameEnd("COMPUTER");
-        } else if (super.gameOver()) {
-            handleGameEnd("TIE");
-        } else {
-            super.isX = !super.isX;
+            grideButtons[row][col].setText("O");
+            grideButtons[row][col].setTextFill(javafx.scene.paint.Color.valueOf("#000000"));
+            mark = !isX ? "X" : "O";
+            if (isWinner(mark)) {
+                try {
+                    // handleGameEnd("COMPUTER");
+                    VideoAlert.showPCWinAlert();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(HardLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               resetGride();
+                //winnerAlert("COMPUTER");
+                updateScore(false);
+                if (isRecord) {
+                        recordMovesToFile();
+                    }
+//                super.resetGride();
+    } 
+            } else if (super.gameOver()) {
+            try {
+                VideoAlert.showDrawAlert();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(HardLevelWithPc.class.getName()).log(Level.SEVERE, null, ex);
+            }
+              resetGride();
+              if (isRecord) {
+                        recordMovesToFile();
+                    }
+                
+            }
+            else{  isX = !isX;}
         }
-    }
+    
 
-    private int[] findBestMove() {
+    private int[] findBestMove(int alpha, int beta, int depth) {
         int bestScore = Integer.MIN_VALUE;
         int[] bestMove = {-1, -1};
 
@@ -67,13 +111,19 @@ public class HardLevelWithPc extends GameBoardUI {
             for (int j = 0; j < grideSize; j++) {
                 if (grideButtons[i][j].getText().isEmpty()) {
                     grideButtons[i][j].setText("O");
-                    int score = minimax(0, false);
+                    int score = minimax(0, false, alpha, beta, depth - 1);
                     grideButtons[i][j].setText("");
 
                     if (score > bestScore) {
                         bestScore = score;
                         bestMove[0] = i;
                         bestMove[1] = j;
+                    }
+
+                    alpha = Math.max(alpha, bestScore);
+
+                    if (alpha >= beta) {
+                        break;
                     }
                 }
             }
@@ -82,13 +132,13 @@ public class HardLevelWithPc extends GameBoardUI {
         return bestMove;
     }
 
-    private int minimax(int depth, boolean isMaximizing) {
-        mark = isX?"X":"O";
+    private int minimax(int depth, boolean isMaximizing, int alpha, int beta, int maxDepth) {
+        mark = isX ? "X" : "O";
         if (super.isWinner(mark)) {
             return isMaximizing ? -1 : 1;
         }
 
-        if (super.gameOver()) {
+        if (super.gameOver() || depth == maxDepth) {
             return 0;
         }
 
@@ -98,18 +148,60 @@ public class HardLevelWithPc extends GameBoardUI {
             for (int j = 0; j < grideSize; j++) {
                 if (grideButtons[i][j].getText().isEmpty()) {
                     grideButtons[i][j].setText(isMaximizing ? "O" : "X");
-                    int score = minimax(depth + 1, !isMaximizing);
+                    int score = minimax(depth + 1, !isMaximizing, alpha, beta, maxDepth);
                     grideButtons[i][j].setText("");
 
-                    bestScore = isMaximizing ? Math.max(score, bestScore) : Math.min(score, bestScore);
+                    if (isMaximizing) {
+                        bestScore = Math.max(score, bestScore);
+                        alpha = Math.max(alpha, bestScore);
+                    } else {
+                        bestScore = Math.min(score, bestScore);
+                        beta = Math.min(beta, bestScore);
+                    }
+
+                    if (beta <= alpha) {
+                        break;
+                    }
                 }
             }
         }
 
         return bestScore;
     }
+    
+  /*  private String checkGameResult() {
+    if (super.isWinner("O")) {
+        return "PC_WINS";
+    } else if (super.isWinner("X")) {
+        return "YOU_WIN";
+    } else if (super.gameOver()) {
+        return "DRAW";
+    } else {
+        return "CONTINUE";
+    }
+}
 
-    private void handleGameEnd(String winner) {
+// Call this method after each move to check the result
+private void checkAndHandleGameResult() {
+    String result = checkGameResult();
+
+    switch (result) {
+        case "PC_WINS":
+            handleGameEnd("PC");
+            break;
+        case "YOU_WIN":
+            handleGameEnd("YOU");
+            break;
+        case "DRAW":
+            handleGameEnd("DRAW");
+            break;
+        case "CONTINUE":
+            // Continue the game
+            break;
+    }
+}*/
+
+  /*  private void handleGameEnd(String winner) {
         if (isRecord) {
             recordMovesToFile();
         }
@@ -124,5 +216,5 @@ public class HardLevelWithPc extends GameBoardUI {
         } catch (InterruptedException ex) {
             Logger.getLogger(GameBoardUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 }
